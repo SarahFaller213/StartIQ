@@ -1,0 +1,4 @@
+- Author: [Your Name Here]
+- Course: [Course Here]
+- Term: [Term Here]
+- Professor [Professor Here]
