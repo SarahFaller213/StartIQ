@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Serif');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+.nav a{
+  font-family: 'Quicksand', serif;
+  color: black;
+}
+
+.nav a:hover {
+  color: grey;
+}
+
+Img {
+  height: 18%;
+  width: 15%;
+}

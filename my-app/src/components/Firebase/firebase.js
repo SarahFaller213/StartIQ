@@ -1,17 +1,14 @@
-
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-
-
 const config = {
-	apiKey: "AIzaSyAVECqNN0d56XtII2jWGeyRJ9sGqD1eqMo",
-    authDomain: "startiq-a16e5.firebaseapp.com",
-    databaseURL:"https://startiq-a16e5.firebaseio.com",
-    projectId: "startiq-a16e5",
-    storageBucket: "startiq-a16e5.appspot.com",
-    messagingSenderId: "863881277059"
+  apiKey: "AIzaSyDoqABBcwvXDdxMhdY_4nmLiPpBX_8YwVw",
+  authDomain: "startiq.firebaseapp.com",
+  databaseURL: "https://startiq.firebaseio.com",
+  projectId: "startiq",
+  storageBucket: "startiq.appspot.com",
+  messagingSenderId: "617875093373"
 };
 
 
@@ -20,9 +17,8 @@ class Firebase {
     app.initializeApp(config);
     this.auth = app.auth();
     this.db = app.database();
-
   }
-  // *** Auth API ***
+
 
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
@@ -38,6 +34,24 @@ class Firebase {
 
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
+
+  //For Database of Ideas
+  putIdea(ideaText) {
+    this.db.ref("Workspace/").child("UserName").set({
+      idea: ideaText,
+    }).then((data) => {
+        //success callback
+        console.log('data ', data)
+    }).catch((error) => {
+        //error callback
+        console.log('error ', error)
+    })
+  }
+
+  getIdea() {
+    return this.db.ref("Workspace/UserName/idea").once('value').then(snapshot => snapshot.val());
+  }
+
 }
 
 export default Firebase;
