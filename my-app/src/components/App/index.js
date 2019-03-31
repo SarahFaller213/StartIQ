@@ -10,7 +10,7 @@ import LandingPage from '../Landing';
 import AdminPage from '../Admin';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
-import HomePage from '../Home';
+import DashboardPage from '../Dashboard';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -42,15 +42,12 @@ class App extends Component {
     return (
   <Router>
     <div>
-          <Navigation authUser={this.state.authUser} />
-
-      <hr />
-
+      <Navigation authUser={this.state.authUser} />
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route path={ROUTES.HOME} component={HomePage} />
+      <Route path={ROUTES.DASHBOARD} component={DashboardPage} />
     </div>
   </Router>
     );

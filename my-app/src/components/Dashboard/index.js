@@ -8,15 +8,15 @@ import Firebase, {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
 
 
-const HomePage = () => (
+const DashboardPage = () => (
   <div>
     <FirebaseContext.Consumer>
-      {firebase => <Home firebase={firebase}/>}
+      {firebase => <Dashboard firebase={firebase}/>}
     </FirebaseContext.Consumer>
   </div>
 );
 
-class Home extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props)
     this.state = { text: '', ideas: "" }
@@ -72,4 +72,4 @@ class Home extends React.Component {
   }
 }
 
-export default HomePage
+export default DashboardPage

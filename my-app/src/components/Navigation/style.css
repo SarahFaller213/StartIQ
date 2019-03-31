@@ -6,8 +6,10 @@
   color: black;
 }
 
+
 .nav a:hover {
   color: grey;
+  text-decoration: none;
 }
 
 Img {
