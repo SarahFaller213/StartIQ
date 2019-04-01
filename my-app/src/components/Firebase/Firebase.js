@@ -39,6 +39,21 @@ class Firebase {
   workspace = uid => this.db.ref(`workspace/${uid}`);
 
 
+putProfile(school, skill, degree, uid) {
+    this.db.ref('users/${uid}/profile_info').push({
+        school: school,
+        skills: skill,
+        degree: degree
+    }).then((data) => {
+          //success callback
+          console.log('data ', data)
+    }).catch((error) => {
+          //error callback
+          console.log('error ', error)
+    })
+}
+
+
   //For Database of Ideas- Workspace
   //Write idea onto Database
   putIdea(ideaText) {

@@ -11,6 +11,8 @@ import AdminPage from '../Admin';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
 import DashboardPage from '../Dashboard';
+import ProfilePage from '../Profile';
+import ProfileEdit from '../EditProfile'
 
 import * as ROUTES from '../../constants/routes';
 
@@ -48,6 +50,9 @@ class App extends Component {
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.DASHBOARD} component={DashboardPage} />
+      <Route path={ROUTES.PROFILE} component={ProfilePage} />
+      <Route path={ROUTES.EDIT} component={ProfileEdit} />
+
     </div>
   </Router>
     );
