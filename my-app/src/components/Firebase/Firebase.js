@@ -45,7 +45,7 @@ class Firebase {
 
 
   putProfile(school, skill, degree, uid) {
-    this.db.ref('users/${uid}/profile_info').push({
+    this.db.ref(`users/${uid}/`).child("profile_info").set({
         school: school,
         skills: skill,
         degree: degree

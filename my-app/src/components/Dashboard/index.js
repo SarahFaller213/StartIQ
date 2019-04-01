@@ -48,7 +48,12 @@ class Dashboard extends React.Component {
     }
   }
 
+  //TODO: Edit or Delete function
   onEdit = () => {
+    
+  }
+
+  onDelete = () => {
     
   }
 
@@ -60,7 +65,7 @@ class Dashboard extends React.Component {
             {renderHTML(idea)}
           </div>
           <div className="col-3">
-            <Button className = "submit" variant="danger" > Delete</Button>
+            <Button className = "submit" variant="danger" onClick = {this.onDelete} > Delete</Button>
             <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
           </div>
         </div>
@@ -71,11 +76,13 @@ class Dashboard extends React.Component {
         <div className="container">
           <div className="row">
             <div className='col-xl-12'>
+              <h1>Idea Dashboard</h1>
+              <div className= "writeIdea">
               <ReactQuill className= "quill" value={this.state.text} placeholder ="Coming up with good ideas
                   . Enter a short description of your idea here"
                   onChange={this.handleChange} />
               <Button className = "submit" variant="info" onClick={this.onSubmit}>Post</Button>
-              <h1>Idea Dashboard</h1>
+              </div>
               {ideas}
             </div>
           </div>

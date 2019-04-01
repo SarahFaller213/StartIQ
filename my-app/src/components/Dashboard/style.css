@@ -24,8 +24,11 @@ h1 {
   font-family: 'Quicksand', sans-serif;
 }
 
+.writeIdea {
+  margin-bottom: 8%;
+}
+
 .dashboard {
   background: white;
-  padding: 1%;
   margin-bottom: 10px;
 }
