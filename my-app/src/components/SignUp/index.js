@@ -31,21 +31,26 @@ class SignUpFormBase extends Component {
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        // Create a user in your Firebase realtime database
+        // Create a user and Create user's idea dashboard under workspace in your Firebase realtime database
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
             username,
-            email,
+            email
+          }),
+          this.props.firebase
+          .workspace(authUser.user.uid)
+          .set({
+            username
           });
       })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.DASHBOARD);
-
       })
       .catch(error => {
-        this.setState({ error });
+        console.log(error);
+        this.setState({ error: error.message }); //Set Error State as Error message
       });
 
     event.preventDefault();
@@ -106,7 +111,7 @@ class SignUpFormBase extends Component {
         />
         <button disabled={isInvalid} type="submit">Sign Up</button>
 
-        {error && <p>{"error"}</p>}
+        {error && <p>{error}</p>}
         
       </form>
     );

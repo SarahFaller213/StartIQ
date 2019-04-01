@@ -19,15 +19,15 @@ const DashboardPage = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', ideas: "" }
+    this.listOfideas = [];
+    this.state = { text: '', ideas: this.listOfidea }
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    this.props.firebase.getIdea().then(ideas => {
-      this.setState({ideas: ideas});
-      console.log(this.state.ideas);
-    });
+    // this.props.firebase.getIdea().then(value => {
+    //   this.setState({ideas: this.listOfIdea.push(value.idea)});
+    // });
   }
 
   handleChange(value) {
@@ -45,25 +45,27 @@ class Dashboard extends React.Component {
 
   render() {
     //TODO: change this to some iteration 
-    const ideas = (
-        <div>
-        <div className = "dashboard">
-          {renderHTML(this.state.ideas)}
-        </div>
-        <Button className = "submit" variant="danger" onClick = {this.onEdit}>Edit</Button>
-        </div>
-    );
+    // const ideas = (
+    //     <div>
+    //     <div className = "dashboard">
+    //       {renderHTML(this.state.ideas.idea)}
+    //     </div>
+    //     <Button className = "submit" variant="danger" > Delete</Button>
+    //     <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
+    //     </div>
+    // );
 
     return (      
       <div className = "main">
         <div className="container">
           <div className="row">
             <div className='col-xl-12'>
-              <ReactQuill className= "quill" value={this.state.text}
+              <ReactQuill className= "quill" value={this.state.text} placeholder ="Coming up with good ideas
+                  . Enter a short description of your idea here"
                   onChange={this.handleChange} />
               <Button className = "submit" variant="info" onClick={this.onSubmit}>Post</Button>
               <h1>Idea Dashboard</h1>
-              {ideas}
+              {/* {ideas} */}
             </div>
           </div>
         </div>

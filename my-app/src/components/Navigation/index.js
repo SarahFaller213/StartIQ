@@ -4,7 +4,7 @@ import * as ROUTES from '../../constants/routes';
 import logo from './startIQ.png';
 import SignOutButton from '../SignOut';
 import './style.css'
-import { userInfo } from 'os';
+// import { userInfo } from 'os';
 
 const Navigation = ({ authUser }) => (
   <div>{authUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>
@@ -17,8 +17,8 @@ const NavigationAuth = () => (
       <img src= {logo} alt="StartIQ" />
       <li> <Link to={ROUTES.DASHBOARD} >Dashboard</Link> </li>
       <li> Assets </li>
-      <li> <Link to={ROUTES.ADMIN}>Admin</Link> </li>
-      <li>  <SignOutButton /> </li>
+      <li> <Link to={ROUTES.ADMIN}>Community</Link> </li>
+      <li>  <Link to={ROUTES.LANDING}><SignOutButton /></Link></li>
     </div>
   </nav>
 
