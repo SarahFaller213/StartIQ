@@ -4,6 +4,8 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import Firebase, {FirebaseContext} from '../Firebase';
+import './style.css'
+
 
 
 const EditPage = () => (
@@ -12,6 +14,7 @@ const EditPage = () => (
     <EditForm />
   </div>
 );
+
 
 const INITIAL_STATE = {
   university: '',
@@ -70,15 +73,18 @@ class ProfileEditBase extends Component {
       
       
     return (
-      <form onSubmit={this.onSubmit}>
+    <div className = "wrapper">
+      <form className="form" onSubmit={this.onSubmit}>
         <input
+        className="input"
           name="university"
           value={university}
           onChange={this.onChange}
           type="text"
           placeholder="Where did you go to school?"
         />
-        <input
+        <input 
+        className="input"
           name="skills"
           value={skills}
           onChange={this.onChange}
@@ -86,17 +92,18 @@ class ProfileEditBase extends Component {
           placeholder="What skills do you have?"
         />
         <input
+        className="input"
           name="degree"
           value={degree}
           onChange={this.onChange}
           type="text"
           placeholder="What degree are you pursuing or have?"
         />
-        <button type="submit">Save</button>
-
+        <button type="submit" className="button1">Save</button>
         {error && <p>{error}</p>}
         
       </form>
+    </div>
     );
   }
 }

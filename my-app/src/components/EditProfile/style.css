@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+.main {
+  height: 100vh;
+  background: #e2e6e6;
+}
+
+.quill {
+  background: white;
+  margin-top: 3%;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  margin-top: 5%;
+}
+
+.submit {
+  margin: 10px;
+  display: inline-block;
+  float: right;
+  font-family: 'Quicksand', sans-serif;
+}
+
+
+.wrapper {
+    display: block;
+    text-align: center;
+    margin: auto;
+    
+    
+}
+
+.form{
+    display: inline-block;
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+    text-align: center;
+    height: 100px;
+    width: 500px;
+
+}
+
+.input{
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: top;
+    height: 100%;
+    width: 100%;
+    margin-top:10%;
+    margin-bottom: 10%;
+
+}
+
+.button1{
+    margin-bottom: 10%;
+}

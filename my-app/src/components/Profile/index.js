@@ -4,11 +4,13 @@ import { EditProfileLink } from '../EditProfile';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
+import './style.css'
+
 
 const ProfilePage = () => (
   <div>
-    <h1>Your Profile</h1>
-    <EditProfileLink/>
+    <h1>Your Profile </h1>
+    <h2><EditProfileLink/></h2>
 
 
   </div>
