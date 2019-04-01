@@ -19,15 +19,12 @@ const DashboardPage = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
-    this.listOfideas = [];
-    this.state = { text: '', ideas: this.listOfidea }
+    this.state = { text: '', ideas: [] }
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    // this.props.firebase.getIdea().then(value => {
-    //   this.setState({ideas: this.listOfIdea.push(value.idea)});
-    // });
+    console.log(this.props.firebase.getIdea());
   }
 
   handleChange(value) {

@@ -61,14 +61,15 @@ class Firebase {
 
   //Read Ideas from Database
   getIdea() {
-    this.auth.onAuthStateChanged((user) => {
-      this.db.ref(`Workspace/${user.uid}`).once().then((snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          console.log(childSnapshot.val());
-        })
+    return this.auth.onAuthStateChanged((user) => {
+      this.db.ref(`workspace/${user.uid}`)
+      .once('value').then( data => {
+        data.forEach(d => { 
+            // console.log(d.val())
+            d.val();
+          })
+        });
       });
-    });
+    }
   }
-}
-
 export default Firebase;
