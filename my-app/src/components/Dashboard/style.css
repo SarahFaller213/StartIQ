@@ -9,6 +9,7 @@
 .quill {
   background: white;
   margin-top: 3%;
+  width: 100%;
 }
 
 h1 {
@@ -28,7 +29,8 @@ h1 {
   margin-bottom: 8%;
 }
 
-.dashboard {
-  background: white;
+div.row.dashboard {
+  margin: 0;
   margin-bottom: 10px;
+  background: white;
 }

@@ -23,12 +23,11 @@ class Dashboard extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  //Still fixing now
   componentDidMount() {
     this.props.firebase.setupAuthChangeHandler((user) => {
       if(user) {
         this.setState({ uid: user.uid });
-        this.props.firebase.getIdea(this.state.uid).then(ideas => {
+        this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
           this.setState({ideas : ideas});
           console.log(this.state.ideas);
         });
@@ -43,8 +42,11 @@ class Dashboard extends React.Component {
 
   onSubmit = () =>{
     if(this.state.uid) {
-      this.props.firebase.putIdea(this.state.text, this.state.uid);
-      window.location.reload();
+      this.props.firebase.putIdea(this.state.text, this.state.uid).then(() => {
+        this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+          this.setState({ideas : ideas, text: ''});
+        });
+      });
     }
   }
 
@@ -53,19 +55,22 @@ class Dashboard extends React.Component {
     
   }
 
-  onDelete = () => {
-    
+  onDelete = (key) => {
+    this.props.firebase.deleteIdea(this.state.uid, key).then(() => {
+      this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+        this.setState({ideas : ideas});
+      });
+    });
   }
 
   render() {
-    //TODO: change this to some iteration 
-    const ideas = this.state.ideas.map( (idea) => (
-        <div className="row dashboard">
+    const ideas = this.state.ideas.map( ([key, ideaInfo]) => (
+        <div className="row dashboard" key={key}>
           <div className="col-9">
-            {renderHTML(idea)}
+            {renderHTML(ideaInfo.idea)}
           </div>
           <div className="col-3">
-            <Button className = "submit" variant="danger" onClick = {this.onDelete} > Delete</Button>
+            <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
             <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
           </div>
         </div>

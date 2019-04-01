@@ -62,28 +62,24 @@ class Firebase {
   //For Database of Ideas- Workspace
   //Write idea onto Database
   putIdea(ideaText, uid) {
-    this.db.ref(`workspace/${uid}`).push({
+    return this.db.ref(`workspace/${uid}`).push({
       idea: ideaText,
       created_at: Math.floor(Date.now() / 1000)
-    })
-    .then((data) => {
-        //success callback
-        console.log('data ', data)
-    }).catch((error) => {
-        //error callback
-        console.log('error ', error)
     });
   }
 
   //Read Ideas from Database
-  //Still fixing now
   getIdea(uid) {
     return this.db.ref(`workspace/${uid}`)
       .once('value').then( data => {
         const workspaceData = data.val();
         delete workspaceData.username;
-        return Object.values(workspaceData).map(entry => entry.idea);
+        return Object.entries(workspaceData);
       });
+  }
+
+  deleteIdea(uid, key) {
+    return this.db.ref(`workspace/${uid}/${key}`).remove();
   }
 }
 
