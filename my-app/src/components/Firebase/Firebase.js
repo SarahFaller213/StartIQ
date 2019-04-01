@@ -60,6 +60,7 @@ class Firebase {
   }
 
   //Read Ideas from Database
+  //Still fixing now
   getIdea() {
     return this.auth.onAuthStateChanged((user) => {
       this.db.ref(`workspace/${user.uid}`)

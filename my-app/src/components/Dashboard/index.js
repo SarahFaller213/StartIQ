@@ -23,8 +23,9 @@ class Dashboard extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  //Still fixing now
   componentDidMount() {
-    console.log(this.props.firebase.getIdea());
+    // console.log(typeOf this.props.firebase.getIdea())
   }
 
   handleChange(value) {
