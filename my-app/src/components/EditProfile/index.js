@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
+import Firebase, {FirebaseContext} from '../Firebase';
+
 
 const EditPage = () => (
   <div>
@@ -16,20 +18,39 @@ const INITIAL_STATE = {
   skills: '',
   degree: '',
   error: null,
+  uid: '',
 };
+
+const EditDataBase = () => (
+  <div>
+    <FirebaseContext.Consumer>
+      {firebase => <ProfileEditBase firebase={firebase}/>}
+    </FirebaseContext.Consumer>
+  </div>
+);
 
 
 class ProfileEditBase extends Component {
+    
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
 
 
   }
+    componentDidMount() {
+    this.props.firebase.setupAuthChangeHandler((user) => {
+      if(user) {
+        this.setState({ uid: user.uid });
+      }
+      else this.setState({ uid: undefined });
+    });
+  }
+
 
  onSubmit = event => {
-    const { university, skills, degree } = this.state;
-    this.props.firebase.putProfile(university, skills, degree, "dd");
+    const { university, skills, degree, uid } = this.state;
+    this.props.firebase.putProfile(university, skills, degree, uid );
 
   }
 
