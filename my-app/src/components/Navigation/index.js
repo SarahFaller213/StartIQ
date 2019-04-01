@@ -16,8 +16,8 @@ const NavigationAuth = () => (
     <div className='container-fluid'>
       <img src= {logo} alt="StartIQ" />
       <li> <Link to={ROUTES.DASHBOARD} >Dashboard</Link> </li>
-      <li> <Link to={ROUTES.PROFILE}>Profile</Link> </li>
       <li> <Link to={ROUTES.ADMIN}>Community</Link> </li>
+      <li> <Link to={ROUTES.PROFILE}>Profile</Link> </li>
       <li>  <Link to={ROUTES.LANDING}><SignOutButton /></Link></li>
     </div>
   </nav>

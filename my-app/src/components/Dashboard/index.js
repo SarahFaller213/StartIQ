@@ -19,13 +19,22 @@ const DashboardPage = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', ideas: [] }
+    this.state = { text: '', uid: '', ideas: [] }
     this.handleChange = this.handleChange.bind(this)
   }
 
   //Still fixing now
   componentDidMount() {
-    // console.log(typeOf this.props.firebase.getIdea())
+    this.props.firebase.setupAuthChangeHandler((user) => {
+      if(user) {
+        this.setState({ uid: user.uid });
+        this.props.firebase.getIdea(this.state.uid).then(ideas => {
+          this.setState({ideas : ideas});
+          console.log(this.state.ideas);
+        });
+      }
+      else this.setState({ uid: undefined });
+    });
   }
 
   handleChange(value) {
@@ -33,8 +42,10 @@ class Dashboard extends React.Component {
   }
 
   onSubmit = () =>{
-    this.props.firebase.putIdea(this.state.text);
-    window.location.reload();
+    if(this.state.uid) {
+      this.props.firebase.putIdea(this.state.text, this.state.uid);
+      window.location.reload();
+    }
   }
 
   onEdit = () => {
@@ -43,15 +54,17 @@ class Dashboard extends React.Component {
 
   render() {
     //TODO: change this to some iteration 
-    // const ideas = (
-    //     <div>
-    //     <div className = "dashboard">
-    //       {renderHTML(this.state.ideas.idea)}
-    //     </div>
-    //     <Button className = "submit" variant="danger" > Delete</Button>
-    //     <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
-    //     </div>
-    // );
+    const ideas = this.state.ideas.map( (idea) => (
+        <div className="row dashboard">
+          <div className="col-9">
+            {renderHTML(idea)}
+          </div>
+          <div className="col-3">
+            <Button className = "submit" variant="danger" > Delete</Button>
+            <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
+          </div>
+        </div>
+    ));
 
     return (      
       <div className = "main">
@@ -63,7 +76,7 @@ class Dashboard extends React.Component {
                   onChange={this.handleChange} />
               <Button className = "submit" variant="info" onClick={this.onSubmit}>Post</Button>
               <h1>Idea Dashboard</h1>
-              {/* {ideas} */}
+              {ideas}
             </div>
           </div>
         </div>
