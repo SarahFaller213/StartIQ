@@ -43,7 +43,7 @@ class App extends Component {
   render() {
     return (
   <Router>
-    <div>
+    <div className = "background">
       <Navigation authUser={this.state.authUser} />
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />

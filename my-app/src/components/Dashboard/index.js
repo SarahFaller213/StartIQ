@@ -66,13 +66,14 @@ class Dashboard extends React.Component {
   render() {
     const ideas = this.state.ideas.map( ([key, ideaInfo]) => (
         <div className="row dashboard" key={key}>
-          <div className="col-9">
-            {renderHTML(ideaInfo.idea)}
-          </div>
-          <div className="col-3">
+          <div className="col-12">
             <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
             <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
           </div>
+          <div className="col-12">
+            {renderHTML(ideaInfo.idea)}
+          </div>
+          
         </div>
     ));
 
