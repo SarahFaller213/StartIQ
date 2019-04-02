@@ -57,7 +57,14 @@ class Firebase {
           console.log('error ', error)
     })
   }
-
+  
+getProfile(uid) {
+    return this.db.ref(`users/${uid}/`).child("profile_info")
+      .once('value').then( data => {
+        const profileData = data.val();
+        return Object.entries(profileData);
+      });
+  }
 
   //For Database of Ideas- Workspace
   //Write idea onto Database
@@ -77,6 +84,7 @@ class Firebase {
         return Object.entries(workspaceData);
       });
   }
+
 
   deleteIdea(uid, key) {
     return this.db.ref(`workspace/${uid}/${key}`).remove();

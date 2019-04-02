@@ -24,8 +24,38 @@ h1 {
   font-family: 'Quicksand', sans-serif;
 }
 
-h2 {
-  text-align: center;
-  font-family: 'Raleway', sans-serif;
-  margin-top: 5%;
+
+.wrapper {
+    display: block;
+    text-align: center;
+    margin: auto;
+    
+    
+}
+
+.form{
+    display: inline-block;
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+    text-align: center;
+    height: 100px;
+    width: 500px;
+
+}
+
+.input{
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: top;
+    height: 100%;
+    width: 100%;
+    margin-top:10%;
+    margin-bottom: 10%;
+
+}
+
+.button1{
+    margin-bottom: 10%;
 }
