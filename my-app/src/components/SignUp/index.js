@@ -3,13 +3,18 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
+import './style.css'
+
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1>Welcome to StartIQ</h1>
+    <div className= "col2">
     <SignUpForm />
+    </div>
   </div>
 );
+
 
 const INITIAL_STATE = {
   username: '',
@@ -60,7 +65,14 @@ class SignUpFormBase extends Component {
 
       
     return (
+    <div>
+    <div className="elements">
+        Sign up for free
+        </div>
+
       <form onSubmit={this.onSubmit}>
+        <div className="elements">
+
         <input
           name="username"
           value={username}
@@ -68,6 +80,8 @@ class SignUpFormBase extends Component {
           type="text"
           placeholder="Full Name"
         />
+        </div>
+        <div className="elements">
         <input
           name="email"
           value={email}
@@ -75,6 +89,8 @@ class SignUpFormBase extends Component {
           type="text"
           placeholder="Email Address"
         />
+        </div>
+        <div className="elements">
         <input
           name="passwordOne"
           value={passwordOne}
@@ -82,6 +98,8 @@ class SignUpFormBase extends Component {
           type="password"
           placeholder="Password"
         />
+        </div>
+        <div className="elements">
         <input
           name="passwordTwo"
           value={passwordTwo}
@@ -89,11 +107,15 @@ class SignUpFormBase extends Component {
           type="password"
           placeholder="Confirm Password"
         />
+        </div>
+        <div className="elements">
         <button disabled={isInvalid} type="submit">Sign Up</button>
+        </div>
 
         {error && <p>{error}</p>}
         
       </form>
+    </div>
     );
   }
 }

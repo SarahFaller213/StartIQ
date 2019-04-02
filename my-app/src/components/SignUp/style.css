@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+
+
+
+.button1{
+    margin-bottom: 10%;
+}
+
+.col2{
+    float:right;
+    text-align: center;
+    background: #c1e1ec;
+    padding: 10px;
+    margin-top:20px;
+    margin-right: 100px;
+    border-radius: 25px;
+    width: 25%;
+
+
+}
