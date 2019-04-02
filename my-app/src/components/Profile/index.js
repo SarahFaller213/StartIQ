@@ -11,12 +11,10 @@ import './style.css'
 const ProfilePage = () => (
   <div>
     <h1>Your Profile </h1>
-    <div>
     <FirebaseContext.Consumer>
       {firebase => <Profile firebase={firebase}/>}
     </FirebaseContext.Consumer>
-  </div>
-    <h2><EditProfileLink/></h2>
+    <h2 className="button"><EditProfileLink/></h2>
   </div>
 );
 
