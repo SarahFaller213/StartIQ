@@ -36,7 +36,7 @@
 
 ### Signout
 
-10. Singing out will take you to the Landing page, which isn't implemented yet.
+10. Signing out will take you to the Landing page, which isn't implemented yet.
 
 <hr>
 
