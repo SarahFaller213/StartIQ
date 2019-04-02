@@ -17,6 +17,9 @@ const EditPage = () => (
 
 
 const INITIAL_STATE = {
+  university: "",
+  skills: "",
+  degree: "",
   error: null,
   uid: '',
 };
@@ -41,17 +44,24 @@ class ProfileEditBase extends Component {
       if(user) {
         this.setState({ uid: user.uid });
         this.props.firebase.getProfile(user.uid).then(profile => {
-          // 
-        })
-      }
-      else this.setState({ uid: undefined });
+          this.setState({ 
+            university : profile.university,
+            skills: profile.skills,
+            degree: profile.degree
+          });
+        });
+      } else this.setState({ uid: undefined });
     });
   }
 
 
  onSubmit = event => {
+    event.preventDefault();
+
     const { university, skills, degree, uid } = this.state;
-    this.props.firebase.putProfile(university, skills, degree, uid );
+    this.props.firebase.putProfile(university, skills, degree, uid ).then(() => {
+      this.props.history.push(ROUTES.PROFILE);
+    });
   }
 
   onChange = event => {
@@ -59,13 +69,7 @@ class ProfileEditBase extends Component {
   };
 
   render() {
-      const {
-      university,
-      skills,
-      degree,
-      error,
-    } = this.state;
-      
+    const { university, skills, degree, error } = this.state;
       
     return (
     <div className = "wrapper">
@@ -95,8 +99,7 @@ class ProfileEditBase extends Component {
           placeholder="What degree are you pursuing or have?"
         />
         <button type="submit" className="button1">Save</button>
-        {error && <p>{error}</p>}
-        
+        {error && <p>{error}</p>}  
       </form>
     </div>
     );

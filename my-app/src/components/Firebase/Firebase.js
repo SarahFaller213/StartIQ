@@ -72,7 +72,7 @@ class Firebase {
   putIdea(ideaText, uid) {
     return this.workspace(uid).push({
       idea: ideaText,
-      created_at: Math.floor(Date.now() / 1000)
+      created_at: Date.now()
     });
   }
 
