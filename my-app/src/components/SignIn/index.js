@@ -4,12 +4,14 @@ import { SignUpLink } from '../SignUp';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
+import './style.css'
 
 const SignInPage = () => (
   <div>
-    <h1>SignIn</h1>
+    <h1>Welcome to StartIQ!</h1>
+    <div className= "col1">
     <SignInForm />
-    <SignUpLink />
+    </div>
   </div>
 );
 
@@ -52,14 +54,21 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
+    <div>
+        <div className="elements">
+        Welcome back
+        </div>
       <form onSubmit={this.onSubmit}>
-        <input
+        <div className="elements">
+        <input 
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
+        </div>
+        <div className="elements">
         <input
           name="password"
           value={password}
@@ -67,12 +76,18 @@ class SignInFormBase extends Component {
           type="password"
           placeholder="Password"
         />
+        </div>
+        <div className="elements">
         <button disabled={isInvalid} type="submit">
           Sign In
         </button>
-
+        </div>
+        <div className="elements">
+        <SignUpLink />
+        </div>
         {error && <p>{error.message}</p>}
       </form>
+    </div>
     );
   }
 }
