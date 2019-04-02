@@ -19,12 +19,12 @@ const DashboardPage = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', uid: '', ideas: [] }
+    this.state = { text: '', ideas: [], uid: undefined }
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    this.props.firebase.setupAuthChangeHandler((user) => {
+    this.props.firebase.setAuthChangeHandler((user) => {
       if(user) {
         this.setState({ uid: user.uid });
         this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}

@@ -23,41 +23,21 @@ class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
-
   }
 
-  onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
-    this.props.firebase
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        // Create a user and Create user's idea dashboard under workspace in your Firebase realtime database
-        return this.props.firebase
-          .user(authUser.user.uid)
-          .set({
-            username,
-            email
-          }),
-          this.props.firebase
-          .workspace(authUser.user.uid)
-          .set({
-            username
-          });
-      })
-      .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.DASHBOARD);
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ error: error.message }); //Set Error State as Error message
-      });
-
+  onSubmit = (event) => {
     event.preventDefault();
 
+    const { username, email, passwordOne } = this.state;
+
+    this.props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
+    .then(authUser => this.props.firebase.signup(username, email, authUser))
+    .then(() => this.props.history.push(ROUTES.DASHBOARD))
+    .catch(error => {
+      console.log(error);
+      this.setState({ error: error.message }); //Set Error State as Error message
+    });
   }
-
-
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });

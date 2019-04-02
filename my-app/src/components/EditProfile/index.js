@@ -17,9 +17,6 @@ const EditPage = () => (
 
 
 const INITIAL_STATE = {
-  university: '',
-  skills: '',
-  degree: '',
   error: null,
   uid: '',
 };
@@ -34,17 +31,18 @@ const EditDataBase = () => (
 
 
 class ProfileEditBase extends Component {
-    
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
-
-
   }
-    componentDidMount() {
-    this.props.firebase.setupAuthChangeHandler((user) => {
+
+  componentDidMount() {
+    this.props.firebase.setAuthChangeHandler((user) => {
       if(user) {
         this.setState({ uid: user.uid });
+        this.props.firebase.getProfile(user.uid).then(profile => {
+          // 
+        })
       }
       else this.setState({ uid: undefined });
     });
@@ -54,10 +52,7 @@ class ProfileEditBase extends Component {
  onSubmit = event => {
     const { university, skills, degree, uid } = this.state;
     this.props.firebase.putProfile(university, skills, degree, uid );
-
   }
-
-
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -107,8 +102,6 @@ class ProfileEditBase extends Component {
     );
   }
 }
-
-
 
 const EditProfileLink = () => (
   <Link to={ROUTES.EDIT}> <button>

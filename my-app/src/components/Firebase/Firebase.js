@@ -17,8 +17,12 @@ class Firebase {
     app.initializeApp(config);
     this.auth = app.auth();
     this.db = app.database();
+    this.uid = undefined;
   }
 
+  getCurrentUID() {
+    return this.uid;
+  }
 
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
@@ -28,8 +32,7 @@ class Firebase {
    
   doSignOut = () => this.auth.signOut()
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
-  doPasswordUpdate = password =>
-  this.auth.currentUser.updatePassword(password);
+  doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
 
   // *** User API ***
@@ -38,56 +41,51 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
   workspace = uid => this.db.ref(`workspace/${uid}`);
+  profile = uid => this.db.ref(`users/${uid}/profile_info`);
 
-  setupAuthChangeHandler(handler) {
+  setAuthChangeHandler(handler) {
     this.auth.onAuthStateChanged(handler);
   }
 
+  // ************************* SIGNUP API ***************************
 
-  putProfile(school, skill, degree, uid) {
-    this.db.ref(`users/${uid}/`).child("profile_info").set({
-        school: school,
+  async signup(username, email, authUser) {
+    await this.user(authUser.user.uid).set({ username, email });
+    await this.putProfile("", "", "", authUser.user.uid);
+    await this.workspace(authUser.user.uid).set({ username });
+  }
+
+  // ************************* PROFILE API ***************************
+  putProfile(university, skill, degree, uid) {
+    return this.profile(uid).set({
+        university: university,
         skills: skill,
         degree: degree
-    }).then((data) => {
-          //success callback
-          console.log('data ', data)
-    }).catch((error) => {
-          //error callback
-          console.log('error ', error)
-    })
+    });
   }
   
-getProfile(uid) {
-    return this.db.ref(`users/${uid}/`).child("profile_info")
-      .once('value').then( data => {
-        const profileData = data.val();
-        return Object.entries(profileData);
-      });
+  getProfile(uid) {
+    return this.profile(uid).once('value').then(snapshot => snapshot.val());
   }
 
-  //For Database of Ideas- Workspace
-  //Write idea onto Database
+  // ************************* IDEA API ***************************
   putIdea(ideaText, uid) {
-    return this.db.ref(`workspace/${uid}`).push({
+    return this.workspace(uid).push({
       idea: ideaText,
       created_at: Math.floor(Date.now() / 1000)
     });
   }
 
-  //Read Ideas from Database
   getIdea(uid) {
-    return this.db.ref(`workspace/${uid}`)
-      .once('value').then( data => {
+    return this.workspace(uid).once('value').then( data => {
         const workspaceData = data.val();
         delete workspaceData.username;
         return Object.entries(workspaceData);
-      });
+    });
   }
 
-
   deleteIdea(uid, key) {
-    return this.db.ref(`workspace/${uid}/${key}`).remove();
+    return this.workspace(uid).child(key).remove();
   }
 }
 
