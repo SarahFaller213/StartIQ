@@ -30,3 +30,7 @@ div.row.dashboard {
   margin-bottom: 4%;
   background: white;
 }
+
+.createdAt {
+  color: grey;
+}

@@ -64,9 +64,15 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const ideas = this.state.ideas.map( ([key, ideaInfo]) => (
+    const ideas = this.state.ideas.map( ([key, ideaInfo]) => {
+      const created_at = (new Date(ideaInfo.created_at)).toString();
+
+      return (
         <div className="row dashboard" key={key}>
-          <div className="col-12">
+          <div className="col-8">
+            <p className = "createdAt"> {created_at} </p>
+          </div>
+          <div className="col-4">
             <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
             <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
           </div>
@@ -75,7 +81,8 @@ class Dashboard extends React.Component {
           </div>
           
         </div>
-    ));
+      )
+    });
 
     return (      
       <div className = "main">
