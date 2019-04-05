@@ -35,16 +35,41 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div className = "wrapper">
-        <p> University : {this.state.profile.university} </p>
-        <p> Degree : {this.state.profile.degree} </p>
-        <p> Skills : {this.state.profile.skills} </p>
-      </div>
+        <table className="editTable">
+        <tr>
+        <td>
+        Your University
+        </td>
+        <td>
+        {this.state.profile.university}
+        </td>
+        </tr>
+        <tr>
+        <td>
+        Skills
+        </td>
+        <td>
+        {this.state.profile.skills}
+        </td>
+        </tr>
+        <tr>
+        <td>
+        Degree
+        </td>
+        <td>
+        {this.state.profile.degree}
+        </td>
+        </tr>
+        </table>
+
     );
   }
 }
     
-    
+
+
+
+
 export default ProfilePage;
 
 export {EditProfileLink};

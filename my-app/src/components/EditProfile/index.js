@@ -11,7 +11,9 @@ import './style.css'
 const EditPage = () => (
   <div>
     <h1>Profile</h1>
+    <div className="editBox">
     <EditForm />
+    </div>
   </div>
 );
 
@@ -72,36 +74,68 @@ class ProfileEditBase extends Component {
     const { university, skills, degree, error } = this.state;
       
     return (
-    <div className = "wrapper">
-      <form className="form" onSubmit={this.onSubmit}>
+        <table className="editTable">
+        <tr>
+        <td>
+        Your University
+        </td>
+        <td>
+        <form onSubmit={this.onSubmit}>
         <input
-        className="input"
+        className="input1"
           name="university"
           value={university}
           onChange={this.onChange}
           type="text"
           placeholder="Where did you go to school?"
         />
-        <input 
-        className="input"
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        Skills
+        </td>
+        <td>
+        <form onSubmit={this.onSubmit}>
+        <input
+        className="input1"
           name="skills"
           value={skills}
           onChange={this.onChange}
           type="text"
           placeholder="What skills do you have?"
         />
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        Degree
+        </td>
+        <td>
+        <form onSubmit={this.onSubmit}>
         <input
-        className="input"
+        className="input1"
           name="degree"
           value={degree}
           onChange={this.onChange}
           type="text"
           placeholder="What degree are you pursuing or have?"
         />
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <form onSubmit={this.onSubmit}>
         <button type="submit" className="button1">Save</button>
         {error && <p>{error}</p>}  
-      </form>
-    </div>
+        </form>
+        </td>
+        </tr>
+        </table>
+
     );
   }
 }
