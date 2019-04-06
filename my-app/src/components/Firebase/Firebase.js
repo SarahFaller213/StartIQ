@@ -76,12 +76,20 @@ class Firebase {
     });
   }
 
+
   getIdea(uid) {
     return this.workspace(uid).once('value').then( data => {
         const workspaceData = data.val();
         delete workspaceData.username;
         return Object.entries(workspaceData);
     });
+  }
+
+  getCreator(uid) {
+    return this.workspace(uid).once('value').then(data => {
+      const workspaceData = data.val();
+      return workspaceData.username;
+    })
   }
 
   deleteIdea(uid, key) {

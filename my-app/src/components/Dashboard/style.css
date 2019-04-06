@@ -34,3 +34,7 @@ div.row.dashboard {
 .createdAt {
   color: grey;
 }
+
+.username_comment {
+  font-weight: bold;
+}
