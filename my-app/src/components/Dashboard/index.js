@@ -138,7 +138,7 @@ class Dashboard extends React.Component {
     // ideas
     const ideas = this.state.ideas.map( ([key, ideaInfo]) => {
       const created_at = (new Date(ideaInfo.created_at)).toString();
-      const attachments = ideaInfo.attachments.map(([filename, url], idx) => {
+      const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
         return (
           <div key={idx} className="my-0 px-2 idea-attachments" style={{ "border-top": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
             <p className="my-0 px-0 col-11 d-inline-block"> <i class="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
