@@ -4,14 +4,36 @@ import { SignUpLink } from '../SignUp';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
+import rocket from './rocket.svg'
 import './style.css'
 
 const SignInPage = () => (
   <div>
-    <h1>Welcome to StartIQ!</h1>
-    <div className= "col1">
-    <SignInForm />
-    </div>
+    <section className = "screen pt-5">
+
+      <div className = "container pt-5">
+        <div className="row align-items-center justify-content-center pt-5">
+
+          <div className="col-md-4">    
+            <div class = "row mydiv">
+              <img src= {rocket} className = "rocket" alt="StartIQ" />
+            </div>
+            <div className = "row align-items-center">
+              <h1 className = "fancy">Start up. Smarter.</h1>
+              <p className = "lato">StartIQ provides support to aspiring founders across the world by automatically interrogating their ideas, delivering data rich insights, organizing their artifacts, and connecting them with people who can help.</p>
+             </div>
+          </div>
+
+          <div className = "col-md-7">
+            <div className= "col1">
+              <SignInForm />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+    </section>
   </div>
 );
 
@@ -54,10 +76,10 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-    <div>
-        <div className="elements">
-        Welcome back
-        </div>
+    <div className>
+      <div className="elements">
+      Welcome back
+      </div>
       <form onSubmit={this.onSubmit}>
         <div className="elements">
         <input 

@@ -4,6 +4,7 @@ import * as ROUTES from '../../constants/routes';
 import logo from './startIQ.png';
 import SignOutButton from '../SignOut';
 import './style.css'
+import { Navbar, Nav} from 'react-bootstrap';
 // import { userInfo } from 'os';
 
 const Navigation = ({ authUser }) => (
@@ -28,15 +29,15 @@ const NavigationAuth = () => (
 const NavigationNonAuth = () => (
 
   <div className = "nav"> 
-  <nav className='navbar navbar-inverse'>
-    <div className='container-fluid'>
-      <img src= {logo} alt="StartIQ" />
-      <li> <Link to={ROUTES.LANDING}>Home</Link> </li>
-      <li> <Link to={ROUTES.SIGN_IN}>Sign In</Link> </li>
-    </div>
-  </nav>
+  
+  <Navbar bg="white" expand="lg">
+    <img src= {logo} alt="StartIQ" />
+    <Nav className="mr-4 px-5">
+      <Nav.Link to={ROUTES.LANDING}>Home</Nav.Link>
+    </Nav>
+  </Navbar>
+  
   </div>
 
 );
-
 export default Navigation;

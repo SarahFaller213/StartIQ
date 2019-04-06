@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
-
 .quill {
   background: white;
   margin-top: 3%;
 }
 
-h1 {
+.toH1 {
   text-align: center;
   font-family: 'Raleway', sans-serif;
-  margin-top: 5%;
+  color: white;
+  font-size: 40px;
+  padding-top: 30px;
 }
 
 .submit {
@@ -20,15 +21,19 @@ h1 {
   font-family: 'Quicksand', sans-serif;
 }
 
+.lato, .fancy {
+  /* color: white; */
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+}
+
 .col1{
     float:right;
     text-align: center;
     background: #c1e1ec;
     padding: 10px;
-    margin-top:20px;
-    margin-right: 100px;
+    margin-top:80px;
     border-radius: 25px;
-
 
 }
 .elements{
@@ -37,9 +42,11 @@ h1 {
 }
 
 
-.input{
-
-    
+.screen {
+  height: 85vh;
+  position: relative;
+  background-size: cover;
+  background-image: url(./wallpaper.jpg);
 }
 
 .input2{
@@ -56,4 +63,8 @@ h1 {
 
 .button1{
     margin-bottom: 10%;
+}
+
+.rocket {
+  width: 30%;
 }
