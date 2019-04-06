@@ -105,3 +105,7 @@ hr {
   color: #FFFF00;
   height: 1px;
 }
+
+.comment_input {
+  border-radius: 10px;
+}

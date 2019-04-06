@@ -167,7 +167,7 @@ class Dashboard extends React.Component {
                 {this.state.username}
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control type="Comment" placeholder="Enter Your Comment..." />
+                  <Form.Control className = "comment_input" type="Comment" placeholder="Enter Your Comment..." />
                 </Col>
                 <Button type="submit" variant = "info">Post</Button>
               </Form.Group>
