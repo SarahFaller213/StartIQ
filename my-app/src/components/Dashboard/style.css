@@ -99,3 +99,9 @@
   cursor: pointer;
   border-radius: 20px;
 }
+
+hr {
+  width: 99.5%;
+  color: #FFFF00;
+  height: 1px;
+}
