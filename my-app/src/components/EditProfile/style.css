@@ -32,8 +32,13 @@ h1 {
     float: center;
     margin-left:auto; 
     margin-right:auto;
+    border-spacing: 3cm 10px;
+    border-collapse: separate;
+    text-align: left;
     
 }
+
+
 .editForm{
     display: inline-block;
 
@@ -42,7 +47,6 @@ h1 {
 }
 .form{
     display: inline-block;
-    text-align: center;
     height: 100px;
     width: 500px;
 
@@ -50,25 +54,10 @@ h1 {
 
 .input1{
     display: block;
-    height: 100%;
-    
-
-
+    height: 100%;  
 
 }
 
-.input{
-    display: block;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    vertical-align: top;
-    height: 100%;
-    width: 10000%;
-    margin-top:5px;
-    margin-bottom: 5px;
-
-}
 
 .button1{
     margin-bottom: 10%;
