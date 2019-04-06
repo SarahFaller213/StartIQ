@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
 
 const config = {
   apiKey: "AIzaSyDoqABBcwvXDdxMhdY_4nmLiPpBX_8YwVw",
@@ -18,6 +19,7 @@ class Firebase {
     this.auth = app.auth();
     this.db = app.database();
     this.uid = undefined;
+    this.storage = app.storage();
   }
 
   getCurrentUID() {
@@ -41,6 +43,7 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
   workspace = uid => this.db.ref(`workspace/${uid}`);
+  fileStorage = uid => this.storage.ref(`files/${uid}`);
   profile = uid => this.db.ref(`users/${uid}/profile_info`);
 
   setAuthChangeHandler(handler) {
@@ -69,10 +72,11 @@ class Firebase {
   }
 
   // ************************* IDEA API ***************************
-  putIdea(ideaText, uid) {
+  putIdea(ideaText, uid, attachments) {
     return this.workspace(uid).push({
       idea: ideaText,
-      created_at: Date.now()
+      created_at: Date.now(),
+      attachments: attachments
     });
   }
 
@@ -94,6 +98,26 @@ class Firebase {
 
   deleteIdea(uid, key) {
     return this.workspace(uid).child(key).remove();
+  }
+
+  uploadFile(uid, file) {
+    return this.fileStorage(uid).child(file.name+Date.now()).put(file);
+  }
+
+  uploadFiles(uid, files) {
+    // the array returned from file input isn't really a array so...
+    let fileArray = [];
+    for(let i = 0 ; i < files.length ; i ++) {
+      fileArray.push(files[i]);
+    }
+    
+    return Promise.all(
+      fileArray.map(file => 
+        this.uploadFile(uid, file)
+            .then((snapshot) => snapshot.ref.getDownloadURL())
+            .then((url) => [file.name, url])
+      )
+    );
   }
 }
 

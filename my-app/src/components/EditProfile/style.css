@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
-.main {
-  height: 100vh;
-  background: #e2e6e6;
-}
-
 .quill {
   background: white;
   margin-top: 3%;
