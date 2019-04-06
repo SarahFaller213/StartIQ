@@ -76,7 +76,7 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-    <div className>
+    <div>
       <div className="elements">
       Welcome back
       </div>

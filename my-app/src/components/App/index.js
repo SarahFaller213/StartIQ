@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 
 import Navigation from '../Navigation';
-import LandingPage from '../Landing';
 import AdminPage from '../Admin';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';

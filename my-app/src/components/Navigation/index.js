@@ -28,16 +28,16 @@ const NavigationAuth = () => (
 
 const NavigationNonAuth = () => (
 
-  <div className = "nav"> 
-  
-  <Navbar bg="white" expand="lg">
-    <img src= {logo} alt="StartIQ" />
-    <Nav className="mr-4 px-5">
-      <Nav.Link to={ROUTES.LANDING}>Home</Nav.Link>
-    </Nav>
-  </Navbar>
-  
+  <div className = "nav">
+  <nav className='navbar navbar-inverse'>
+    <div className= "row mx-3">
+      <img src= {logo} alt="StartIQ" />
+      <li> <Link className = "mx-5" to={ROUTES.LANDING} >Home</Link> </li>
+    </div>
+  </nav>
+
   </div>
 
+  
 );
 export default Navigation;
