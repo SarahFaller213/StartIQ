@@ -4,16 +4,41 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import './style.css'
+import rocket from './rocket.svg'
+import './style.css'
+
 
 
 const SignUpPage = () => (
   <div>
-    <h1>Welcome to StartIQ</h1>
-    <div className= "col2">
-    <SignUpForm />
-    </div>
+    <section className = "screen">
+
+      <div className = "container pt-5">
+        <div className="row align-items-center justify-content-center pt-5">
+
+          <div className="col-md-4">    
+            <div class = "row mydiv">
+              <img src= {rocket} className = "rocket" alt="StartIQ" />
+            </div>
+            <div className = "row align-items-center">
+              <h1 className = "fancy">Start up. Smarter.</h1>
+              <p className = "lato">StartIQ provides support to aspiring founders across the world by automatically interrogating their ideas, delivering data rich insights, organizing their artifacts, and connecting them with people who can help.</p>
+             </div>
+          </div>
+
+          <div className = "col-md-7">
+            <div className= "col1">
+              <SignUpForm />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+    </section>
   </div>
 );
+
 
 
 const INITIAL_STATE = {
@@ -66,12 +91,12 @@ class SignUpFormBase extends Component {
       
     return (
     <div>
-    <div className="elements">
+    <div className="elements2">
         Sign up for free
         </div>
 
       <form onSubmit={this.onSubmit}>
-        <div className="elements">
+        <div className="elements2">
 
         <input
           name="username"
@@ -81,7 +106,7 @@ class SignUpFormBase extends Component {
           placeholder="Full Name"
         />
         </div>
-        <div className="elements">
+        <div className="elements2">
         <input
           name="email"
           value={email}
@@ -90,7 +115,7 @@ class SignUpFormBase extends Component {
           placeholder="Email Address"
         />
         </div>
-        <div className="elements">
+        <div className="elements2">
         <input
           name="passwordOne"
           value={passwordOne}
@@ -99,7 +124,7 @@ class SignUpFormBase extends Component {
           placeholder="Password"
         />
         </div>
-        <div className="elements">
+        <div className="elements2">
         <input
           name="passwordTwo"
           value={passwordTwo}
@@ -108,7 +133,7 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         </div>
-        <div className="elements">
+        <div className="elements2">
         <button disabled={isInvalid} type="submit">Sign Up</button>
         </div>
 

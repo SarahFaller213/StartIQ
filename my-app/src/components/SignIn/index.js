@@ -9,7 +9,7 @@ import './style.css'
 
 const SignInPage = () => (
   <div>
-    <section className = "screen pt-5">
+    <section className = "screen">
 
       <div className = "container pt-5">
         <div className="row align-items-center justify-content-center pt-5">

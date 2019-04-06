@@ -9,7 +9,7 @@
 .col2{
     float:right;
     text-align: center;
-    background: #c1e1ec;
+    background: white;
     padding: 10px;
     margin-top:20px;
     margin-right: 100px;
@@ -17,4 +17,9 @@
     width: 25%;
 
 
+}
+.elements2{
+    padding: 10px;
+    margin-right: 40px;
+    margin-left: 40px;
 }
