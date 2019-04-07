@@ -64,3 +64,9 @@ h1 {
 .button1{
     margin-bottom: 10%;
 }
+
+.profile_img_ {
+  width: 10%;
+  display:block;
+  margin:auto;
+}

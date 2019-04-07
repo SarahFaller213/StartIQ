@@ -4,6 +4,7 @@ import { EditProfileLink } from '../EditProfile';
 import { withFirebase } from '../Firebase';
 import Firebase, {FirebaseContext} from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import profileImg from './fakeImgForProfile.png';
 import { compose } from 'recompose';
 import './style.css'
 
@@ -34,6 +35,8 @@ class Profile extends React.Component {
 
   render() {
     return (
+      <div className = "mt-4">
+        <img className = "profile_img_" src={profileImg} alt="profile"/>
         <table className="editTable">
         <tr>
         <td className="cell">
@@ -68,6 +71,7 @@ class Profile extends React.Component {
         </tr>
         
         </table>
+      </div>
 
     );
   }
