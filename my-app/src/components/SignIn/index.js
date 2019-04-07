@@ -27,6 +27,7 @@ const SignInPage = () => (
           <div className = "col-md-7">
             <div className= "col1">
               <SignInForm />
+        <SignInGoogle />
             </div>
           </div>
 
@@ -42,6 +43,53 @@ const INITIAL_STATE = {
   password: '',
   error: null,
 };
+
+
+
+class SignInGoogleBase extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { error: null };
+  }
+
+  onSubmit = event => {
+    this.props.firebase
+      .doSignInWithGoogle()
+      .then(socialAuthUser => {
+        // Create a user in your Firebase Realtime Database too
+        return this.props.firebase
+          .user(socialAuthUser.user.uid)
+          .set({
+            username: socialAuthUser.user.displayName,
+            email: socialAuthUser.user.email,
+            roles: {},
+          });
+      })
+      .then(socialAuthUser => {
+        this.setState({ error: null });
+        this.props.history.push(ROUTES.DASHBOARD);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
+  };
+
+  render() {
+    const { error } = this.state;
+
+    return (
+      <form onSubmit={this.onSubmit}>
+        <button type="submit">Sign In with Google</button>
+
+        {error && <p>{error.message}</p>}
+      </form>
+    );
+  }
+}
+
 
 class SignInFormBase extends Component {
   constructor(props) {
@@ -119,6 +167,11 @@ const SignInForm = compose(
   withFirebase,
 )(SignInFormBase);
 
+const SignInGoogle = compose(
+  withRouter,
+  withFirebase,
+)(SignInGoogleBase);
+
 export default SignInPage;
 
-export { SignInForm };
+export { SignInForm, SignInGoogle };

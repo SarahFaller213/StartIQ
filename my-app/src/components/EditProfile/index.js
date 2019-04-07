@@ -10,7 +10,7 @@ import './style.css'
 
 const EditPage = () => (
   <div>
-    <h1>Profile</h1>
+    <h1>Your Profile</h1>
     <div className="editBox">
     <EditForm />
     </div>
@@ -76,7 +76,7 @@ class ProfileEditBase extends Component {
     return (
         <table className="editTable">
         <tr>
-        <td>
+        <td className="cell">
         Your University
         </td>
         <td>
@@ -93,7 +93,24 @@ class ProfileEditBase extends Component {
         </td>
         </tr>
         <tr>
+        <td className="cell">
+        Degree
+        </td>
         <td>
+        <form onSubmit={this.onSubmit}>
+        <input
+        className="input1"
+          name="degree"
+          value={degree}
+          onChange={this.onChange}
+          type="text"
+          placeholder="What degree are you pursuing or have?"
+        />
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td className="cell">
         Skills
         </td>
         <td>
@@ -111,23 +128,8 @@ class ProfileEditBase extends Component {
         </tr>
         <tr>
         <td>
-        Degree
         </td>
-        <td>
-        <form onSubmit={this.onSubmit}>
-        <input
-        className="input1"
-          name="degree"
-          value={degree}
-          onChange={this.onChange}
-          type="text"
-          placeholder="What degree are you pursuing or have?"
-        />
-        </form>
-        </td>
-        </tr>
-        <tr>
-        <td>
+        <td className="cell2">
         <form onSubmit={this.onSubmit}>
         <button type="submit" className="button1">Save</button>
         {error && <p>{error}</p>}  

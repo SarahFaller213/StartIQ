@@ -28,13 +28,18 @@ h1 {
 }
 
 .editTable{
-    margin-top: 10px;
+    margin-top: 25px;
     float: center;
     margin-left:auto; 
     margin-right:auto;
     border-spacing: 3cm 10px;
     border-collapse: separate;
     text-align: left;
+    
+}
+
+.cell{
+    font-weight: bold;
     
 }
 
@@ -55,6 +60,8 @@ h1 {
 .input1{
     display: block;
     height: 100%;  
+    width: 150px;
+    text-align: center;
 
 }
 

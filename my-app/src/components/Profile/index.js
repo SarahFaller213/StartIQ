@@ -14,7 +14,6 @@ const ProfilePage = () => (
     <FirebaseContext.Consumer>
       {firebase => <Profile firebase={firebase}/>}
     </FirebaseContext.Consumer>
-    <h2 className="button"><EditProfileLink/></h2>
   </div>
 );
 
@@ -37,7 +36,7 @@ class Profile extends React.Component {
     return (
         <table className="editTable">
         <tr>
-        <td>
+        <td className="cell">
         Your University
         </td>
         <td>
@@ -45,7 +44,15 @@ class Profile extends React.Component {
         </td>
         </tr>
         <tr>
+        <td className="cell">
+        Degree
+        </td>
         <td>
+        {this.state.profile.degree}
+        </td>
+        </tr>
+        <tr>
+        <td className="cell">
         Skills
         </td>
         <td>
@@ -54,12 +61,12 @@ class Profile extends React.Component {
         </tr>
         <tr>
         <td>
-        Degree
         </td>
-        <td>
-        {this.state.profile.degree}
+        <td className="cell2">
+        <p className="button"><EditProfileLink/></p>
         </td>
         </tr>
+        
         </table>
 
     );

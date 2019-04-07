@@ -20,6 +20,8 @@ class Firebase {
     this.db = app.database();
     this.uid = undefined;
     this.storage = app.storage();
+    this.googleProvider = new app.auth.GoogleAuthProvider();
+
   }
 
   getCurrentUID() {
@@ -35,6 +37,11 @@ class Firebase {
   doSignOut = () => this.auth.signOut()
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
+    // *** User API *** GOOGLE 
+ 
+  doSignInWithGoogle = () =>
+    this.auth.signInWithPopup(this.googleProvider);
 
 
   // *** User API ***
