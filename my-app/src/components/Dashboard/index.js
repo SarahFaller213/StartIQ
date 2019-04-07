@@ -163,10 +163,10 @@ class Dashboard extends React.Component {
             <hr></hr>
             <Form>
               <Form.Group as={Row} controlId="formPlaintextComment">
-                <Form.Label className = "username_comment" column sm={1}>
+                <Form.Label className = "username_comment" column sm={2}>
                 {this.state.username}
                 </Form.Label>
-                <Col sm="10">
+                <Col sm="9">
                   <Form.Control className = "comment_input" type="Comment" placeholder="Enter Your Comment..." />
                 </Col>
                 <Button type="submit" variant = "info">Post</Button>
