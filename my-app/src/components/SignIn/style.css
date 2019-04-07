@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Arvo|Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 .quill {
   background: white;
@@ -21,11 +23,18 @@
   font-family: 'Quicksand', sans-serif;
 }
 
-.lato, .fancy {
-  /* color: white; */
-  font-weight: bold;
-  font-family: 'Quicksand', sans-serif;
+.lato {
+  font-family: 'Varela Round', sans-serif;
 }
+
+.fancy {
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.fancy partners {
+
+}
+
 
 .col1{
     float:right;
@@ -43,7 +52,7 @@
 
 
 .screen {
-  height: 85vh;
+  height: 90vh;
   position: relative;
   background-size: cover;
   background-image: url(./wallpaper.jpg);
@@ -67,4 +76,22 @@
 
 .rocket {
   width: 30%;
+}
+
+.partner {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  background: white;
+}
+
+.partners {
+  width: 200px; 
+  height: auto; 
+  padding: 1em;
+}
+
+.partners_fuqua {
+  width: 100px; 
+  height: auto; 
+  padding: 1em;
 }

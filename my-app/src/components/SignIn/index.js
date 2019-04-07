@@ -5,6 +5,9 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import rocket from './rocket.svg'
+import kauff from './Kauffman.png'
+import fuqua from './Fuqua.gif'
+import IE from './DukeIE.gif'
 import './style.css'
 
 const SignInPage = () => (
@@ -27,7 +30,7 @@ const SignInPage = () => (
           <div className = "col-md-7">
             <div className= "col1">
               <SignInForm />
-        <SignInGoogle />
+              <SignInGoogle />
             </div>
           </div>
 
@@ -35,6 +38,20 @@ const SignInPage = () => (
       </div>
       
     </section>
+
+    <section className = "partner">
+      <div class = "container">
+        <div class = "row justify-content-center">
+          <h1 class = "fancy">Our partners</h1>
+        </div>
+        <div class = "row justify-content-center align-items-center">
+          <img src= {kauff} className = "partners" alt="StartIQ" />
+          <img src= {IE} className = "partners" alt="StartIQ" />
+          <img src= {fuqua} className = "partners_fuqua" alt="StartIQ" />
+        </div>
+      </div>
+    </section>
+
   </div>
 );
 
