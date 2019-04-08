@@ -43,7 +43,7 @@ class AdminPage extends Component {
 
     return (
       <div>
-        <h1>Commnity</h1>
+        <h1 className = "title mt-0">Commnity</h1>
         {loading && <div>Loading ...</div>}
 
         <UserList users={users} />
@@ -54,6 +54,7 @@ class AdminPage extends Component {
 }
 
 const UserList = ({ users }) => (
+  <div className = "mt-5">
   <ul>
     {users.map(user => (
       <li key={user.uid}>
@@ -69,6 +70,7 @@ const UserList = ({ users }) => (
       </li>
     ))}
   </ul>
+  </div>
 );
 
 export default withFirebase(AdminPage);

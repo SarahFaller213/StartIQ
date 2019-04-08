@@ -11,7 +11,7 @@ import './style.css'
 
 const ProfilePage = () => (
   <div>
-    <h1>Your Profile </h1>
+    <h1 className = "title mt-0">Your Profile </h1>
     <FirebaseContext.Consumer>
       {firebase => <Profile firebase={firebase}/>}
     </FirebaseContext.Consumer>

@@ -191,6 +191,7 @@ class Dashboard extends React.Component {
 
     return (      
       <div className = "main">
+        <h1 className="title text-center mt-0">Idea Dashboard</h1>
         <div className="container-fluid">
           <div className="my-5"></div>
           <div className="row ml-5">
@@ -206,8 +207,7 @@ class Dashboard extends React.Component {
               </div>
             </div>
 
-            <div className='col-9 px-3 mr-0 px-5 idea-wrapper'>
-              <h1 className="text-center mt-0 mb-5">Idea Dashboard</h1>
+            <div className='col-9 px-3 mr-0 px-5 mt-4 idea-wrapper'>
               <div className= "writeIdea mb-5">
                 <CustomToolbar className="mb-0"/>
                 <ReactQuill className= "quill mt-0" 

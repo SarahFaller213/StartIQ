@@ -10,7 +10,7 @@ import './style.css'
 
 const EditPage = () => (
   <div>
-    <h1>Your Profile</h1>
+    <h1 className = "title mt-0">Your Profile</h1>
     <div className="editBox">
     <EditForm />
     </div>
@@ -137,7 +137,6 @@ class ProfileEditBase extends Component {
         </td>
         </tr>
         </table>
-
     );
   }
 }

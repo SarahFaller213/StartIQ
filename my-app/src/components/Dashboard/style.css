@@ -109,3 +109,13 @@ hr {
 .comment_input {
   border-radius: 10px;
 }
+
+.title {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.4) 100%,
+    rgba(255, 255, 255, 0.7) 100%
+    ),
+    url(./wallpaper.png);
+  padding: 70px;
+}
