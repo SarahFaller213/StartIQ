@@ -5,28 +5,32 @@ import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import './style.css'
 import rocket from './rocket.svg'
-import './style.css'
+import kauff from '../SignIn/Kauffman.png'
+import fuqua from '../SignIn/Fuqua.gif'
+import IE from '../SignIn/DukeIE.gif'
 
 
 
 const SignUpPage = () => (
   <div>
-    <section className = "screen">
+    <section className = "screen pt-4">
 
-      <div className = "container pt-5">
+      <div className = "container-fluid pt-5">
         <div className="row align-items-center justify-content-center pt-5">
 
-          <div className="col-md-4">    
+          <div className="col-md-3">    
             <div class = "row mydiv">
               <img src= {rocket} className = "rocket" alt="StartIQ" />
             </div>
-            <div className = "row align-items-center">
+            <div className = "texts row align-items-center">
               <h1 className = "fancy">Start up. Smarter.</h1>
               <p className = "lato">StartIQ provides support to aspiring founders across the world by automatically interrogating their ideas, delivering data rich insights, organizing their artifacts, and connecting them with people who can help.</p>
              </div>
           </div>
 
-          <div className = "col-md-7">
+          <div className="col-md-1"></div>
+
+          <div className = "col-md-3">
             <div className= "col1">
               <SignUpForm />
             </div>
@@ -34,8 +38,20 @@ const SignUpPage = () => (
 
         </div>
       </div>
-      
     </section>
+    <section className = "partner">
+      <div class = "container">
+        <div class = "row justify-content-center">
+          <h1 class = "fancy">Our partners</h1>
+        </div>
+        <div class = "row justify-content-center align-items-center">
+          <img src= {kauff} className = "partners" alt="StartIQ" />
+          <img src= {IE} className = "partners" alt="StartIQ" />
+          <img src= {fuqua} className = "partners_fuqua" alt="StartIQ" />
+        </div>
+      </div>
+    </section>
+
   </div>
 );
 
@@ -91,50 +107,53 @@ class SignUpFormBase extends Component {
       
     return (
     <div>
-    <div className="elements2">
-        Sign up for free
-        </div>
+      <div className="elements2 signup-text">
+          Sign up for free
+      </div>
 
       <form onSubmit={this.onSubmit}>
-        <div className="elements2">
-
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
+        <div className="elements2 mx-1">
+          <input
+            name="username"
+            value={username}
+            onChange={this.onChange}
+            type="text"
+            className="form-control"
+            placeholder="Full Name"
+          />
         </div>
-        <div className="elements2">
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
+        <div className="elements2 mx-1">
+          <input
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="text"
+            className="form-control"
+            placeholder="Email Address"
+          />
         </div>
-        <div className="elements2">
+        <div className="elements2 mx-1">
         <input
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
+          className="form-control"
           placeholder="Password"
         />
         </div>
-        <div className="elements2">
+        <div className="elements2 mx-1">
         <input
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
+          className="form-control"
           placeholder="Confirm Password"
         />
         </div>
         <div className="elements2">
-        <button disabled={isInvalid} type="submit">Sign Up</button>
+        <button className = "btn nurikuri btn-block" type="submit">Sign Up</button>
         </div>
 
         {error && <p>{error}</p>}

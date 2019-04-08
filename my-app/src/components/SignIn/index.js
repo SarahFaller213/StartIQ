@@ -8,27 +8,30 @@ import rocket from './rocket.svg'
 import kauff from './Kauffman.png'
 import fuqua from './Fuqua.gif'
 import IE from './DukeIE.gif'
+import google from './googleIcon.png'
 import './style.css'
 
 const SignInPage = () => (
   <div>
-    <section className = "screen">
+    <section className = "screen pt-4">
 
-      <div className = "container pt-5">
+      <div className = "container-fluid pt-5">
         <div className="row align-items-center justify-content-center pt-5">
 
-          <div className="col-md-4">    
+          <div className="col-md-3">    
             <div class = "row mydiv">
               <img src= {rocket} className = "rocket" alt="StartIQ" />
             </div>
-            <div className = "row align-items-center">
+            <div className = "texts row align-items-center">
               <h1 className = "fancy">Start up. Smarter.</h1>
               <p className = "lato">StartIQ provides support to aspiring founders across the world by automatically interrogating their ideas, delivering data rich insights, organizing their artifacts, and connecting them with people who can help.</p>
              </div>
           </div>
 
-          <div className = "col-md-7">
-            <div className= "col1">
+          <div className="col-md-1">
+          </div>
+          <div className = "col-md-3">
+            <div className= "col1 signInForm">
               <SignInForm />
               <SignInGoogle />
             </div>
@@ -99,7 +102,10 @@ class SignInGoogleBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
+       
+        <button type="submit" className="btn nurikuri mx-3">
+          <img src= {google} className = "google" alt="StartIQ" /> Sign In with Google
+        </button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -142,8 +148,8 @@ class SignInFormBase extends Component {
 
     return (
     <div>
-      <div className="elements">
-      Welcome back
+      <div className="elements" id="welcome-text">
+      Welcome Back
       </div>
       <form onSubmit={this.onSubmit}>
         <div className="elements">
@@ -152,6 +158,7 @@ class SignInFormBase extends Component {
           value={email}
           onChange={this.onChange}
           type="text"
+          className="form-control"
           placeholder="Email Address"
         />
         </div>
@@ -161,12 +168,13 @@ class SignInFormBase extends Component {
           value={password}
           onChange={this.onChange}
           type="password"
+          className="form-control"
           placeholder="Password"
         />
         </div>
         <div className="elements">
-        <button disabled={isInvalid} type="submit">
-          Sign In
+        <button type="submit" className="btn nurikuri btn-block">
+          Log In
         </button>
         </div>
         <div className="elements">

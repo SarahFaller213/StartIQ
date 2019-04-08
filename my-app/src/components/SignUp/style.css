@@ -7,19 +7,36 @@
 }
 
 .col2{
-    float:right;
     text-align: center;
     background: white;
     padding: 10px;
     margin-top:20px;
     margin-right: 100px;
     border-radius: 25px;
-    width: 25%;
-
-
 }
+
+.signup-text {
+    font-size: 20pt;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
 .elements2{
     padding: 10px;
-    margin-right: 40px;
-    margin-left: 40px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.screen_signup {
+    height: 95vh;
+    position: relative;
+    background-size: cover;
+    background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.4) 100%,
+    rgba(255, 255, 255, 0.7) 100%
+    ),
+    url(../SignIn/wallpaper_3.jpg);
+}
+
+.signupbtn {
+    background-color: rgb(131, 208, 195);
 }
