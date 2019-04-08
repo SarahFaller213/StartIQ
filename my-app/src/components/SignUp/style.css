@@ -34,9 +34,10 @@
     rgba(255, 255, 255, 0.4) 100%,
     rgba(255, 255, 255, 0.7) 100%
     ),
-    url(../SignIn/wallpaper_3.jpg);
+    url(../SignIn/wallpaper.jpg);
 }
 
 .signupbtn {
-    background-color: rgb(131, 208, 195);
+    /* background-color: rgb(131, 208, 195); */
+    background-color: rgb(119, 166, 247);
 }

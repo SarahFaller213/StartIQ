@@ -67,7 +67,9 @@
 }
 
 .nurikuri {
-  background-color: rgb(131, 208, 195);
+  /* background-color: rgb(131, 208, 195); */
+  background-color: rgb(24, 34, 157);
+  color: white;
 }
 
 .screen {
@@ -79,7 +81,7 @@
     rgba(255, 255, 255, 0.4) 100%,
     rgba(255, 255, 255, 0.7) 100%
     ),
-    url(../SignIn/wallpaper_3.jpg);
+    url(../SignIn/wallpaper.jpg);
 }
 
 .input2{

@@ -28,7 +28,7 @@ const SignUpPage = () => (
              </div>
           </div>
 
-          <div className="col-md-1"></div>
+          <div className="col-md-2"></div>
 
           <div className = "col-md-3">
             <div className= "col1">
