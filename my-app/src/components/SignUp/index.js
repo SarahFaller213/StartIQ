@@ -30,7 +30,7 @@ const SignUpPage = () => (
 
           <div className="col-md-2"></div>
 
-          <div className = "col-md-3">
+          <div className = "col-md-4">
             <div className= "col1">
               <SignUpForm />
             </div>
