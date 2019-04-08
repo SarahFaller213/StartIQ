@@ -28,6 +28,7 @@
 
 .lato {
   font-family: 'Varela Round', sans-serif;
+  padding-right: 20px;
 }
 
 .fancy {
@@ -40,7 +41,7 @@
 
 .col1{
     text-align: center;
-    background: white;
+    background: rgba(255, 255, 255, 0.7);
     padding: 10px;
     margin-top:80px;
     border-radius: 25px;
