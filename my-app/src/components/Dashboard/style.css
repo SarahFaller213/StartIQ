@@ -50,7 +50,8 @@
 }
 
 .dash_pro p {
-  background: grey;
+  /* background: grey; */
+  background: rgb(45, 51, 179);
 }
 
 .profile_img {
@@ -117,7 +118,7 @@ hr {
     rgba(255, 255, 255, 0.7) 100%
     ),
     url(./wallpaper.png); */
-  background-color: rgb(24, 34, 150);
+  background-color: rgb(45, 51, 179);
   padding: 50px;
   color: white;
   /* font-family: 'Nunito Sans', sans-serif; */
