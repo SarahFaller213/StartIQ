@@ -63,6 +63,24 @@ class Profile extends React.Component {
         </td>
         </tr>
         <tr>
+        <td className="cell">
+        Industries
+        </td>
+        <td>
+        {this.state.profile.industries}
+        </td>
+        </tr>
+
+        <tr>
+        <td className="cell">
+        Roles
+        </td>
+        <td>
+        {this.state.profile.roles}
+        </td>
+        </tr>
+        
+        <tr>
         <td>
         </td>
         <td className="cell2">

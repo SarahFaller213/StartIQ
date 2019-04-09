@@ -5,6 +5,8 @@ import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import Firebase, {FirebaseContext} from '../Firebase';
 import './style.css'
+import profileImg from './fakeImgForProfile.png';
+
 
 
 
@@ -22,6 +24,8 @@ const INITIAL_STATE = {
   university: "",
   skills: "",
   degree: "",
+  industries:"",
+  roles:"",
   error: null,
   uid: '',
 };
@@ -49,7 +53,9 @@ class ProfileEditBase extends Component {
           this.setState({ 
             university : profile.university,
             skills: profile.skills,
-            degree: profile.degree
+            degree: profile.degree,
+            industries:profile.industries,
+            roles:profile.roles
           });
         });
       } else this.setState({ uid: undefined });
@@ -60,8 +66,8 @@ class ProfileEditBase extends Component {
  onSubmit = event => {
     event.preventDefault();
 
-    const { university, skills, degree, uid } = this.state;
-    this.props.firebase.putProfile(university, skills, degree, uid ).then(() => {
+    const {university, skills, degree, industries, roles, uid } = this.state;
+    this.props.firebase.putProfile(university, skills, degree, industries, roles, uid ).then(() => {
       this.props.history.push(ROUTES.PROFILE);
     });
   }
@@ -71,9 +77,12 @@ class ProfileEditBase extends Component {
   };
 
   render() {
-    const { university, skills, degree, error } = this.state;
+    const { university, skills, degree, industries, roles, error } = this.state;
       
     return (
+        <div className = "mt-4">
+
+        <img className = "profile_img_" src={profileImg} alt="profile"/>
         <table className="editTable">
         <tr>
         <td className="cell">
@@ -126,6 +135,43 @@ class ProfileEditBase extends Component {
         </form>
         </td>
         </tr>
+        
+        <tr>
+        <td className="cell">
+        Industries
+        </td>
+        <td>
+        <form onSubmit={this.onSubmit}>
+        <input
+        className="input1"
+          name="industries"
+          value={industries}
+          onChange={this.onChange}
+          type="text"
+          placeholder="What industries interest you"
+        />
+        </form>
+        </td>
+        </tr>
+
+        <tr>
+        <td className="cell">
+        Roles
+        </td>
+        <td>
+        <form onSubmit={this.onSubmit}>
+        <input
+        className="input1"
+          name="roles"
+          value={roles}
+          onChange={this.onChange}
+          type="text"
+          placeholder="What are your roles?"
+        />
+        </form>
+        </td>
+        </tr>
+        
         <tr>
         <td>
         </td>
@@ -137,6 +183,7 @@ class ProfileEditBase extends Component {
         </td>
         </tr>
         </table>
+        </div>
     );
   }
 }

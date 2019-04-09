@@ -70,20 +70,17 @@ class CommunityPage extends React.Component {
 
 
 const UserList = ({ users }) => (
-  <div className = "mt-5">
+  <div className = "mt-4">
     <CardGroup>
     {users.map(user => (
-
-    <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top"/>
+    <Card style={{ width: '18rem'}} className="text-center">
         <Card.Body>
-        <Card.Title className="text-center p-3">{user.username}</Card.Title>
+        <Card.Title>{user.username}</Card.Title>
         <Card.Text>
-        <ul>
-            <li>{user.university}</li>
-            <li>{user.degree}</li>
-            <li>{user.skills}</li>
-        </ul>
+            {user.email}
+            <br>{user.university}</br>
+            <br>{user.degree}</br>
+            <br>{user.skills}</br>
         </Card.Text>
         </Card.Body>
         </Card>))}

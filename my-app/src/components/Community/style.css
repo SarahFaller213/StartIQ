@@ -30,3 +30,7 @@ h1 {
   display:block;
   margin:auto;
 }
+
+.cardStyle{
+   list-style:none;
+}

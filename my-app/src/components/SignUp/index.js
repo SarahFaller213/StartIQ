@@ -119,7 +119,7 @@ class SignUpFormBase extends Component {
             onChange={this.onChange}
             type="text"
             className="form-control"
-            placeholder="Full Name"
+            placeholder="First Name and Last Name"
           />
         </div>
         <div className="elements2 mx-1">

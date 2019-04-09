@@ -66,11 +66,13 @@ class Firebase {
   }
 
   // ************************* PROFILE API ***************************
-  putProfile(university, skill, degree, uid) {
+  putProfile(university, skill, degree, industries, roles, uid) {
     return this.profile(uid).set({
         university: university,
         skills: skill,
-        degree: degree
+        degree: degree,
+        industries: industries,
+        roles: roles,
     });
   }
   
