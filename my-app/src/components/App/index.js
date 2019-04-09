@@ -12,6 +12,7 @@ import SignInPage from '../SignIn';
 import DashboardPage from '../Dashboard';
 import ProfilePage from '../Profile';
 import ProfileEdit from '../EditProfile'
+import CommunityPage from '../Community'
 
 import * as ROUTES from '../../constants/routes';
 
@@ -51,6 +52,7 @@ class App extends Component {
       <Route path={ROUTES.DASHBOARD} component={DashboardPage} />
       <Route path={ROUTES.PROFILE} component={ProfilePage} />
       <Route path={ROUTES.EDIT} component={ProfileEdit} />
+      <Route path={ROUTES.COMMUNITY} component={CommunityPage} />
 
     </div>
   </Router>
