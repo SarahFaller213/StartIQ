@@ -28,6 +28,7 @@ const INITIAL_STATE = {
     industries:"",
     roles:""
   },
+  blockSubmit: false,
   error: null,
   uid: '',
 };
@@ -73,14 +74,15 @@ class ProfileEditBase extends Component {
   };
 
   onUpload = (event) => {
+    this.setState({blockSubmit: true});
     this.props.firebase.uploadImg(event.target.files[0]).then(url => {
       this.state.profile.profileIMG = url;
-      this.setState({ profile: this.state.profile });
+      this.setState({ profile: this.state.profile, blockSubmit: false });
     });
   }
 
   render() {
-    const { profile } = this.state;
+    const { profile, blockSubmit } = this.state;
       
     return (
       <div className = "mt-4">
@@ -129,7 +131,7 @@ class ProfileEditBase extends Component {
               <tr>
                 <td> </td>
                 <td className="cell2">
-                  <button type="submit" className="button1">Save</button>
+                  <button type="submit" disabled={blockSubmit} className="button1">Save</button>
                 </td>
               </tr>
             </tbody>

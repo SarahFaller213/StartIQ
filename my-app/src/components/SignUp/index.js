@@ -94,7 +94,6 @@ class SignUpFormBase extends Component {
   onUpload = (event) => {
     this.setState({blockSubmit: true});
     this.props.firebase.uploadImg(event.target.files[0]).then(url => {
-      console.log("boom!");
       this.setState({imgURL: url, blockSubmit: false});
     });
   }
