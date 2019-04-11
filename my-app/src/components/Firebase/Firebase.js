@@ -61,7 +61,7 @@ class Firebase {
 
   async signup(username, email, authUser) {
     await this.user(authUser.user.uid).set({ username, email });
-    await this.putProfile("", "", "", authUser.user.uid);
+    await this.putProfile("", "", "", "", "", authUser.user.uid);
     await this.workspace(authUser.user.uid).set({ username });
   }
 
