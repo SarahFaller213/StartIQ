@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
+import { Button} from 'react-bootstrap';
 import Firebase, {FirebaseContext} from '../Firebase';
 import './style.css'
 
@@ -131,7 +132,7 @@ class ProfileEditBase extends Component {
               <tr>
                 <td> </td>
                 <td className="cell2">
-                  <button type="submit" disabled={blockSubmit} className="button1">Save</button>
+                  <Button className = "submit" variant="secondary" disabled={blockSubmit} className="button1">Save</Button>
                 </td>
               </tr>
             </tbody>
@@ -143,9 +144,9 @@ class ProfileEditBase extends Component {
 }
 
 const EditProfileLink = () => (
-  <Link to={ROUTES.EDIT}> <button>
+  <Link to={ROUTES.EDIT}> <Button variant="secondary">
     Edit
-  </button></Link>
+  </Button></Link>
 );
 
 
