@@ -12,6 +12,7 @@ const config = {
   messagingSenderId: "617875093373"
 };
 
+const fallbackIMG = "https://firebasestorage.googleapis.com/v0/b/startiq.appspot.com/o/imgs%2FfakeImgForProfile.png?alt=media&token=8224719a-3243-4edd-a4d7-daa37abbd669";
 
 class Firebase {
   constructor() {
@@ -40,8 +41,12 @@ class Firebase {
 
     // *** User API *** GOOGLE 
  
-  doSignInWithGoogle = () =>
-    this.auth.signInWithPopup(this.googleProvider);
+  doSignInWithGoogle = () => 
+    this.auth.signInWithPopup(this.googleProvider).then(async (res) => {
+      const {displayName, email, uid} = res.user;
+      const prevUser = (await this.user(uid).once('value')).val();
+      if(!prevUser) await this.signup(displayName, email, undefined, uid);
+    });
 
 
   // *** User API ***
@@ -60,8 +65,8 @@ class Firebase {
 
   // ************************* SIGNUP API ***************************
 
-  async signup(username, email, imgURL, authUser) {
-    await this.user(authUser.user.uid).set({ username, email});
+  async signup(username, email, imgURL, uid) {
+    await this.user(uid).set({ username, email});
     await this.putProfile({ 
       university: "", 
       degree: "", 
@@ -69,8 +74,8 @@ class Firebase {
       skills: "", 
       industries: "", 
       profileIMG: imgURL || ""
-    }, authUser.user.uid);
-    await this.workspace(authUser.user.uid).set({ username });
+    }, uid);
+    await this.workspace(uid).set({ username });
   }
 
   // ************************* PROFILE API ***************************
@@ -79,7 +84,11 @@ class Firebase {
   }
   
   getProfile(uid) {
-    return this.profile(uid).once('value').then(snapshot => snapshot.val());
+    return this.profile(uid).once('value').then(snapshot => {
+      const profile = snapshot.val();
+      if(!profile.profileIMG) profile.profileIMG = fallbackIMG;
+      return profile;
+    });
   }
 
   uploadImg(img) {

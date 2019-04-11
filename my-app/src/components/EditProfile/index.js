@@ -5,7 +5,6 @@ import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import Firebase, {FirebaseContext} from '../Firebase';
 import './style.css'
-import profileImg from './fakeImgForProfile.png';
 
 
 
@@ -86,7 +85,7 @@ class ProfileEditBase extends Component {
     return (
       <div className = "mt-4">
         <img className = "profile_img_" src={profile.profileIMG} alt="profile"/>
-        <input onChange={this.onUpload} type="file" accept="image/*" className="form-control" />
+        <input onChange={this.onUpload} type="file" accept="image/*" className="cell" />
         <input name="imgURL" value={profile.profileIMG} readOnly hidden />
 
         <form onSubmit={this.onSubmit}>

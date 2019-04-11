@@ -4,7 +4,6 @@ import { EditProfileLink } from '../EditProfile';
 import { withFirebase } from '../Firebase';
 import Firebase, {FirebaseContext} from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import profileImg from './fakeImgForProfile.png';
 import { compose } from 'recompose';
 import './style.css'
 import Card from 'react-bootstrap/Card'

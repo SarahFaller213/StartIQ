@@ -8,8 +8,6 @@ import Firebase, {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
 import { NONAME } from "dns";
 
-const fallbackIMG = "https://firebasestorage.googleapis.com/v0/b/startiq.appspot.com/o/imgs%2FfakeImgForProfile.png?alt=media&token=8224719a-3243-4edd-a4d7-daa37abbd669";
-
 const DashboardPage = () => (
   <div>
     <FirebaseContext.Consumer>
@@ -77,7 +75,6 @@ class Dashboard extends React.Component {
           // console.log(this.state.ideas.length);
         });
         this.props.firebase.getProfile(this.state.uid).then(profile => {
-          if(!profile.profileIMG) profile.profileIMG = fallbackIMG;
           this.setState({profile : profile});
         });
       }
