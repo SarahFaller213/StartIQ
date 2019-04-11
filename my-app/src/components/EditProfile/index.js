@@ -132,7 +132,7 @@ class ProfileEditBase extends Component {
               <tr>
                 <td> </td>
                 <td className="cell2">
-                  <Button className = "submit" variant="secondary" disabled={blockSubmit} className="button1">Save</Button>
+                  <button disabled={blockSubmit} className="button1">Save</button>
                 </td>
               </tr>
             </tbody>
