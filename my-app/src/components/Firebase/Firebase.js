@@ -50,7 +50,8 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
   workspace = uid => this.db.ref(`workspace/${uid}`);
-  fileStorage = uid => this.storage.ref(`files/${uid}`);
+  fileStorage = uid => this.storage.ref(`files/${uid}`); //Storage for pdf file uploads
+  imgStorage = uid => this.storage.ref(`imgs/${uid}`);  //Storage for profile picture uploads
   profile = uid => this.db.ref(`users/${uid}/profile_info`);
 
   setAuthChangeHandler(handler) {
@@ -59,26 +60,33 @@ class Firebase {
 
   // ************************* SIGNUP API ***************************
 
-  async signup(username, email, authUser) {
-    await this.user(authUser.user.uid).set({ username, email });
-    await this.putProfile("", "", "", "", "", authUser.user.uid);
+  async signup(username, email, imgURL, authUser) {
+    await this.user(authUser.user.uid).set({ username, email});
+    await this.putProfile({ 
+      university: "", 
+      degree: "", 
+      roles: "", 
+      skills: "", 
+      industries: "", 
+      profileIMG: imgURL || ""
+    }, authUser.user.uid);
     await this.workspace(authUser.user.uid).set({ username });
   }
 
   // ************************* PROFILE API ***************************
-  putProfile(university, skill, degree, industries, roles, uid) {
-    return this.profile(uid).set({
-        university: university,
-        skills: skill,
-        degree: degree,
-        industries: industries,
-        roles: roles,
-    });
+  putProfile(profile, uid) {
+    return this.profile(uid).set(profile);
   }
   
   getProfile(uid) {
     return this.profile(uid).once('value').then(snapshot => snapshot.val());
   }
+
+  uploadImg(img) {
+    return this.imgStorage(img.name+Date.now()).put(img)
+            .then((snapshot) => snapshot.ref.getDownloadURL());
+  }
+
 
   // ************************* IDEA API ***************************
   putIdea(ideaText, uid, attachments) {

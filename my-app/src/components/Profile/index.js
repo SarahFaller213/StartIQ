@@ -21,7 +21,7 @@ const ProfilePage = () => (
 class Profile extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { profile: { university: "", degree: "", skills: ""}, uid: undefined }
+    this.state = { profile: { profileIMG: "", university: "", degree: "", skills: ""}, uid: undefined }
   }
 
   componentDidMount() {
@@ -36,58 +36,34 @@ class Profile extends React.Component {
   render() {
     return (
       <div className = "mt-4">
-        <img className = "profile_img_" src={profileImg} alt="profile"/>
+        <img className = "profile_img_" src={this.state.profile.profileIMG} alt="profile"/>
         <table className="editTable">
-        <tr>
-        <td className="cell">
-        Your University
-        </td>
-        <td>
-        {this.state.profile.university}
-        </td>
-        </tr>
-        <tr>
-        <td className="cell">
-        Degree
-        </td>
-        <td>
-        {this.state.profile.degree}
-        </td>
-        </tr>
-        <tr>
-        <td className="cell">
-        Skills
-        </td>
-        <td>
-        {this.state.profile.skills}
-        </td>
-        </tr>
-        <tr>
-        <td className="cell">
-        Industries
-        </td>
-        <td>
-        {this.state.profile.industries}
-        </td>
-        </tr>
-
-        <tr>
-        <td className="cell">
-        Roles
-        </td>
-        <td>
-        {this.state.profile.roles}
-        </td>
-        </tr>
-        
-        <tr>
-        <td>
-        </td>
-        <td className="cell2">
-        <p className="button"><EditProfileLink/></p>
-        </td>
-        </tr>
-        
+          <tbody>
+            <tr>
+              <td className="cell"> Your University </td>
+              <td> {this.state.profile.university} </td>
+            </tr>
+            <tr>
+              <td className="cell"> Degree </td>
+              <td> {this.state.profile.degree} </td>
+            </tr>
+            <tr>
+              <td className="cell"> Skills </td>
+              <td> {this.state.profile.skills} </td>
+            </tr>
+            <tr>
+              <td className="cell">Industries </td>
+              <td> {this.state.profile.industries} </td>
+            </tr>
+            <tr> 
+              <td className="cell"> Roles </td>
+              <td> {this.state.profile.roles} </td>
+            </tr>
+            <tr>
+              <td> </td>
+              <td className="cell2"> <p className="button"><EditProfileLink/></p> </td>
+            </tr>
+          </tbody>
         </table>
       </div>
 

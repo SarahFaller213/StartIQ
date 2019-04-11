@@ -21,11 +21,14 @@ const EditPage = () => (
 
 
 const INITIAL_STATE = {
-  university: "",
-  skills: "",
-  degree: "",
-  industries:"",
-  roles:"",
+  profile: {
+    profileIMG: "",
+    university: "",
+    skills: "",
+    degree: "",
+    industries:"",
+    roles:""
+  },
   error: null,
   uid: '',
 };
@@ -50,13 +53,7 @@ class ProfileEditBase extends Component {
       if(user) {
         this.setState({ uid: user.uid });
         this.props.firebase.getProfile(user.uid).then(profile => {
-          this.setState({ 
-            university : profile.university,
-            skills: profile.skills,
-            degree: profile.degree,
-            industries:profile.industries,
-            roles:profile.roles
-          });
+          this.setState({ profile: profile });
         });
       } else this.setState({ uid: undefined });
     });
@@ -65,125 +62,81 @@ class ProfileEditBase extends Component {
 
  onSubmit = event => {
     event.preventDefault();
-
-    const {university, skills, degree, industries, roles, uid } = this.state;
-    this.props.firebase.putProfile(university, skills, degree, industries, roles, uid ).then(() => {
+    const { profile, uid } = this.state;
+    this.props.firebase.putProfile(profile, uid).then(() => {
       this.props.history.push(ROUTES.PROFILE);
     });
   }
 
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.state.profile[event.target.name] = event.target.value;
+    this.setState({ profile: this.state.profile });
   };
 
+  onUpload = (event) => {
+    this.props.firebase.uploadImg(event.target.files[0]).then(url => {
+      this.state.profile.profileIMG = url;
+      this.setState({ profile: this.state.profile });
+    });
+  }
+
   render() {
-    const { university, skills, degree, industries, roles, error } = this.state;
+    const { profile } = this.state;
       
     return (
-        <div className = "mt-4">
+      <div className = "mt-4">
+        <img className = "profile_img_" src={profile.profileIMG} alt="profile"/>
+        <input onChange={this.onUpload} type="file" accept="image/*" className="form-control" />
+        <input name="imgURL" value={profile.profileIMG} readOnly hidden />
 
-        <img className = "profile_img_" src={profileImg} alt="profile"/>
-        <table className="editTable">
-        <tr>
-        <td className="cell">
-        Your University
-        </td>
-        <td>
         <form onSubmit={this.onSubmit}>
-        <input
-        className="input1"
-          name="university"
-          value={university}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Where did you go to school?"
-        />
-        </form>
-        </td>
-        </tr>
-        <tr>
-        <td className="cell">
-        Degree
-        </td>
-        <td>
-        <form onSubmit={this.onSubmit}>
-        <input
-        className="input1"
-          name="degree"
-          value={degree}
-          onChange={this.onChange}
-          type="text"
-          placeholder="What degree are you pursuing or have?"
-        />
-        </form>
-        </td>
-        </tr>
-        <tr>
-        <td className="cell">
-        Skills
-        </td>
-        <td>
-        <form onSubmit={this.onSubmit}>
-        <input
-        className="input1"
-          name="skills"
-          value={skills}
-          onChange={this.onChange}
-          type="text"
-          placeholder="What skills do you have?"
-        />
-        </form>
-        </td>
-        </tr>
-        
-        <tr>
-        <td className="cell">
-        Industries
-        </td>
-        <td>
-        <form onSubmit={this.onSubmit}>
-        <input
-        className="input1"
-          name="industries"
-          value={industries}
-          onChange={this.onChange}
-          type="text"
-          placeholder="What industries interest you"
-        />
-        </form>
-        </td>
-        </tr>
+          <table className="editTable"> 
+            <tbody> 
+              <tr> 
+                <td className="cell"> Your University </td>
+                <td> 
+                  <input className="input1" name="university" value={profile.university} onChange={this.onChange} type="text" placeholder="Where did you go to school?"/>
+                </td>
+              </tr>
 
-        <tr>
-        <td className="cell">
-        Roles
-        </td>
-        <td>
-        <form onSubmit={this.onSubmit}>
-        <input
-        className="input1"
-          name="roles"
-          value={roles}
-          onChange={this.onChange}
-          type="text"
-          placeholder="What are your roles?"
-        />
-        </form>
-        </td>
-        </tr>
+              <tr>
+                <td className="cell"> Degree </td> 
+                <td>
+                  <input className="input1" name="degree" value={profile.degree} onChange={this.onChange} type="text" placeholder="What degree are you pursuing or have?" />
+                </td>
+              </tr>
+
+              <tr>
+                <td className="cell"> Skills </td>
+                <td> 
+                  <input className="input1" name="skills" value={profile.skills} onChange={this.onChange} type="text" placeholder="What skills do you have?" />
+                </td>
+              </tr>
         
-        <tr>
-        <td>
-        </td>
-        <td className="cell2">
-        <form onSubmit={this.onSubmit}>
-        <button type="submit" className="button1">Save</button>
-        {error && <p>{error}</p>}  
+              <tr>
+                <td className="cell"> Industries </td>
+                <td> 
+                  <input className="input1" name="industries" value={profile.industries} onChange={this.onChange} type="text" placeholder="What industries interest you"/>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="cell"> Roles </td>
+                <td>
+                  <input className="input1" name="roles" value={profile.roles} onChange={this.onChange} type="text" placeholder="What are your roles?"/>
+                </td>
+              </tr>
+              
+              <tr>
+                <td> </td>
+                <td className="cell2">
+                  <button type="submit" className="button1">Save</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </form>
-        </td>
-        </tr>
-        </table>
-        </div>
+      </div>
     );
   }
 }

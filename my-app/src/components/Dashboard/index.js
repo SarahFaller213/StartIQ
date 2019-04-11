@@ -6,9 +6,9 @@ import 'react-quill/dist/quill.bubble.css';
 import { Col, Button, Form, Row} from 'react-bootstrap';
 import Firebase, {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
-import profileImg from './fakeImgForProfile.png';
 import { NONAME } from "dns";
 
+const fallbackIMG = "https://firebasestorage.googleapis.com/v0/b/startiq.appspot.com/o/imgs%2FfakeImgForProfile.png?alt=media&token=8224719a-3243-4edd-a4d7-daa37abbd669";
 
 const DashboardPage = () => (
   <div>
@@ -59,7 +59,7 @@ const CustomToolbar = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', ideas: [], uid: undefined, username: undefined, attachments: [] }
+    this.state = { text: '', ideas: [], uid: undefined, username: undefined, attachments: [], profile: '' }
     this.handleChange = this.handleChange.bind(this)
     this.uploadRef = React.createRef();
   }
@@ -75,6 +75,10 @@ class Dashboard extends React.Component {
         this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
           this.setState({ideas : ideas});
           // console.log(this.state.ideas.length);
+        });
+        this.props.firebase.getProfile(this.state.uid).then(profile => {
+          if(!profile.profileIMG) profile.profileIMG = fallbackIMG;
+          this.setState({profile : profile});
         });
       }
       else this.setState({ uid: undefined, username: undefined });
@@ -195,10 +199,13 @@ class Dashboard extends React.Component {
         <div className="container-fluid">
           <div className="my-5"></div>
           <div className="row ml-5">
+            
+            {/* hidden file input that receives multiple files to be uploaded */}
             <input type="file" accept=".pdf" className="invisible" ref={this.uploadRef} onChange={this.onUpload} multiple></input>
+            
             <div className = 'dashboard_profile col-2 px-3 text-center mt-5'>
               <div className="col-10 offset-md-1">
-                <img className = "profile_img" src={profileImg} alt="profile"/>
+                <img className = "profile_img" src={this.state.profile.profileIMG} alt="profile"/>
                 <hr></hr>
                 <div className = "dash_pro">
                   <p>{this.state.username}</p>

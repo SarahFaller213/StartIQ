@@ -19,7 +19,7 @@ const SignUpPage = () => (
         <div className="row align-items-center justify-content-center pt-5">
 
           <div className="col-md-3">    
-            <div class = "row mydiv">
+            <div className = "row mydiv">
               <img src= {rocket} className = "rocket" alt="StartIQ" />
             </div>
             <div className = "texts row align-items-center">
@@ -40,11 +40,11 @@ const SignUpPage = () => (
       </div>
     </section>
     <section className = "partner">
-      <div class = "container">
-        <div class = "row justify-content-center">
-          <h1 class = "fancy">Our partners</h1>
+      <div className = "container">
+        <div className = "row justify-content-center">
+          <h1 className = "fancy">Our partners</h1>
         </div>
-        <div class = "row justify-content-center align-items-center">
+        <div className = "row justify-content-center align-items-center">
           <img src= {kauff} className = "partners" alt="StartIQ" />
           <img src= {IE} className = "partners" alt="StartIQ" />
           <img src= {fuqua} className = "partners_fuqua" alt="StartIQ" />
@@ -62,6 +62,8 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  imgURL: '',
+  blockSubmit: false,
   error: null,
 };
 
@@ -74,10 +76,10 @@ class SignUpFormBase extends Component {
   onSubmit = (event) => {
     event.preventDefault();
 
-    const { username, email, passwordOne } = this.state;
+    const { username, email, passwordOne, imgURL } = this.state;
 
     this.props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
-    .then(authUser => this.props.firebase.signup(username, email, authUser))
+    .then(authUser => this.props.firebase.signup(username, email, imgURL, authUser))
     .then(() => this.props.history.push(ROUTES.DASHBOARD))
     .catch(error => {
       console.log(error);
@@ -89,20 +91,30 @@ class SignUpFormBase extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  onUpload = (event) => {
+    this.setState({blockSubmit: true});
+    this.props.firebase.uploadImg(event.target.files[0]).then(url => {
+      console.log("boom!");
+      this.setState({imgURL: url, blockSubmit: false});
+    });
+  }
+
   render() {
-      const {
+    const { 
       username,
       email,
       passwordOne,
       passwordTwo,
+      imgURL,
+      blockSubmit,
       error,
     } = this.state;
-      
-      const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      username === '';
+    
+    const isInvalid =
+    passwordOne !== passwordTwo ||
+    passwordOne === '' ||
+    email === '' ||
+    username === '';
 
       
     return (
@@ -152,8 +164,22 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         </div>
+        <div className="elements2 mx-1">
+        <input
+          onChange={this.onUpload}
+          type="file"
+          accept="image/*"
+          className="form-control"
+        />
+        <input 
+          name="imgURL"
+          value={imgURL}
+          readOnly
+          hidden
+        />
+        </div>
         <div className="elements2">
-        <button className = "btn nurikuri btn-block" type="submit">Sign Up</button>
+        <button className = "btn nurikuri btn-block" disabled={blockSubmit} type="submit">Sign Up</button>
         </div>
 
         {error && <p>{error}</p>}
