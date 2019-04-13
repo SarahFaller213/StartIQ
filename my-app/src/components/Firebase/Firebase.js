@@ -58,6 +58,7 @@ class Firebase {
   fileStorage = uid => this.storage.ref(`files/${uid}`); //Storage for pdf file uploads
   imgStorage = uid => this.storage.ref(`imgs/${uid}`);  //Storage for profile picture uploads
   profile = uid => this.db.ref(`users/${uid}/profile_info`);
+  tokens = token => this.db.ref(`tokens/${token}`)
 
   setAuthChangeHandler(handler) {
     this.auth.onAuthStateChanged(handler);
@@ -65,8 +66,8 @@ class Firebase {
 
   // ************************* SIGNUP API ***************************
 
-  async signup(username, email, imgURL, uid) {
-    await this.user(uid).set({ username, email});
+  async signup(userType, username, email, imgURL, community, uid) {
+    await this.user(uid).set({userType, username, email, community});
     await this.putProfile({ 
       university: "", 
       degree: "", 
@@ -121,6 +122,19 @@ class Firebase {
       return workspaceData.username;
     })
   }
+
+checkToken(userType, username, email, imgURL, token, uid){
+    this.tokens(token).once('value', function(snapshot){
+    if (snapshot.exists()){
+        console.log("exiss")
+        console.log(snapshot.val())
+        return snapshot.val();
+    }
+        else{
+            return false;
+        }
+    })
+}
 
   deleteIdea(uid, key) {
     return this.workspace(uid).child(key).remove();

@@ -97,35 +97,35 @@ class ProfileEditBase extends Component {
               <tr> 
                 <td className="cell"> Your University </td>
                 <td> 
-                  <input className="input1" name="university" value={profile.university} onChange={this.onChange} type="text" placeholder="Where did you go to school?"/>
+                  <input className="input2" name="university" value={profile.university} onChange={this.onChange} type="text" placeholder="Where did you go to school?"/>
                 </td>
               </tr>
 
               <tr>
                 <td className="cell"> Degree </td> 
                 <td>
-                  <input className="input1" name="degree" value={profile.degree} onChange={this.onChange} type="text" placeholder="What degree are you pursuing or have?" />
+                  <input className="input2" name="degree" value={profile.degree} onChange={this.onChange} type="text" placeholder="What degree are you pursuing or have?" />
                 </td>
               </tr>
 
               <tr>
                 <td className="cell"> Skills </td>
                 <td> 
-                  <input className="input1" name="skills" value={profile.skills} onChange={this.onChange} type="text" placeholder="What skills do you have?" />
+                  <input className="input2" name="skills" value={profile.skills} onChange={this.onChange} type="text" placeholder="What skills do you have?" />
                 </td>
               </tr>
         
               <tr>
                 <td className="cell"> Industries </td>
                 <td> 
-                  <input className="input1" name="industries" value={profile.industries} onChange={this.onChange} type="text" placeholder="What industries interest you"/>
+                  <input className="input2" name="industries" value={profile.industries} onChange={this.onChange} type="text" placeholder="What industries interest you"/>
                 </td>
               </tr>
 
               <tr>
                 <td className="cell"> Roles </td>
                 <td>
-                  <input className="input1" name="roles" value={profile.roles} onChange={this.onChange} type="text" placeholder="What are your roles?"/>
+                  <input className="input2" name="roles" value={profile.roles} onChange={this.onChange} type="text" placeholder="What are your roles?"/>
                 </td>
               </tr>
               

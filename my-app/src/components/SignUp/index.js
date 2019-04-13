@@ -8,6 +8,8 @@ import rocket from './rocket.svg'
 import kauff from '../SignIn/Kauffman.png'
 import fuqua from '../SignIn/Fuqua.gif'
 import IE from '../SignIn/DukeIE.gif'
+import FormCheck from 'react-bootstrap/FormCheck'
+import Form from 'react-bootstrap/Form'
 
 
 
@@ -58,10 +60,12 @@ const SignUpPage = () => (
 
 
 const INITIAL_STATE = {
+  userType:'',
   username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  token: '',
   imgURL: '',
   blockSubmit: false,
   error: null,
@@ -75,18 +79,23 @@ class SignUpFormBase extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-
-    const { username, email, passwordOne, imgURL } = this.state;
-
+    const {userType, username, email, passwordOne, imgURL, token } = this.state;
+      
     this.props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
-    .then(result => this.props.firebase.signup(username, email, imgURL, result.user.uid))
-    .then(() => this.props.history.push(ROUTES.DASHBOARD))
-    .catch(error => {
-      console.log(error);
-      this.setState({ error: error.message }); //Set Error State as Error message
-    });
-  }
+        .then(result => this.props.firebase.signup(userType, username, email, imgURL, token,result.user.uid))
+        .then(() => this.props.history.push(ROUTES.DASHBOARD))
+        .catch(error => {
+            console.log(error);
+            this.setState({ error: error.message }); //Set Error State as Error message
+    })
 
+  }
+  
+
+  onRole = event => {
+      this.setState({userType: event.target.value});
+  }
+  
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -100,10 +109,12 @@ class SignUpFormBase extends Component {
 
   render() {
     const { 
+      userType,
       username,
       email,
       passwordOne,
       passwordTwo,
+      token,
       imgURL,
       blockSubmit,
       error,
@@ -123,6 +134,29 @@ class SignUpFormBase extends Component {
       </div>
 
       <form onSubmit={this.onSubmit}>
+        <div className="elements2-mx-1">
+        <Form>
+        <fieldset>
+        <Form.Group>
+            {['radio'].map(type => (
+            <div key={'inline-${type}'} className="mb-3">
+                <Form.Check inline label="Mentor" id={'inline-${type}-1'} name = "userType" type="radio"
+                value= "mentor"
+                onChange={this.onRole}
+
+                />
+                <Form.Check inline label="User" id={'inline-${type}-1'} name = "userType" type="radio" 
+                value= "user"
+                onChange={this.onRole}
+
+                />
+            </div>))}
+        </Form.Group>
+        </fieldset>
+        </Form>
+
+        </div>
+        
         <div className="elements2 mx-1">
           <input
             name="username"
@@ -161,6 +195,16 @@ class SignUpFormBase extends Component {
           type="password"
           className="form-control"
           placeholder="Confirm Password"
+        />
+        </div>
+        <div className="elements2 mx-1">
+        <input
+          name="token"
+          value={token}
+          onChange={this.onChange}
+          type="text"
+          className="token"
+          placeholder="Community Password"
         />
         </div>
         <div className="elements2 mx-1">
