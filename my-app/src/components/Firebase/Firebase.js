@@ -123,19 +123,6 @@ class Firebase {
     })
   }
 
-checkToken(userType, username, email, imgURL, token, uid){
-    this.tokens(token).once('value', function(snapshot){
-    if (snapshot.exists()){
-        console.log("exiss")
-        console.log(snapshot.val())
-        return snapshot.val();
-    }
-        else{
-            return false;
-        }
-    })
-}
-
   deleteIdea(uid, key) {
     return this.workspace(uid).child(key).remove();
   }
@@ -159,6 +146,29 @@ checkToken(userType, username, email, imgURL, token, uid){
       )
     );
   }
+
+// ************************* Token API ***************************
+checkToken(userType, username, email, imgURL, token, uid){
+  this.tokens(token).once('value', function(snapshot){
+  if (snapshot.exists()){
+      console.log("exiss")
+      console.log(snapshot.val())
+      return snapshot.val();
+  }
+      else{
+          return false;
+      }
+  })
 }
+
+putTokens(token) {
+  return this.tokens().push(token);
+}
+
+
+
+}
+
+
 
 export default Firebase;

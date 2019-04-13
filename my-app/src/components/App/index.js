@@ -13,7 +13,7 @@ import DashboardPage from '../Dashboard';
 import ProfilePage from '../Profile';
 import ProfileEdit from '../EditProfile'
 import CommunityPage from '../Community'
-
+import TokenPage from '../Token'
 import * as ROUTES from '../../constants/routes';
 
 import { withFirebase } from '../Firebase';
@@ -53,6 +53,7 @@ class App extends Component {
       <Route path={ROUTES.PROFILE} component={ProfilePage} />
       <Route path={ROUTES.EDIT} component={ProfileEdit} />
       <Route path={ROUTES.COMMUNITY} component={CommunityPage} />
+      <Route path={ROUTES.TOKEN} component={TokenPage} />
 
     </div>
   </Router>
