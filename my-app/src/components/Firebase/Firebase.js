@@ -58,7 +58,8 @@ class Firebase {
   fileStorage = uid => this.storage.ref(`files/${uid}`); //Storage for pdf file uploads
   imgStorage = uid => this.storage.ref(`imgs/${uid}`);  //Storage for profile picture uploads
   profile = uid => this.db.ref(`users/${uid}/profile_info`);
-  tokens = token => this.db.ref(`tokens/${token}`)
+  tokens = token => this.db.ref(`tokens/${token}`);
+  tokenPair = () => this.db.ref('tokens');
 
   setAuthChangeHandler(handler) {
     this.auth.onAuthStateChanged(handler);
@@ -148,7 +149,7 @@ class Firebase {
   }
 
 // ************************* Token API ***************************
-checkToken(userType, username, email, imgURL, token, uid){
+checkToken(token){
   this.tokens(token).once('value', function(snapshot){
   if (snapshot.exists()){
       console.log("exiss")
@@ -161,10 +162,9 @@ checkToken(userType, username, email, imgURL, token, uid){
   })
 }
 
-putTokens(token) {
-  return this.tokens().push(token);
+putTokens(token, community) {
+  return this.tokens(token).set(community);
 }
-
 
 
 }

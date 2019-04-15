@@ -80,16 +80,18 @@ class SignUpFormBase extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     const {userType, username, email, passwordOne, imgURL, token } = this.state;
-      
+
+    
     this.props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
-        .then(result => this.props.firebase.signup(userType, username, email, imgURL, token,result.user.uid))
+        .then(result => this.props.firebase.signup(userType, username, email, imgURL, result,result.user.uid))
         .then(() => this.props.history.push(ROUTES.DASHBOARD))
         .catch(error => {
             console.log(error);
             this.setState({ error: error.message }); //Set Error State as Error message
     })
+    
 
-  }
+  };
   
 
   onRole = event => {
