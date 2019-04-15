@@ -205,7 +205,7 @@ class SignUpFormBase extends Component {
           value={token}
           onChange={this.onChange}
           type="text"
-          className="token"
+          className="form-control"
           placeholder="Community Password"
         />
         </div>
