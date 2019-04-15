@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Firebase, {FirebaseContext} from '../Firebase';
-import { Button, InputGroup, FormControl, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {FirebaseContext} from '../Firebase';
+import { Button, InputGroup, FormControl, ListGroup } from 'react-bootstrap';
 import './style.css'
 
 const TokenPage = () => (
@@ -15,7 +15,8 @@ const TokenPage = () => (
 const INITIAL_STATE = {
   token: "",
   community: "",
-  tokens: []
+  community:[],
+  passcode: ""
 };
 
 class Token extends Component {
@@ -24,25 +25,26 @@ class Token extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  // componentDidMount() {
-  //   this.props.firebase.tokens().on('value', snapshot => {
-  //     const tokensObject = snapshot.val();
-  //     const tokensList = Object.keys(tokensObject).map(key => ({
-  //       ...tokensObject[key],
-  //       uid: key,
-  //     }));
+  componentDidMount() {
+    this.props.firebase.tokenPair().on('value', snapshot => {
+      const tokenList = snapshot.val();
+      console.log(tokenList);
+      console.log(JSON.stringify(tokenList));
 
-  //     this.setState({
-  //       tokens: tokensList,
-  //       loading: false,
-  //     });
-  //   });
-  // }
+      //Get Community Names
+      // Object.keys(tokenList).map(function(_) { 
+      //   const communityList = tokenList[_];
+      //   console.log(communityList); 
+      // })
 
-  // componentWillUnmount() {
-  //   this.props.firebase.tokens().off();
-  // }
 
+      this.setState({
+        tokens:{
+
+        }
+      });
+    });
+  }
 
   onSubmit = event => {
     event.preventDefault();
@@ -87,24 +89,23 @@ class Token extends Component {
           </InputGroup>
         </div>
         <div className = "container_token">
-          
-          {/* <TokensList tokens = {tokens} /> */}
+          <TokensList tokens = {tokens} />
         </div>
       </div>
     );
   }
 }
 
-// const TokensList = ({ tokens }) => (
-//   <div>
-//     <p className = "p_title text-center mt-4">Already Existed Community Codes:</p>
-//     <ListGroup>
-//       {tokens.map(token => (
-//         <ListGroup.Item className="text-center mt-2">{token.community}</ListGroup.Item>
-//       ))}
-//     </ListGroup>
-//   </div>
-// );
+const TokensList = ({ tokens }) => (
+  <div>
+    <p className = "p_title text-center mt-4">Already Existed Communities and Tokens:</p>
+    <ListGroup>
+        <ListGroup.Item className="text-center mt-3"> 
+          {/* <p className = "p_title">{tokens.community} (community), {tokens.community} (token)</p> */}
+        </ListGroup.Item>
+    </ListGroup>
+  </div>
+);
 
 
 export default TokenPage;

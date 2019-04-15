@@ -149,23 +149,22 @@ class Firebase {
   }
 
 // ************************* Token API ***************************
-checkToken(token){
-  this.tokens(token).once('value', function(snapshot){
-  if (snapshot.exists()){
-      console.log("exiss")
-      console.log(snapshot.val())
-      return snapshot.val();
-  }
-      else{
-          return false;
-      }
+async checkToken(token){
+  var tokenized = ""
+  await this.tokens(token).once('value', function(snapshot){
+    if (snapshot.exists()){
+      tokenized = snapshot.val();
+    }
+    else{
+      tokenized = false;
+    }
   })
+  return tokenized;
 }
 
 putTokens(token, community) {
   return this.tokens(token).set(community);
 }
-
 
 }
 

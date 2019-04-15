@@ -8,7 +8,6 @@ import rocket from './rocket.svg'
 import kauff from '../SignIn/Kauffman.png'
 import fuqua from '../SignIn/Fuqua.gif'
 import IE from '../SignIn/DukeIE.gif'
-import FormCheck from 'react-bootstrap/FormCheck'
 import Form from 'react-bootstrap/Form'
 
 
@@ -18,7 +17,7 @@ const SignUpPage = () => (
     <section className = "screen pt-4">
 
       <div className = "container-fluid pt-15">
-        <div className="row align-items-center justify-content-center pt-5">
+        <div className="row align-items-center justify-content-center">
 
           <div className="col-md-3">    
             <div className = "row mydiv">
@@ -81,16 +80,20 @@ class SignUpFormBase extends Component {
     event.preventDefault();
     const {userType, username, email, passwordOne, imgURL, token } = this.state;
 
-    
-    this.props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
-        .then(result => this.props.firebase.signup(userType, username, email, imgURL, result,result.user.uid))
+    this.props.firebase.checkToken(token).then(tokenized => {
+      
+      const communityName = tokenized;
+      
+      if(communityName){
+        this.props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
+        .then(result => this.props.firebase.signup(userType, username, email, imgURL, communityName, result.user.uid))
         .then(() => this.props.history.push(ROUTES.DASHBOARD))
         .catch(error => {
             console.log(error);
             this.setState({ error: error.message }); //Set Error State as Error message
+        })
+      }
     })
-    
-
   };
   
 

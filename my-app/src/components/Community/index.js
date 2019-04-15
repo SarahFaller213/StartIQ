@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { EditProfileLink } from '../EditProfile';
+import React from 'react';
 import { withFirebase } from '../Firebase';
-import Firebase, {FirebaseContext} from '../Firebase';
-import * as ROUTES from '../../constants/routes';
-import { compose } from 'recompose';
+import {FirebaseContext} from '../Firebase';
 import './style.css'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
