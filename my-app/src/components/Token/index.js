@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {FirebaseContext} from '../Firebase';
-import { Button, InputGroup, FormControl, ListGroup } from 'react-bootstrap';
+import { Button, InputGroup, FormControl, ListGroup} from 'react-bootstrap';
 import './style.css'
 
 const TokenPage = () => (
@@ -14,9 +14,8 @@ const TokenPage = () => (
 
 const INITIAL_STATE = {
   token: "",
-  community: "",
-  community:[],
-  passcode: ""
+  community:"",
+  pairs: []
 };
 
 class Token extends Component {
@@ -27,21 +26,13 @@ class Token extends Component {
 
   componentDidMount() {
     this.props.firebase.tokenPair().on('value', snapshot => {
-      const tokenList = snapshot.val();
-      console.log(tokenList);
-      console.log(JSON.stringify(tokenList));
-
-      //Get Community Names
-      // Object.keys(tokenList).map(function(_) { 
-      //   const communityList = tokenList[_];
-      //   console.log(communityList); 
-      // })
-
+      const tokenPair = [];
+      snapshot.forEach(function(data) {
+        tokenPair.push(data.val() + " && " + data.key);
+      });
 
       this.setState({
-        tokens:{
-
-        }
+        pairs: tokenPair
       });
     });
   }
@@ -59,7 +50,7 @@ class Token extends Component {
 
 
   render() {
-    const { tokens, community, token } = this.state;
+    const { community, token, pairs } = this.state;
     return (
       <div>
         <h1 className = "title text-center mt-0">Admin Page</h1>
@@ -89,22 +80,28 @@ class Token extends Component {
           </InputGroup>
         </div>
         <div className = "container_token">
-          <TokensList tokens = {tokens} />
+          <TokensList pairs = {pairs} />
         </div>
       </div>
     );
   }
 }
 
-const TokensList = ({ tokens }) => (
+const TokensList = ({ pairs }) => (
   <div>
-    <p className = "p_title text-center mt-4">Already Existed Communities and Tokens:</p>
-    <ListGroup>
+    <p className = "p_title text-center mt-4">Already Existed Communities && Tokens: </p>
+    <hr></hr>
+    <ListGroup as="ul">
+      {pairs.map(pair => (
         <ListGroup.Item className="text-center mt-3"> 
-          {/* <p className = "p_title">{tokens.community} (community), {tokens.community} (token)</p> */}
+          <p className = "p_title">{pair}</p>
         </ListGroup.Item>
+      ))}
     </ListGroup>
+
   </div>
+
+  
 );
 
 
