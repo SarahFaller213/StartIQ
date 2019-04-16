@@ -19,7 +19,7 @@ const SignInPage = () => (
         <div className="row align-items-center justify-content-center pt-5">
 
           <div className="col-md-3">    
-            <div class = "row mydiv">
+            <div className = "row mydiv">
               <img src= {rocket} className = "rocket" alt="StartIQ" />
             </div>
             <div className = "texts row align-items-center">
@@ -43,11 +43,11 @@ const SignInPage = () => (
     </section>
 
     <section className = "partner">
-      <div class = "container">
-        <div class = "row justify-content-center">
-          <h1 class = "fancy">Our partners</h1>
+      <div className = "container">
+        <div className = "row justify-content-center">
+          <h1 className = "fancy">Our partners</h1>
         </div>
-        <div class = "row justify-content-center align-items-center">
+        <div className = "row justify-content-center align-items-center">
           <img src= {kauff} className = "partners" alt="StartIQ" />
           <img src= {IE} className = "partners" alt="StartIQ" />
           <img src= {fuqua} className = "partners_fuqua" alt="StartIQ" />

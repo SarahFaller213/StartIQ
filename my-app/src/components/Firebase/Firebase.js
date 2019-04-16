@@ -45,7 +45,7 @@ class Firebase {
     this.auth.signInWithPopup(this.googleProvider).then(async (res) => {
       const {displayName, email, uid} = res.user;
       const prevUser = (await this.user(uid).once('value')).val();
-      if(!prevUser) await this.signup(displayName, email, undefined, uid);
+      if(!prevUser) await this.signup("user", displayName, email, undefined, "", uid);
     });
 
 

@@ -4,9 +4,8 @@ import './style.css'
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import { Col, Button, Form, Row} from 'react-bootstrap';
-import Firebase, {FirebaseContext} from '../Firebase';
+import {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
-import { NONAME } from "dns";
 
 const DashboardPage = () => (
   <div>
@@ -23,7 +22,7 @@ const SubmitButton = () => (
 );
 
 const FileUploadButton = () => (
-  <i class="fas fa-paperclip"></i>
+  <i className="fas fa-paperclip"></i>
 );
 
 const CustomToolbar = () => (
@@ -142,7 +141,7 @@ class Dashboard extends React.Component {
       const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
         return (
           <div key={idx} className="my-0 px-2 idea-attachments" style={{ "border-top": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
-            <p className="my-0 px-0 col-11 d-inline-block"> <i class="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
+            <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
           </div>
         );
       });
@@ -184,7 +183,7 @@ class Dashboard extends React.Component {
       if(filename.length > 60) filename = filename.substring(0, 30)+" ... "+filename.substring(filename.length-30, filename.length);
       return (
         <div key={idx} className="my-0 px-2 attachments">
-          <p className="my-0 px-0 col-11 d-inline-block"> <i class="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
+          <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
           <span className="float-right remove-attachment" onClick={() => this.removeAttachment(idx)} ><i class="far fa-trash-alt"></i></span>
         </div>
       );
