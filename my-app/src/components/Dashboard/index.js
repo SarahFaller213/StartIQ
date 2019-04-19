@@ -1,12 +1,19 @@
 import * as React from "react"
 import ReactQuill from 'react-quill';
 import './style.css'
+import {
+  BrowserRouter as Router,
+  Route
+ } from 'react-router-dom';
+ import { Link, withRouter } from 'react-router'
+import { MoreIdeaLink } from '../IdeaPage';
+import * as ROUTES from '../../constants/routes';
+import { compose } from 'recompose';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
-import { Col, Button, Form, Row, Modal, Dropdown } from 'react-bootstrap';
+import { Col, Button, Form, Row, Modal, Dropdown} from 'react-bootstrap';
 import {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
-import { timingSafeEqual } from "crypto";
 
 const DashboardPage = () => (
   <div>
@@ -58,7 +65,7 @@ const CustomToolbar = () => (
 
 class Dashboard extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = { text: '', revise: '', ideas: [], revisions: [], uid: undefined, username: undefined, attachments: [], profile: ''}
     this.handleChange = this.handleChange.bind(this)
     this.handleModalChange = this.handleModalChange.bind(this)
@@ -142,6 +149,11 @@ class Dashboard extends React.Component {
     });
   }
 
+  onAdd = event => {
+    console.log('clicked');
+    this.props.history.push("ROUTES.IDEA_PAGE");
+  }
+
   onUploadClick = () => {
     this.uploadRef.current.click();
   }
@@ -190,7 +202,7 @@ class Dashboard extends React.Component {
           <div className="col-4">
             
             <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
-            
+            <MoreIdeaLink />
             <Button className = "submit" variant="secondary" onClick={() => this.onModal(key, ideaInfo.idea)}> Edit</Button>
             
             <Modal
@@ -238,7 +250,7 @@ class Dashboard extends React.Component {
                 <Col sm="9">
                   <Form.Control className = "comment_input" type="Comment" placeholder="Enter Your Comment..." />
                 </Col>
-                <Button type="submit" variant = "info">Post</Button>
+                <Button type="submit" variant = "primary">Post</Button>
               </Form.Group>
             </Form>
           </div>
@@ -302,3 +314,4 @@ class Dashboard extends React.Component {
 }
 
 export default DashboardPage
+

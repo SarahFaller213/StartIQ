@@ -52,7 +52,7 @@ class Idea extends React.Component {
         <div className="tabs">
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
             <Tab eventKey="customer" title="Customer">
-                <div className="label1"><Form.Label className="from-label">Question: Show question</Form.Label></div>
+                <div className="label1"><Form.Label>Question: Show question</Form.Label></div>
                 <form onSubmit={this.onSubmit}>
                     <input 
                     name="email"
@@ -106,7 +106,20 @@ class Idea extends React.Component {
 
   
 }
-    
+
+const IdeaForm = compose(
+  withRouter,
+  withFirebase,
+)(Idea);
+
+const MoreIdeaLink = () => (
+  <Link to={ROUTES.IDEA_PAGE}> <Button className = "submit" variant="info">
+    Refine
+  </Button></Link>
+);
+
+
 export default IdeaPage;
 
-export {IdeaPage};
+export {IdeaForm, MoreIdeaLink};
+
