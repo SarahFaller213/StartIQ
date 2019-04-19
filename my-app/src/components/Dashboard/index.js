@@ -6,7 +6,7 @@ import {
   Route
  } from 'react-router-dom';
  import { Link, withRouter } from 'react-router'
-import { MoreIdeaLink } from '../IdeaPage';
+import { RefineIdeaLink } from '../Idea';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import 'react-quill/dist/quill.snow.css';
@@ -96,7 +96,7 @@ class Dashboard extends React.Component {
   }
 
   handleModalChange(value){
-    this.setState({ revise: value});
+    this.setState({ revise: value });
   }
 
   onSubmit = () =>{
@@ -149,10 +149,6 @@ class Dashboard extends React.Component {
     });
   }
 
-  onAdd = event => {
-    console.log('clicked');
-    this.props.history.push("ROUTES.IDEA_PAGE");
-  }
 
   onUploadClick = () => {
     this.uploadRef.current.click();
@@ -202,7 +198,7 @@ class Dashboard extends React.Component {
           <div className="col-4">
             
             <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
-            <MoreIdeaLink />
+            <RefineIdeaLink />
             <Button className = "submit" variant="secondary" onClick={() => this.onModal(key, ideaInfo.idea)}> Edit</Button>
             
             <Modal

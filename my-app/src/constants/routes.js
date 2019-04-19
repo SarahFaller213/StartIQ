@@ -7,4 +7,4 @@ export const PROFILE = '/Profile';
 export const EDIT = '/EditProfile';
 export const COMMUNITY='/Community';
 export const TOKEN = '/Token';
-export const IDEA_PAGE = '/IdeaPage';
+export const IDEA_PAGE = '/Idea';

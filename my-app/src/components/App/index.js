@@ -14,7 +14,7 @@ import ProfilePage from '../Profile';
 import ProfileEdit from '../EditProfile'
 import CommunityPage from '../Community'
 import TokenPage from '../Token'
-import IdeaPage from '../IdeaPage'
+import IdeaPage from '../Idea'
 import * as ROUTES from '../../constants/routes';
 
 import { withFirebase } from '../Firebase';

@@ -8,7 +8,8 @@ import './style.css'
 import { Col, Button, Form, Row} from 'react-bootstrap';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-
+import ReactQuill from 'react-quill';
+import { dashboard } from '../Dashboard';
 
 
 const IdeaPage = () => (
@@ -19,18 +20,11 @@ const IdeaPage = () => (
   </div>
 );
 
-const INITIAL_STATE = {
-  email: '',
-};
-
-
 class Idea extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {ideas: "", uid: undefined, username: undefined, attachments: [], profile: '' }
-    this.uploadRef = React.createRef();
   }
-    
+
 
   render() {
     // ideas
@@ -38,16 +32,15 @@ class Idea extends React.Component {
       return (
         <div className = "main">
         <h1 className="title text-center mt-0">Interogate Idea</h1>
-        <div className="centerDiv" >
-        <div className="card">
+       
+        {/* <ReactQuill /> */}
             <div className="cardHeader">
                 <p className="ideaFont">Idea</p>
             </div>
             <div className="cardBody">
-                <p>blah blah content</p>
+              {/* {this.ideaKey} */}
             </div>
-        </div>
-        </div>
+
         <div className="centerDiv2"> 
         <div className="tabs">
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
@@ -112,7 +105,7 @@ const IdeaForm = compose(
   withFirebase,
 )(Idea);
 
-const MoreIdeaLink = () => (
+const RefineIdeaLink = () => (
   <Link to={ROUTES.IDEA_PAGE}> <Button className = "submit" variant="info">
     Refine
   </Button></Link>
@@ -121,5 +114,5 @@ const MoreIdeaLink = () => (
 
 export default IdeaPage;
 
-export {IdeaForm, MoreIdeaLink};
+export {IdeaForm, RefineIdeaLink};
 
