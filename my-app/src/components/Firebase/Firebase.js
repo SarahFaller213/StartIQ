@@ -209,6 +209,4 @@ async getQuestion(prompt){
 
 
 
-
-
 export default Firebase;
