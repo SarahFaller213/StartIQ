@@ -36,6 +36,8 @@ class Profile extends React.Component {
     return (
       <div className = "mt-4">
         <img className = "profile_img_" src={this.state.profile.profileIMG} alt="profile"/>
+        <div className = "dash_pro">
+        </div>
         <table className="editTable">
           <tbody>
             <tr>

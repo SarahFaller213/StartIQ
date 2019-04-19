@@ -25,12 +25,19 @@ h1 {
     text-align: center;
 }
 
-.profile_img_ {
-  width: 10%;
-  display:block;
-  margin:auto;
-}
 
 .cardStyle{
    list-style:none;
+}
+
+.card1{
+    text-align: center;
+    
+}
+
+.cardImage {
+    padding-top: 10px;
+    width:auto;/* you can use % */
+    height: 200px;
+    margin:auto;
 }

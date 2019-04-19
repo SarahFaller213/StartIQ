@@ -4,7 +4,8 @@ import {FirebaseContext} from '../Firebase';
 import './style.css'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
-
+import CardDeck from 'react-bootstrap/CardDeck'
+import CardColumns from 'react-bootstrap/CardColumns'
 
 
 const ProfilePage = () => (
@@ -67,9 +68,10 @@ class CommunityPage extends React.Component {
 
 const UserList = ({ users }) => (
   <div className = "mt-4">
-    <CardGroup>
+    <CardDeck>
     {users.map(user => (
-        <Card style={{ width: '18rem'}} className="text-center">
+        <Card style={{ width: '18rem'}} className="card1">
+            <Card.Img variant="top" className="cardImage" src={user.profile_info.profileIMG} alt="profile"/>
             <Card.Body>
             <Card.Title>{user.username}</Card.Title>
             <Card.Text>email:  {user.email}</Card.Text>
@@ -79,7 +81,7 @@ const UserList = ({ users }) => (
             </Card.Body>
         </Card>
     ))}
-    </CardGroup>
+    </CardDeck>
   </div>
 );
 

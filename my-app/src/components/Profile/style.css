@@ -70,3 +70,14 @@ h1 {
   display:block;
   margin:auto;
 }
+
+.dash_pro {
+  text-align: center;
+  color: white;
+  margin-top: 10px;
+}
+
+.dash_pro p {
+  /* background: grey; */
+  background: rgb(45, 51, 179);
+}
