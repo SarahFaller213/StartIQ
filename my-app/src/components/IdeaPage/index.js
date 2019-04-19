@@ -38,21 +38,21 @@ class Idea extends React.Component {
       return (
         <div className = "main">
         <h1 className="title text-center mt-0">Interogate Idea</h1>
-        <div className="col-md-8" >
+        <div className="centerDiv" >
         <div className="card">
             <div className="cardHeader">
-                <p>Idea</p>
+                <p className="ideaFont">Idea</p>
             </div>
             <div className="cardBody">
                 <p>blah blah content</p>
             </div>
         </div>
         </div>
-          
-        <div className="col-md-8" style={{ padding: '100px'}}>
+        <div className="centerDiv2"> 
+        <div className="tabs">
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
             <Tab eventKey="customer" title="Customer">
-                 <Form.Label>Question:</Form.Label>
+                <div className="label1"><Form.Label className="from-label">Question: Show question</Form.Label></div>
                 <form onSubmit={this.onSubmit}>
                     <input 
                     name="email"
@@ -96,6 +96,7 @@ class Idea extends React.Component {
                 </form>
             </Tab>
           </Tabs> 
+        </div>
         </div>
           
         </div>

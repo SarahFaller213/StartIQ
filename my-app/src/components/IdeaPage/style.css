@@ -1,18 +1,17 @@
 .card{
     position: relative;
-    display: flex;
+    display: inline-block;
     flex-direction: column;
     min-width: 0;
     border-radius: .25rem;
     width: 50%;
     padding-bottom: 2em; 
-    float: center;
     
 }
 
 
 .cardHeader{
-    padding: .75 rem 1.25 rem;
+    padding: 1.5%;
     margin-bottom: 0;
     background-color: grey;
     text-align: center;
@@ -22,4 +21,34 @@
     flex: 1 1 auto;
     padding: 1.25rem;
     text-align: center;
+}
+
+
+
+.form-label{
+    display: inline-block;
+    padding: 10% 0%;
+}
+.label1{
+    text-align: center;
+}
+
+.centerDiv{
+    text-align: center;
+    padding-top: 5%;
+}
+
+.centerDiv2{
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.tabs{
+    display: inline-block;
+    width: 50%;
+}
+
+.ideaFont{
+    font-size: x-large;
 }
