@@ -52,7 +52,7 @@ class Idea extends React.Component {
         <div className="tabs">
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
             <Tab eventKey="customer" title="Customer">
-                <div className="label1"><Form.Label>Question: Show question</Form.Label></div>
+                <div className="label1"><Form.Label className = "question-label">Question: Show question</Form.Label></div>
                 <form onSubmit={this.onSubmit}>
                     <input 
                     name="email"
@@ -63,7 +63,7 @@ class Idea extends React.Component {
                 </form>
             </Tab>
             <Tab eventKey="competition" title="Competition">
-                <Form.Label>Question:</Form.Label>
+                <Form.Label className = "question-label">Question:</Form.Label>
                 <form onSubmit={this.onSubmit}>
                     <input 
                     name="email"
@@ -74,7 +74,7 @@ class Idea extends React.Component {
                 </form>
             </Tab>
             <Tab eventKey="solution" title="Solution">
-                <Form.Label>Question:</Form.Label>
+                <Form.Label className = "question-label">Question:</Form.Label>
                 <form onSubmit={this.onSubmit}>
                     <input 
                     name="email"
@@ -85,7 +85,7 @@ class Idea extends React.Component {
                 </form>
             </Tab>
             <Tab eventKey="problem" title="Problem">
-                 <Form.Label>Question:</Form.Label>
+                 <Form.Label className = "question-label">Question:</Form.Label>
                 <form onSubmit={this.onSubmit}>
                     <input 
                     name="email"
