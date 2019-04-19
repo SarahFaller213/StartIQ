@@ -202,7 +202,7 @@ class Dashboard extends React.Component {
           <div className="col-4">
             
             <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
-            <MoreIdeaLink />
+            <MoreIdeaLink key={key}/>
             <Button className = "submit" variant="secondary" onClick={() => this.onModal(key, ideaInfo.idea)}> Edit</Button>
             
             <Modal

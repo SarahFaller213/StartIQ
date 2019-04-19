@@ -19,9 +19,29 @@ const IdeaPage = () => (
   </div>
 );
 
+
 const INITIAL_STATE = {
-  email: '',
+      questions: {
+          comp :{
+            "Are there competing Companies": "",
+          },
+          customer :{
+          "Who is your target customer": "", 
+          },
+          prob :{
+          "What problem is your idea going to solve?": "",
+          },
+          sol:{
+              "What is the solution does your idea have?": "",
+          },
+        },
+    blockSubmit: false,
+    error: null,
+    uid: '',
+    email: '',
 };
+              
+
 
 
 class Idea extends React.Component {
@@ -61,6 +81,7 @@ class Idea extends React.Component {
                     placeholder=""
                 />
                 </form>
+
             </Tab>
             <Tab eventKey="competition" title="Competition">
                 <Form.Label className = "question-label">Question:</Form.Label>
@@ -104,7 +125,6 @@ class Idea extends React.Component {
       )
     }
 
-  
 }
 
 const IdeaForm = compose(

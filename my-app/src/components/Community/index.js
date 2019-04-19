@@ -68,7 +68,7 @@ class CommunityPage extends React.Component {
 
 const UserList = ({ users }) => (
   <div className = "mt-4">
-    <CardDeck>
+    <CardDeck className="communityDeck">
     {users.map(user => (
         <Card style={{ width: '18rem'}} className="card1">
             <Card.Img variant="top" className="cardImage" src={user.profile_info.profileIMG} alt="profile"/>

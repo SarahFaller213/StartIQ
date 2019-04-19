@@ -61,6 +61,8 @@ class Firebase {
   tokens = token => this.db.ref(`tokens/${token}`);
   tokenPair = () => this.db.ref('tokens');
   revise = (uid, key) => this.db.ref(`workspace/${uid}/${key}/revision`);
+  question = prompt => this.db.ref(`prompts/${prompt}`);
+
 
   setAuthChangeHandler(handler) {
     this.auth.onAuthStateChanged(handler);
@@ -101,12 +103,26 @@ class Firebase {
 
 
   // ************************* IDEA API ***************************
-  putIdea(ideaText, uid, attachments) {
+  async putIdea(ideaText, uid, attachments, prompts) {
     let date = Date.now()
-    return this.workspace(uid).push({
+    this.workspace(uid).push({
       idea: ideaText,
       created_at: date,
       attachments: attachments,
+      questions: {
+          comp :{
+            "Are there competing Companies": "",
+          },
+          customer :{
+          "Who is your target customer": "", 
+          },
+          prob :{
+          "What problem is your idea going to solve?": "",
+          },
+          sol:{
+              "What is the solution does your idea have?": "",
+          },
+        }
     }).child("revision").push({
       idea: ideaText,
       created_at: date
@@ -179,7 +195,19 @@ putTokens(token, community) {
   return this.tokens(token).set(community);
 }
 
+// ************************* Prompts AIP ***************************
+
+async getQuestion(prompt){
+    var question = "";
+    await this.prompts(question).once('value', function(snapshot){
+        question=snapshot.val();
+    })
+    return question;
 }
+
+}
+
+
 
 
 
