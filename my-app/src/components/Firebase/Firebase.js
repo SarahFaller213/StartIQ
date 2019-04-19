@@ -76,7 +76,7 @@ class Firebase {
       roles: "", 
       skills: "", 
       industries: "", 
-      profileIMG: imgURL || ""
+      profileIMG: imgURL || fallbackIMG
     }, uid);
     await this.workspace(uid).set({ username });
   }

@@ -14,7 +14,7 @@ import Form from 'react-bootstrap/Form'
 
 const SignUpPage = () => (
   <div>
-    <section className = "screen pt-4">
+    <section className = "screen_signup pt-4">
 
       <div className = "container-fluid pt-15">
         <div className="row align-items-center justify-content-center">
