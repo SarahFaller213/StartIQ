@@ -60,6 +60,7 @@ class Firebase {
   profile = uid => this.db.ref(`users/${uid}/profile_info`);
   tokens = token => this.db.ref(`tokens/${token}`);
   tokenPair = () => this.db.ref('tokens');
+  revise = (uid, key) => this.db.ref(`workspace/${uid}/${key}/revision`);
 
   setAuthChangeHandler(handler) {
     this.auth.onAuthStateChanged(handler);
@@ -101,10 +102,14 @@ class Firebase {
 
   // ************************* IDEA API ***************************
   putIdea(ideaText, uid, attachments) {
+    let date = Date.now()
     return this.workspace(uid).push({
       idea: ideaText,
-      created_at: Date.now(),
-      attachments: attachments
+      created_at: date,
+      attachments: attachments,
+    }).child("revision").push({
+      idea: ideaText,
+      created_at: date
     });
   }
 
@@ -126,6 +131,14 @@ class Firebase {
 
   deleteIdea(uid, key) {
     return this.workspace(uid).child(key).remove();
+  }
+
+  async editIdea(ideaText, uid, key){
+    await this.workspace(uid).child(key).update({idea: ideaText});
+    await this.workspace(uid).child(key).child("revision").push({
+      idea: ideaText,
+      created_at: Date.now()
+    });
   }
 
   uploadFile(uid, file) {

@@ -3,9 +3,10 @@ import ReactQuill from 'react-quill';
 import './style.css'
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
-import { Col, Button, Form, Row} from 'react-bootstrap';
+import { Col, Button, Form, Row, Modal, Dropdown } from 'react-bootstrap';
 import {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
+import { timingSafeEqual } from "crypto";
 
 const DashboardPage = () => (
   <div>
@@ -43,6 +44,7 @@ const CustomToolbar = () => (
       <option value="#d0d1d2"></option>
       <option selected></option>
     </select>
+    <button className="ql-link"></button>
     <button className="ql-image mr-auto"></button>
     <button className="ql-upload px-0 py-0">
       <FileUploadButton className="mx-0 my-0"/>
@@ -53,11 +55,13 @@ const CustomToolbar = () => (
   </div>
 );
 
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', ideas: [], uid: undefined, username: undefined, attachments: [], profile: '' }
+    this.state = { text: '', revise: '', ideas: [], revisions: [], uid: undefined, username: undefined, attachments: [], profile: ''}
     this.handleChange = this.handleChange.bind(this)
+    this.handleModalChange = this.handleModalChange.bind(this)
     this.uploadRef = React.createRef();
   }
 
@@ -71,7 +75,6 @@ class Dashboard extends React.Component {
         });
         this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
           this.setState({ideas : ideas});
-          // console.log(this.state.ideas.length);
         });
         this.props.firebase.getProfile(this.state.uid).then(profile => {
           this.setState({profile : profile});
@@ -82,22 +85,53 @@ class Dashboard extends React.Component {
   }
 
   handleChange(value) {
-    this.setState({ text: value })
+    this.setState({ text: value });
+  }
+
+  handleModalChange(value){
+    this.setState({ revise: value});
   }
 
   onSubmit = () =>{
     if(this.state.uid) {
       this.props.firebase.putIdea(this.state.text, this.state.uid, this.state.attachments).then(() => {
-        this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
-          this.setState({ideas : ideas, text: '', attachments: [] });
+          this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+            this.setState({ideas : ideas, text: '', attachments: [] });
+          });
         });
-      });
     }
   }
 
-  //TODO: Edit or Delete function
-  onEdit = () => {
-    
+  onEdit = (key) => {
+    this.setState({ modalShow: false });
+      this.props.firebase.editIdea(this.state.revise, this.state.uid, key).then(() => {
+        this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+        this.setState({ideas : ideas, text: '', attachments: [] });
+        });
+      })
+  }
+
+  onSelect = (data) => {
+    this.setState({ revise: data });
+  }
+
+  onModal = (key, idea) => {
+    this.setState({ modalShow: true, revise: idea });
+
+    this.props.firebase.revise(this.state.uid, key).on('value', snapshot => {
+      const editObject = snapshot.val();
+      const editList = Object.keys(editObject).map(data => ({
+        ...editObject[data]
+      }));
+
+      this.setState({
+        revisions: editList
+      });
+
+      console.log(this.state.revisions);
+    });
+
+
   }
 
   onDelete = (key) => {
@@ -140,11 +174,12 @@ class Dashboard extends React.Component {
       const created_at = (new Date(ideaInfo.created_at)).toString();
       const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
         return (
-          <div key={idx} className="my-0 px-2 idea-attachments" style={{ "border-top": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
+          <div key={idx} className="my-0 px-2 idea-attachments" style={{ "borderTop": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
             <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
           </div>
         );
       });
+    let modalClose = () => this.setState({ modalShow: false });
 
       return (
         <div className="row dashboard" key={key}>
@@ -153,8 +188,42 @@ class Dashboard extends React.Component {
             <p className = "createdAt"> {created_at}, posted by {this.state.username} </p>
           </div>
           <div className="col-4">
+            
             <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
-            <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
+            
+            <Button className = "submit" variant="secondary" onClick={() => this.onModal(key, ideaInfo.idea)}> Edit</Button>
+            
+            <Modal
+              {...this.props}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={this.state.modalShow}
+              onHide={modalClose} 
+            >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Edit Your Idea
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ReactQuill value={this.state.revise} onChange={this.handleModalChange} />
+              <Dropdown className = "mt-4">
+                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    Select from revisions
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    {!this.state.revisions ? [] : this.state.revisions.map((edit, idx) => (
+                      <Dropdown.Item key={idx} onClick = {() => {this.onSelect(edit.idea)}}> Revised on {(new Date(edit.created_at)).toString()} </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant = "info" onClick={() => this.onEdit(key)}>Save</Button>
+            </Modal.Footer>
+          </Modal>
           </div>
 
           <div className="col-12">
@@ -197,7 +266,7 @@ class Dashboard extends React.Component {
           <div className="row ml-5">
             
             {/* hidden file input that receives multiple files to be uploaded */}
-            <input type="file" accept=".pdf" className="invisible" ref={this.uploadRef} onChange={this.onUpload} multiple></input>
+            <input type="file" className="invisible" ref={this.uploadRef} onChange={this.onUpload} multiple></input>
             
             <div className = 'dashboard_profile col-2 px-3 text-center mt-5'>
               <div className="col-10 offset-md-1">
