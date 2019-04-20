@@ -20,12 +20,19 @@ const IdeaPage = () => (
   </div>
 );
 
+
+const INITIAL_STATE = {
+  blockSubmit: false,
+  error: null,
+};
+
               
 class Idea extends React.Component {
   constructor(props) {
     super(props)
     this.state = { prompt: "", question: ""}
   }
+    const
 
   onSelect = (prompt) => {
     this.setState({ prompt });
@@ -37,10 +44,14 @@ class Idea extends React.Component {
         }
       });
       this.setState({question: prompt_question[0]});
+      this.setState({blockSubmit:false})
     })
   }
 
   render() {
+        const { 
+      blockSubmit,
+    } = this.state;
     
     return (
       <div className = "main">
@@ -60,47 +71,58 @@ class Idea extends React.Component {
       <div className="tabs">
         <Tabs activeKey={this.state.prompt} id="uncontrolled-tab-example" onSelect={prompt => this.onSelect(prompt)}>
           <Tab eventKey="customer" title="Customer">
-              <div className="label1"><Form.Label className = "question-label">Question: {this.state.question} </Form.Label></div>
+              <div className="label1"><Form.Label className = "question-label">{this.state.question} </Form.Label></div>
               <form>
+                  <div className="questionInput">
                   <input 
                   name="email"
                   type="text"
                   className="form-control"
                   placeholder=""
               />
-              </form>        
+                </div>
+              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
+            </form>        
           </Tab>
           <Tab eventKey="competitor" title="Competition">
-              <Form.Label className = "question-label">Question: {this.state.question}</Form.Label>
+              <Form.Label className = "question-label">{this.state.question}</Form.Label>
               <form>
+                  <div className="questionInput">
                   <input 
                   name="email"
                   type="text"
                   className="form-control"
                   placeholder=""
               />
-              </form>
+             </div>
+              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button> 
+            </form>
           </Tab>
           <Tab eventKey="solution" title="Solution">
-              <Form.Label className = "question-label">Question: {this.state.question}</Form.Label>
+              <Form.Label className = "question-label">{this.state.question}</Form.Label>
               <form>
+                  <div className="questionInput">
                   <input 
                   name="email"
                   type="text"
                   className="form-control"
-                  placeholder=""
-              />
+                  placeholder="" />
+                </div>
+                <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
               </form>
           </Tab>
           <Tab eventKey="problem" title="Problem">
-                <Form.Label className = "question-label">Question: {this.state.question}</Form.Label>
+                <Form.Label className = "question-label">{this.state.question}</Form.Label>
               <form>
+                <div className="questionInput">
                   <input 
                   name="email"
                   type="text"
                   className="form-control"
                   placeholder=""
               />
+              </div>
+              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
               </form>
           </Tab>
         </Tabs> 
@@ -108,7 +130,6 @@ class Idea extends React.Component {
       </div>
         
       </div>
-        
     )
   }
 

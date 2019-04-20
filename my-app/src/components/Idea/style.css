@@ -53,3 +53,10 @@
 .ideaFont{
     font-size: x-large;
 }
+
+.questionInput{
+    display: inline-block;
+}
+#next{
+    margin-left: 10px;
+}

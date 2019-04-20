@@ -132,7 +132,7 @@ class ProfileEditBase extends Component {
               <tr>
                 <td> </td>
                 <td className="cell2">
-                  <button disabled={blockSubmit} className="button1">Save</button>
+                  <button disabled={blockSubmit} className="nurikuri">Save</button>
                 </td>
               </tr>
             </tbody>
@@ -144,7 +144,7 @@ class ProfileEditBase extends Component {
 }
 
 const EditProfileLink = () => (
-  <Link to={ROUTES.EDIT}> <Button variant="secondary">
+  <Link to={ROUTES.EDIT}> <Button className="nurikuri" variant="secondary">
     Edit
   </Button></Link>
 );
