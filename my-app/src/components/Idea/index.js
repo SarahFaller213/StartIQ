@@ -20,108 +20,97 @@ const IdeaPage = () => (
   </div>
 );
 
-
-const INITIAL_STATE = {
-      questions: {
-          comp :{
-            "Are_there_competing_Companies": ' ',
-          },
-          customer :{
-          "Who_is_your_target_customer": ' ', 
-          },
-        },
-    blockSubmit: false,
-    error: null,
-    uid: '',
-    email: '',
-};
               
 class Idea extends React.Component {
   constructor(props) {
     super(props)
-      this.state={ questions: { comp : { "Are_there_competing_Companies": ""}, customer : { "Who_is_your_target_customer": ""}}
-      }
+    this.state = { prompt: "", question: ""}
   }
+
+  onSelect = (prompt) => {
+    this.setState({ prompt });
+    this.props.firebase.prompts().once('value').then((snapshot) => {
+      var prompt_question = [];
+      snapshot.forEach(function(data) {
+        if(data.key === prompt){
+          prompt_question.push(data.val()); //push into array because data.val() is ReadOnly. It cannot be defined as string
+        }
+      });
+      this.setState({question: prompt_question[0]});
+    })
+  }
+
+  render() {
     
-    componentDidMount() {
-         this.props.firebase.getQuestion((customerQ) => {
-             this.setState({questions:{customer: customerQ}});
-         });
-  }
-
-
-    render() {
-    // ideas
-      
-      return (
-        <div className = "main">
-        <h1 className="title text-center mt-0">Interogate Idea</h1>
-          <div className="centerDiv">
-       <div className = "card">
-        {/* <ReactQuill /> */}
-            <div className="cardHeader">
-                <p className="ideaFont">Idea</p>
-            </div>
-            <div className="cardBody">
-              <p>dfdfs</p>
-            </div>
-        </div>
+    return (
+      <div className = "main">
+      <h1 className="title text-center mt-0">Interogate Idea</h1>
+        <div className="centerDiv">
+      <div className = "card">
+      {/* <ReactQuill /> */}
+          <div className="cardHeader">
+              <p className="ideaFont">Idea</p>
           </div>
-        <div className="centerDiv2"> 
-        <div className="tabs">
-          <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-            <Tab eventKey="customer" title="Customer">
-                <div className="label1"><Form.Label className = "question-label">{this.state.questions.customer.Who_is_your_target_customer}</Form.Label></div>
-                <form onSubmit={this.onSubmit}>
-                    <input 
-                    name="email"
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                />
-                </form>        
-            </Tab>
-            <Tab eventKey="competition" title="Competition">
-                <Form.Label className = "question-label">Question:</Form.Label>
-                <form onSubmit={this.onSubmit}>
-                    <input 
-                    name="email"
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                />
-                </form>
-            </Tab>
-            <Tab eventKey="solution" title="Solution">
-                <Form.Label className = "question-label">Question:</Form.Label>
-                <form onSubmit={this.onSubmit}>
-                    <input 
-                    name="email"
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                />
-                </form>
-            </Tab>
-            <Tab eventKey="problem" title="Problem">
-                 <Form.Label className = "question-label">Question:</Form.Label>
-                <form onSubmit={this.onSubmit}>
-                    <input 
-                    name="email"
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                />
-                </form>
-            </Tab>
-          </Tabs> 
+          <div className="cardBody">
+            <p></p>
+          </div>
+      </div>
         </div>
-        </div>
-          
-        </div>
-          
-      )
-    }
+      <div className="centerDiv2"> 
+      <div className="tabs">
+        <Tabs activeKey={this.state.prompt} id="uncontrolled-tab-example" onSelect={prompt => this.onSelect(prompt)}>
+          <Tab eventKey="customer" title="Customer">
+              <div className="label1"><Form.Label className = "question-label">Question: {this.state.question} </Form.Label></div>
+              <form>
+                  <input 
+                  name="email"
+                  type="text"
+                  className="form-control"
+                  placeholder=""
+              />
+              </form>        
+          </Tab>
+          <Tab eventKey="competitor" title="Competition">
+              <Form.Label className = "question-label">Question: {this.state.question}</Form.Label>
+              <form>
+                  <input 
+                  name="email"
+                  type="text"
+                  className="form-control"
+                  placeholder=""
+              />
+              </form>
+          </Tab>
+          <Tab eventKey="solution" title="Solution">
+              <Form.Label className = "question-label">Question: {this.state.question}</Form.Label>
+              <form>
+                  <input 
+                  name="email"
+                  type="text"
+                  className="form-control"
+                  placeholder=""
+              />
+              </form>
+          </Tab>
+          <Tab eventKey="problem" title="Problem">
+                <Form.Label className = "question-label">Question: {this.state.question}</Form.Label>
+              <form>
+                  <input 
+                  name="email"
+                  type="text"
+                  className="form-control"
+                  placeholder=""
+              />
+              </form>
+          </Tab>
+        </Tabs> 
+      </div>
+      </div>
+        
+      </div>
+        
+    )
+  }
 
 }
 
@@ -130,14 +119,8 @@ const IdeaForm = compose(
   withFirebase,
 )(Idea);
 
-const RefineIdeaLink = () => (
-  <Link to={ROUTES.IDEA_PAGE}> <Button className = "submit" variant="info">
-    Refine
-  </Button></Link>
-);
-
 
 export default IdeaPage;
 
-export {IdeaForm, RefineIdeaLink};
+export {IdeaForm};
 

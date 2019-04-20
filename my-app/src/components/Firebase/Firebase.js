@@ -61,7 +61,7 @@ class Firebase {
   tokens = token => this.db.ref(`tokens/${token}`);
   tokenPair = () => this.db.ref('tokens');
   revise = (uid, key) => this.db.ref(`workspace/${uid}/${key}/revision`);
-  prompts = prompt => this.db.ref(`prompts/${prompt}`);
+  prompts = () => this.db.ref('prompts');
 
 
   setAuthChangeHandler(handler) {
@@ -197,17 +197,7 @@ putTokens(token, community) {
 
 // ************************* Prompts AIP ***************************
 
-async getQuestion(prompt){
-    var question = "";
-    await this.prompts(prompt).once('value', function(snapshot){
-        console.log(snapshot.val());
-        question=snapshot.val();
-    })
-    return question;
 }
-
-}
-
 
 
 export default Firebase;
