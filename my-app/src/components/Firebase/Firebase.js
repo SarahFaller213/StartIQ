@@ -149,6 +149,12 @@ class Firebase {
     return this.workspace(uid).child(key).remove();
   }
 
+  getRefineIdea(uid, key) {
+    return this.workspace(uid).child(key).once('value').then( data => {
+      return data.val()
+    });
+  }
+
   async editIdea(ideaText, uid, key){
     await this.workspace(uid).child(key).update({idea: ideaText});
     await this.workspace(uid).child(key).child("revision").push({
@@ -195,7 +201,9 @@ putTokens(token, community) {
   return this.tokens(token).set(community);
 }
 
-// ************************* Prompts AIP ***************************
+// ************************* Prompts API ***************************
+
+
 
 }
 

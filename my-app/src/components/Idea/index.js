@@ -8,14 +8,12 @@ import './style.css'
 import { Col, Button, Form, Row} from 'react-bootstrap';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import ReactQuill from 'react-quill';
-import { dashboard } from '../Dashboard';
+import renderHTML from 'react-render-html';
 
-
-const IdeaPage = () => (
+const IdeaPage = (props) => (
   <div>
     <FirebaseContext.Consumer>
-      {firebase => <Idea firebase={firebase}/>}
+      {firebase => <Idea firebase={firebase} {...props}/>}
     </FirebaseContext.Consumer>
   </div>
 );
@@ -30,9 +28,24 @@ const INITIAL_STATE = {
 class Idea extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { prompt: "", question: ""}
+    this.state = { prompt: "", question: "", key: props.match.params.key, uid: undefined, date: "", content: ""}
   }
-    const
+
+  componentDidMount() {
+    this.props.firebase.setAuthChangeHandler((user) => {
+      if(user) {
+        this.setState({ uid: user.uid });
+        this.props.firebase.getRefineIdea(this.state.uid, this.state.key).then((idea) => {
+          console.log(idea)
+          this.setState({
+            date: idea.created_at,
+            content: idea.idea
+          })
+        })
+      }
+      else this.setState({ uid: undefined});
+    });
+  }
 
   onSelect = (prompt) => {
     this.setState({ prompt });
@@ -49,7 +62,7 @@ class Idea extends React.Component {
   }
 
   render() {
-        const { 
+    const { 
       blockSubmit,
     } = this.state;
     
@@ -58,13 +71,12 @@ class Idea extends React.Component {
       <h1 className="title text-center mt-0">Interogate Idea</h1>
         <div className="centerDiv">
       <div className = "card">
-      {/* <ReactQuill /> */}
-          <div className="cardHeader">
-              <p className="ideaFont">Idea</p>
-          </div>
-          <div className="cardBody">
-            <p></p>
-          </div>
+        <div className="cardHeader">
+            <p className="ideaFont">Idea</p>
+        </div>
+        <div className="cardBody">
+          {renderHTML(this.state.content)}
+        </div>
       </div>
         </div>
       <div className="centerDiv2"> 
