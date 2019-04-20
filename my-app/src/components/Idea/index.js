@@ -24,16 +24,10 @@ const IdeaPage = () => (
 const INITIAL_STATE = {
       questions: {
           comp :{
-            "Are there competing Companies": "",
+            "Are_there_competing_Companies": ' ',
           },
           customer :{
-          "Who is your target customer": "", 
-          },
-          prob :{
-          "What problem is your idea going to solve?": "",
-          },
-          sol:{
-              "What is the solution does your idea have?": "",
+          "Who_is_your_target_customer": ' ', 
           },
         },
     blockSubmit: false,
@@ -45,10 +39,18 @@ const INITIAL_STATE = {
 class Idea extends React.Component {
   constructor(props) {
     super(props)
+      this.state={ questions: { comp : { "Are_there_competing_Companies": ""}, customer : { "Who_is_your_target_customer": ""}}
+      }
+  }
+    
+    componentDidMount() {
+         this.props.firebase.getQuestion((customerQ) => {
+             this.setState({questions:{customer: customerQ}});
+         });
   }
 
 
-  render() {
+    render() {
     // ideas
       
       return (
@@ -69,7 +71,7 @@ class Idea extends React.Component {
         <div className="tabs">
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
             <Tab eventKey="customer" title="Customer">
-                <div className="label1"><Form.Label className = "question-label">Question: Show question</Form.Label></div>
+                <div className="label1"><Form.Label className = "question-label">{this.state.questions.customer.Who_is_your_target_customer}</Form.Label></div>
                 <form onSubmit={this.onSubmit}>
                     <input 
                     name="email"
@@ -77,8 +79,7 @@ class Idea extends React.Component {
                     className="form-control"
                     placeholder=""
                 />
-                </form>
-
+                </form>        
             </Tab>
             <Tab eventKey="competition" title="Competition">
                 <Form.Label className = "question-label">Question:</Form.Label>
