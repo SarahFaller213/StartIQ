@@ -28,7 +28,7 @@ const INITIAL_STATE = {
 class Idea extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { prompt: "", question: "", key: props.match.params.key, uid: undefined, date: "", content: ""}
+    this.state = { prompt: "", number: "", question: "", key: props.match.params.key, uid: undefined, date: "", content: ""}
   }
 
   componentDidMount() {
@@ -49,13 +49,11 @@ class Idea extends React.Component {
 
   onSelect = (prompt) => {
     this.setState({ prompt });
-    this.props.firebase.prompts().once('value').then((snapshot) => {
+    this.props.firebase.prompts(prompt).once('value').then((snapshot) => {
       var prompt_question = [];
       snapshot.forEach(function(data) {
-        if(data.key === prompt){
           prompt_question.push(data.val()); //push into array because data.val() is ReadOnly. It cannot be defined as string
-        }
-      });
+        });
       this.setState({question: prompt_question[0]});
       this.setState({blockSubmit:false})
     })
@@ -82,7 +80,7 @@ class Idea extends React.Component {
       <div className="centerDiv2"> 
       <div className="tabs">
         <Tabs activeKey={this.state.prompt} id="uncontrolled-tab-example" onSelect={prompt => this.onSelect(prompt)}>
-          <Tab eventKey="customer" title="Customer">
+          <Tab eventKey="Customer" title="Customer">
               <div className="label1"><Form.Label className = "question-label">{this.state.question} </Form.Label></div>
               <form>
                   <div className="questionInput">
@@ -96,7 +94,7 @@ class Idea extends React.Component {
               <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
             </form>        
           </Tab>
-          <Tab eventKey="competitor" title="Competition">
+          <Tab eventKey="Competition" title="Competition">
               <Form.Label className = "question-label">{this.state.question}</Form.Label>
               <form>
                   <div className="questionInput">
@@ -110,7 +108,7 @@ class Idea extends React.Component {
               <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button> 
             </form>
           </Tab>
-          <Tab eventKey="solution" title="Solution">
+          <Tab eventKey="Solution" title="Solution">
               <Form.Label className = "question-label">{this.state.question}</Form.Label>
               <form>
                   <div className="questionInput">
@@ -123,7 +121,7 @@ class Idea extends React.Component {
                 <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
               </form>
           </Tab>
-          <Tab eventKey="problem" title="Problem">
+          <Tab eventKey="Problem" title="Problem">
                 <Form.Label className = "question-label">{this.state.question}</Form.Label>
               <form>
                 <div className="questionInput">

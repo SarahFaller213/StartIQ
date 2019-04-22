@@ -61,7 +61,7 @@ class Firebase {
   tokens = token => this.db.ref(`tokens/${token}`);
   tokenPair = () => this.db.ref('tokens');
   revise = (uid, key) => this.db.ref(`workspace/${uid}/${key}/revision`);
-  prompts = () => this.db.ref('prompts');
+  prompts = (prompt) => this.db.ref(`prompts/${prompt}`);
 
 
   setAuthChangeHandler(handler) {
@@ -103,7 +103,7 @@ class Firebase {
 
 
   // ************************* IDEA API ***************************
-  async putIdea(ideaText, uid, attachments, prompts) {
+  async putIdea(ideaText, uid, attachments) {
     let date = Date.now()
     this.workspace(uid).push({
       idea: ideaText,
@@ -201,7 +201,7 @@ putTokens(token, community) {
   return this.tokens(token).set(community);
 }
 
-// ************************* Prompts API ***************************
+// ************************* Comments API ***************************
 
 
 
