@@ -185,10 +185,10 @@ class Firebase {
   }
 
   putComment(uid, key, user, text) {
-    return this.comments(uid, key).set([{
+    this.comments(uid, key).push({
       0: user,
       1: text
-    }])
+    })
   }
 
 // ************************* Token API ***************************

@@ -191,9 +191,9 @@ class Dashboard extends React.Component {
     // ideas
     const ideas = this.state.ideas.map( ([key, ideaInfo]) => {
       const created_at = (new Date(ideaInfo.created_at)).toString();
-      const comments = !ideaInfo.comments ? [] : ideaInfo.comments.map(([username, comment], idx) => {
+      const comments = !ideaInfo.comments ? [] : Object.values(ideaInfo.comments).map(([username, comment]) => {
         return (
-          <Form key = {idx}>
+          <Form>
             <Form.Group as={Row} controlId="formPlaintextComment">
               <Form.Label className = "username_comment" column sm={2}>
                 {username}
