@@ -62,7 +62,7 @@ class Firebase {
   tokenPair = () => this.db.ref('tokens');
   revise = (uid, key) => this.db.ref(`workspace/${uid}/${key}/revision`);
   prompts = (prompt) => this.db.ref(`prompts/${prompt}`);
-
+  comments = (uid, key) => this.db.ref(`workspace/${uid}/${key}/comments`);
 
   setAuthChangeHandler(handler) {
     this.auth.onAuthStateChanged(handler);
@@ -129,6 +129,12 @@ class Firebase {
     });
   }
 
+  putComment(uid, key, user, text) {
+    this.comments(uid, key).push({
+      username: user,
+      comment: text
+    })
+  }
 
   getIdea(uid) {
     return this.workspace(uid).once('value').then( data => {
@@ -200,9 +206,6 @@ async checkToken(token){
 putTokens(token, community) {
   return this.tokens(token).set(community);
 }
-
-// ************************* Comments API ***************************
-
 
 
 }

@@ -66,7 +66,7 @@ const CustomToolbar = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '', revise: '', ideas: [], revisions: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: ""}
+    this.state = { text: '', revise: '', ideas: [], revisions: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: "", comment: ""}
     this.handleChange = this.handleChange.bind(this)
     this.handleModalChange = this.handleModalChange.bind(this)
     this.uploadRef = React.createRef();
@@ -140,6 +140,14 @@ class Dashboard extends React.Component {
     });
 
 
+  }
+
+  onChange = event => {
+    this.setState({ comment: event.target.value });
+  };
+
+  onPost = (key) => {
+    this.props.firebase.putComment(this.state.uid, key, this.state.username, this.state.comment);
   }
 
   onDelete = (key) => {
@@ -239,15 +247,15 @@ class Dashboard extends React.Component {
             {renderHTML(ideaInfo.idea)}
             {attachments}
             <hr></hr>
-            <Form>
+            <Form onSubmit = {(event) => event.preventDefault()}>
               <Form.Group as={Row} controlId="formPlaintextComment">
                 <Form.Label className = "username_comment" column sm={2}>
                 {this.state.username}
                 </Form.Label>
                 <Col sm="9">
-                  <Form.Control className = "comment_input" type="Comment" placeholder="Enter Your Comment..." />
+                  <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
                 </Col>
-                <Button type="submit" variant = "primary">Post</Button>
+                <Button type="submit" variant = "primary" onClick = {() => this.onPost(key)}>Post</Button>
               </Form.Group>
             </Form>
           </div>
