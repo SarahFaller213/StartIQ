@@ -66,7 +66,7 @@ const CustomToolbar = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '', revise: '', ideas: [], revisions: [], uid: undefined, username: undefined, attachments: [], profile: ''}
+    this.state = { text: '', revise: '', ideas: [], revisions: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: ""}
     this.handleChange = this.handleChange.bind(this)
     this.handleModalChange = this.handleModalChange.bind(this)
     this.uploadRef = React.createRef();
@@ -110,6 +110,7 @@ class Dashboard extends React.Component {
   }
 
   onEdit = (key) => {
+    console.log(key)
     this.setState({ modalShow: false });
       this.props.firebase.editIdea(this.state.revise, this.state.uid, key).then(() => {
         this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
@@ -123,9 +124,9 @@ class Dashboard extends React.Component {
   }
 
   onModal = (key, idea) => {
-    this.setState({ modalShow: true, revise: idea });
+    this.setState({ modalShow: true, revise: idea, ideaKey: key });
 
-    this.props.firebase.revise(this.state.uid, key).on('value', snapshot => {
+    this.props.firebase.revise(this.state.uid, key).once('value', snapshot => {
       const editObject = snapshot.val();
       const editList = Object.keys(editObject).map(data => ({
         ...editObject[data]
@@ -229,7 +230,7 @@ class Dashboard extends React.Component {
                 </Dropdown>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant = "info" onClick={() => this.onEdit(key)}>Save</Button>
+              <Button variant = "info" onClick={() => this.onEdit(this.state.ideaKey)}>Save</Button>
             </Modal.Footer>
           </Modal>
           </div>

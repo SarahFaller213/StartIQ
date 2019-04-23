@@ -157,7 +157,7 @@ class Firebase {
 
   async editIdea(ideaText, uid, key){
     await this.workspace(uid).child(key).update({idea: ideaText});
-    await this.workspace(uid).child(key).child("revision").push({
+    await this.revise(uid, key).push({
       idea: ideaText,
       created_at: Date.now()
     });
