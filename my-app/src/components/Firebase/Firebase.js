@@ -129,12 +129,7 @@ class Firebase {
     });
   }
 
-  putComment(uid, key, user, text) {
-    this.comments(uid, key).push({
-      username: user,
-      comment: text
-    })
-  }
+ 
 
   getIdea(uid) {
     return this.workspace(uid).once('value').then( data => {
@@ -187,6 +182,13 @@ class Firebase {
             .then((url) => [file.name, url])
       )
     );
+  }
+
+  putComment(uid, key, user, text) {
+    return this.comments(uid, key).set([{
+      0: user,
+      1: text
+    }])
   }
 
 // ************************* Token API ***************************

@@ -124,3 +124,8 @@ hr {
   /* font-family: 'Nunito Sans', sans-serif; */
   font-size: 40px;
 }
+
+.commentContext {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bolder;
+}

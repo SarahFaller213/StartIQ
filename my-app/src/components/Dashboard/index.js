@@ -1,17 +1,10 @@
 import * as React from "react"
 import ReactQuill from 'react-quill';
 import './style.css'
-import {
-  BrowserRouter as Router,
-  Route
- } from 'react-router-dom';
- import { Link, withRouter } from 'react-router-dom'
-import { RefineIdeaLink } from '../Idea';
-import * as ROUTES from '../../constants/routes';
-import { compose } from 'recompose';
+ import { Link } from 'react-router-dom'
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
-import { Col, Button, Form, Row, Modal, Dropdown} from 'react-bootstrap';
+import { Col, Button, Form, Row, Modal, Dropdown, Alert} from 'react-bootstrap';
 import {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
 
@@ -66,9 +59,10 @@ const CustomToolbar = () => (
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '', revise: '', ideas: [], revisions: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: "", comment: ""}
+    this.state = { text: '', revise: '', ideas: [], revisions: [], comments: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: "", comment: "", commentShow: false}
     this.handleChange = this.handleChange.bind(this)
     this.handleModalChange = this.handleModalChange.bind(this)
+    this.onChange = this.onChange.bind(this)
     this.uploadRef = React.createRef();
   }
 
@@ -89,6 +83,7 @@ class Dashboard extends React.Component {
       }
       else this.setState({ uid: undefined, username: undefined });
     });
+
   }
 
   handleChange(value) {
@@ -158,6 +153,13 @@ class Dashboard extends React.Component {
     });
   }
 
+  onComment= (event) => {
+    event.target.reset();
+    this.setState({
+      comment: ""
+    })
+  }
+
 
   onUploadClick = () => {
     this.uploadRef.current.click();
@@ -189,6 +191,21 @@ class Dashboard extends React.Component {
     // ideas
     const ideas = this.state.ideas.map( ([key, ideaInfo]) => {
       const created_at = (new Date(ideaInfo.created_at)).toString();
+      const comments = !ideaInfo.comments ? [] : ideaInfo.comments.map(([username, comment], idx) => {
+        return (
+          <Form key = {idx}>
+            <Form.Group as={Row} controlId="formPlaintextComment">
+              <Form.Label className = "username_comment" column sm={2}>
+                {username}
+              </Form.Label>
+              <Col sm="9" className = "commentContext pt-2">
+                {comment}
+              </Col>
+            </Form.Group>
+          </Form>
+        )
+      });
+      
       const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
         return (
           <div key={idx} className="my-0 px-2 idea-attachments" style={{ "borderTop": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
@@ -196,6 +213,7 @@ class Dashboard extends React.Component {
           </div>
         );
       });
+      
     let modalClose = () => this.setState({ modalShow: false });
 
       return (
@@ -247,7 +265,8 @@ class Dashboard extends React.Component {
             {renderHTML(ideaInfo.idea)}
             {attachments}
             <hr></hr>
-            <Form onSubmit = {(event) => event.preventDefault()}>
+            
+            <Form onSubmit = {this.onComment} >
               <Form.Group as={Row} controlId="formPlaintextComment">
                 <Form.Label className = "username_comment" column sm={2}>
                 {this.state.username}
@@ -255,9 +274,12 @@ class Dashboard extends React.Component {
                 <Col sm="9">
                   <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
                 </Col>
-                <Button type="submit" variant = "primary" onClick = {() => this.onPost(key)}>Post</Button>
+                <Button className = "mr-4" type="submit" variant = "light" onClick = {() => this.onPost(key)}>Post</Button>
               </Form.Group>
             </Form>
+
+            {comments}
+
           </div>
           
         </div>
