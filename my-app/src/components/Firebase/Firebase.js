@@ -185,7 +185,7 @@ class Firebase {
   }
 
   putComment(uid, key, user, text) {
-    this.comments(uid, key).push({
+    return this.comments(uid, key).push({
       0: user,
       1: text
     })

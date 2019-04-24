@@ -141,8 +141,13 @@ class Dashboard extends React.Component {
     this.setState({ comment: event.target.value });
   };
 
-  onPost = (key) => {
-    this.props.firebase.putComment(this.state.uid, key, this.state.username, this.state.comment);
+  onPost = (evt, key) => {
+    evt.preventDefault();
+    this.props.firebase.putComment(this.state.uid, key, this.state.username, this.state.comment).then(() => {
+      this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+        this.setState({ideas : ideas});
+      });
+    });
   }
 
   onDelete = (key) => {
@@ -274,7 +279,7 @@ class Dashboard extends React.Component {
                 <Col sm="9">
                   <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
                 </Col>
-                <Button className = "mr-4" type="submit" variant = "light" onClick = {() => this.onPost(key)}>Post</Button>
+                <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key)}>Post</Button>
               </Form.Group>
             </Form>
 
