@@ -1,12 +1,12 @@
 import * as React from "react"
 import ReactQuill from 'react-quill';
 import './style.css'
+ import { Link } from 'react-router-dom'
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
-import { Col, Button, Form, Row} from 'react-bootstrap';
-import Firebase, {FirebaseContext} from '../Firebase';
+import { Col, Button, Form, Row, Modal, Dropdown, Alert} from 'react-bootstrap';
+import {FirebaseContext} from '../Firebase';
 import renderHTML from 'react-render-html';
-import { NONAME } from "dns";
 
 const DashboardPage = () => (
   <div>
@@ -23,7 +23,7 @@ const SubmitButton = () => (
 );
 
 const FileUploadButton = () => (
-  <i class="fas fa-paperclip"></i>
+  <i className="fas fa-paperclip"></i>
 );
 
 const CustomToolbar = () => (
@@ -44,6 +44,7 @@ const CustomToolbar = () => (
       <option value="#d0d1d2"></option>
       <option selected></option>
     </select>
+    <button className="ql-link"></button>
     <button className="ql-image mr-auto"></button>
     <button className="ql-upload px-0 py-0">
       <FileUploadButton className="mx-0 my-0"/>
@@ -54,11 +55,14 @@ const CustomToolbar = () => (
   </div>
 );
 
+
 class Dashboard extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { text: '', ideas: [], uid: undefined, username: undefined, attachments: [], profile: '' }
+    super(props);
+    this.state = { text: '', revise: '', ideas: [], revisions: [], comments: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: "", comment: "", commentShow: false}
     this.handleChange = this.handleChange.bind(this)
+    this.handleModalChange = this.handleModalChange.bind(this)
+    this.onChange = this.onChange.bind(this)
     this.uploadRef = React.createRef();
   }
 
@@ -72,7 +76,6 @@ class Dashboard extends React.Component {
         });
         this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
           this.setState({ideas : ideas});
-          // console.log(this.state.ideas.length);
         });
         this.props.firebase.getProfile(this.state.uid).then(profile => {
           this.setState({profile : profile});
@@ -80,25 +83,71 @@ class Dashboard extends React.Component {
       }
       else this.setState({ uid: undefined, username: undefined });
     });
+
   }
 
   handleChange(value) {
-    this.setState({ text: value })
+    this.setState({ text: value });
+  }
+
+  handleModalChange(value){
+    this.setState({ revise: value });
   }
 
   onSubmit = () =>{
     if(this.state.uid) {
       this.props.firebase.putIdea(this.state.text, this.state.uid, this.state.attachments).then(() => {
-        this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
-          this.setState({ideas : ideas, text: '', attachments: [] });
+          this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+            this.setState({ideas : ideas, text: '', attachments: [] });
+          });
         });
-      });
     }
   }
 
-  //TODO: Edit or Delete function
-  onEdit = () => {
-    
+  onEdit = (key) => {
+    console.log(key)
+    this.setState({ modalShow: false });
+      this.props.firebase.editIdea(this.state.revise, this.state.uid, key).then(() => {
+        this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+        this.setState({ideas : ideas, text: '', attachments: [] });
+        });
+      })
+  }
+
+  onSelect = (data) => {
+    this.setState({ revise: data });
+  }
+
+  onModal = (key, idea) => {
+    this.setState({ modalShow: true, revise: idea, ideaKey: key });
+
+    this.props.firebase.revise(this.state.uid, key).once('value', snapshot => {
+      const editObject = snapshot.val();
+      const editList = Object.keys(editObject).map(data => ({
+        ...editObject[data]
+      }));
+
+      this.setState({
+        revisions: editList
+      });
+
+      console.log(this.state.revisions);
+    });
+
+
+  }
+
+  onChange = event => {
+    this.setState({ comment: event.target.value });
+  };
+
+  onPost = (evt, key) => {
+    evt.preventDefault();
+    this.props.firebase.putComment(this.state.uid, key, this.state.username, this.state.comment).then(() => {
+      this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+        this.setState({ideas : ideas});
+      });
+    });
   }
 
   onDelete = (key) => {
@@ -108,6 +157,14 @@ class Dashboard extends React.Component {
       });
     });
   }
+
+  onComment= (event) => {
+    event.target.reset();
+    this.setState({
+      comment: ""
+    })
+  }
+
 
   onUploadClick = () => {
     this.uploadRef.current.click();
@@ -139,13 +196,30 @@ class Dashboard extends React.Component {
     // ideas
     const ideas = this.state.ideas.map( ([key, ideaInfo]) => {
       const created_at = (new Date(ideaInfo.created_at)).toString();
+      const comments = !ideaInfo.comments ? [] : Object.values(ideaInfo.comments).map(([username, comment]) => {
+        return (
+          <Form>
+            <Form.Group as={Row} controlId="formPlaintextComment">
+              <Form.Label className = "username_comment" column sm={2}>
+                {username}
+              </Form.Label>
+              <Col sm="9" className = "commentContext pt-2">
+                {comment}
+              </Col>
+            </Form.Group>
+          </Form>
+        )
+      });
+      
       const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
         return (
-          <div key={idx} className="my-0 px-2 idea-attachments" style={{ "border-top": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
-            <p className="my-0 px-0 col-11 d-inline-block"> <i class="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
+          <div key={idx} className="my-0 px-2 idea-attachments" style={{ "borderTop": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
+            <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
           </div>
         );
       });
+      
+    let modalClose = () => this.setState({ modalShow: false });
 
       return (
         <div className="row dashboard" key={key}>
@@ -154,25 +228,63 @@ class Dashboard extends React.Component {
             <p className = "createdAt"> {created_at}, posted by {this.state.username} </p>
           </div>
           <div className="col-4">
+            
             <Button className = "submit" variant="danger" onClick = {() => this.onDelete(key)} > Delete</Button>
-            <Button className = "submit" variant="secondary" onClick = {this.onEdit}>Edit</Button>
+            <Link to={`/Idea/${key}`}> <Button className = "submit" variant="info"> Refine </Button></Link>
+            <Button className = "submit" variant="secondary" onClick={() => this.onModal(key, ideaInfo.idea)}> Edit</Button>
+            
+            <Modal
+              {...this.props}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={this.state.modalShow}
+              onHide={modalClose} 
+            >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Edit Your Idea
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ReactQuill value={this.state.revise} onChange={this.handleModalChange} />
+              <Dropdown className = "mt-4">
+                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    Select from revisions
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    {!this.state.revisions ? [] : this.state.revisions.map((edit, idx) => (
+                      <Dropdown.Item key={idx} onClick = {() => {this.onSelect(edit.idea)}}> Revised on {(new Date(edit.created_at)).toString()} </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant = "info" onClick={() => this.onEdit(this.state.ideaKey)}>Save</Button>
+            </Modal.Footer>
+          </Modal>
           </div>
 
           <div className="col-12">
             {renderHTML(ideaInfo.idea)}
             {attachments}
             <hr></hr>
-            <Form>
+            
+            <Form onSubmit = {this.onComment} >
               <Form.Group as={Row} controlId="formPlaintextComment">
                 <Form.Label className = "username_comment" column sm={2}>
                 {this.state.username}
                 </Form.Label>
                 <Col sm="9">
-                  <Form.Control className = "comment_input" type="Comment" placeholder="Enter Your Comment..." />
+                  <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
                 </Col>
-                <Button type="submit" variant = "info">Post</Button>
+                <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key)}>Post</Button>
               </Form.Group>
             </Form>
+
+            {comments}
+
           </div>
           
         </div>
@@ -184,7 +296,7 @@ class Dashboard extends React.Component {
       if(filename.length > 60) filename = filename.substring(0, 30)+" ... "+filename.substring(filename.length-30, filename.length);
       return (
         <div key={idx} className="my-0 px-2 attachments">
-          <p className="my-0 px-0 col-11 d-inline-block"> <i class="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
+          <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
           <span className="float-right remove-attachment" onClick={() => this.removeAttachment(idx)} ><i class="far fa-trash-alt"></i></span>
         </div>
       );
@@ -192,13 +304,13 @@ class Dashboard extends React.Component {
 
     return (      
       <div className = "main">
-        <h1 className="title text-center mt-0">News Feed</h1>
+        <h1 className="title text-center mt-0">Idea Dashboard</h1>
         <div className="container-fluid">
           <div className="my-5"></div>
           <div className="row ml-5">
             
             {/* hidden file input that receives multiple files to be uploaded */}
-            <input type="file" accept=".pdf" className="invisible" ref={this.uploadRef} onChange={this.onUpload} multiple></input>
+            <input type="file" className="invisible" ref={this.uploadRef} onChange={this.onUpload} multiple></input>
             
             <div className = 'dashboard_profile col-2 px-3 text-center mt-5'>
               <div className="col-10 offset-md-1">
@@ -234,3 +346,4 @@ class Dashboard extends React.Component {
 }
 
 export default DashboardPage
+

@@ -276,7 +276,7 @@ class Dashboard extends React.Component {
                 <Form.Label className = "username_comment" column sm={2}>
                 {this.state.username}
                 </Form.Label>
-                <Col sm="9">
+                <Col sm="8">
                   <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
                 </Col>
                 <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key)}>Post</Button>
