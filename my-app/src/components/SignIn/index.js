@@ -118,7 +118,11 @@ class SignInFormBase extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.DASHBOARD);
+        if(email === "admin@gmail.com"){
+          this.props.history.push(ROUTES.TOKEN);
+        } else {
+          this.props.history.push(ROUTES.DASHBOARD);
+        }
       })
       .catch(error => {
         this.setState({ error });

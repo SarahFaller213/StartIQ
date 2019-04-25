@@ -15,6 +15,7 @@ import ProfileEdit from '../EditProfile'
 import CommunityPage from '../Community'
 import TokenPage from '../Token'
 import IdeaPage from '../Idea'
+import NewsFeedPage from '../NewsFeed'
 import * as ROUTES from '../../constants/routes';
 
 import { withFirebase } from '../Firebase';
@@ -56,7 +57,7 @@ class App extends Component {
       <Route path={ROUTES.COMMUNITY} component={CommunityPage} />
       <Route path={ROUTES.TOKEN} component={TokenPage} />
       <Route path={ROUTES.IDEA_PAGE} component={IdeaPage} />
-
+      <Route path={ROUTES.FEED} component={NewsFeedPage} />
     </div>
   </Router>
     );

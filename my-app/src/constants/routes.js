@@ -8,3 +8,4 @@ export const EDIT = '/EditProfile';
 export const COMMUNITY='/Community';
 export const TOKEN = '/Token';
 export const IDEA_PAGE = '/Idea/:key';
+export const FEED = '/mentor';
