@@ -87,10 +87,12 @@ class SignUpFormBase extends Component {
       if(communityName){
         this.props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
         .then(result => this.props.firebase.signup(userType, username, email, imgURL, communityName, result.user.uid))
-        .then(() => this.props.history.push(ROUTES.DASHBOARD))
-        .catch(error => {
-            console.log(error);
-            this.setState({ error: error.message }); //Set Error State as Error message
+        .then(() => {
+          if(userType === 'mentor'){
+            this.props.history.push(ROUTES.FEED)
+          } else {
+            this.props.history.push(ROUTES.DASHBOARD)
+          }
         })
       }
     })

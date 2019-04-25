@@ -73,7 +73,8 @@ const UserList = ({ users }) => (
         <Card style={{ width: '18rem'}} className="card1">
             <Card.Img variant="top" className="cardImage" src={user.profile_info.profileIMG} alt="profile"/>
             <Card.Body>
-            <Card.Title>{user.username}</Card.Title>
+            <Card.Text><b>{user.community}</b></Card.Text>
+            <Card.Text>Skills: {user.profile_info.skills}</Card.Text>
             <Card.Text>email:  {user.email}</Card.Text>
             <Card.Text>University: {user.profile_info.university}</Card.Text>
             <Card.Text>Degree: {user.profile_info.degree}</Card.Text>
