@@ -7,7 +7,7 @@
     *  however, a lot of it was collaborative
 *   Amy 
     *   Work mostly on Database integration with Firebase and UI of the app.
-    *   Primarily on Dashboard with idea edits and comments, Admin token generation, Mentor dashboard and Routes Navigation.
+    *   Primarily on Dashboard with refine&edit idea and comments, Admin token generation, Mentor dashboard and Routes Navigation.
 
 ###### Attributions/ turtorial / external libraries:
 * Got guidlines on how to set up authentication with email and google from : https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/#react-application-setup
