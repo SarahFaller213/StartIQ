@@ -19,11 +19,6 @@ const IdeaPage = (props) => (
 );
 
 
-const INITIAL_STATE = {
-  blockSubmit: false,
-  error: null,
-};
-
               
 class Idea extends React.Component {
   constructor(props) {
