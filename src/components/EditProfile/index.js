@@ -34,13 +34,13 @@ const INITIAL_STATE = {
   uid: '',
 };
 
-const EditDataBase = () => (
-  <div>
-    <FirebaseContext.Consumer>
-      {firebase => <ProfileEditBase firebase={firebase}/>}
-    </FirebaseContext.Consumer>
-  </div>
-);
+// const EditDataBase = () => (
+//   <div>
+//     <FirebaseContext.Consumer>
+//       {firebase => <ProfileEditBase firebase={firebase}/>}
+//     </FirebaseContext.Consumer>
+//   </div>
+// );
 
 
 class ProfileEditBase extends Component {
