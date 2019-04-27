@@ -61,6 +61,7 @@ const SignInPage = () => (
 const INITIAL_STATE = {
   email: '',
   password: '',
+  userType: '',
   error: null,
 };
 
@@ -112,22 +113,32 @@ class SignInFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { email, password } = this.state;
+    const { email, password, userType } = this.state;
 
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        this.setState({ email: email, password: password });
         if(email === "admin@gmail.com"){
           this.props.history.push(ROUTES.TOKEN);
         } else {
-          this.props.history.push(ROUTES.DASHBOARD);
+          this.props.firebase.setAuthChangeHandler((user) => {
+            this.props.firebase.user(user.uid).once('value').then(snapshot => {
+              this.setState({userType: snapshot.val().userType});
+              // console.log(snapshot.val().userType);
+              if(this.state.userType == "mentor"){
+                this.props.history.push(ROUTES.FEED);
+              } else {
+                this.props.history.push(ROUTES.DASHBOARD);
+              }
+            });
+          })
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         this.setState({ error });
       });
-
+      
+    
     event.preventDefault();
   };
 

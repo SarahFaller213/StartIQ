@@ -8,7 +8,9 @@ import { Navbar, Nav} from 'react-bootstrap';
 // import { userInfo } from 'os';
 
 const Navigation = ({ authUser }) => (
-  <div>{authUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>
+  <div>
+    {authUser ? <NavigationAuth /> : <NavigationNonAuth />}
+  </div>
 );
 
 const NavigationAuth = () => (
