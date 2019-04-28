@@ -94,6 +94,8 @@ class SignUpFormBase extends Component {
             this.props.history.push(ROUTES.DASHBOARD)
           }
         })
+      }else {
+        this.setState({error: "Wrong Token"})
       }
     })
   };
@@ -232,7 +234,7 @@ class SignUpFormBase extends Component {
         <button className = "btn nurikuri btn-block" disabled={blockSubmit} type="submit">Sign Up</button>
         </div>
 
-        {error && <p>{error}</p>}
+        {error && <p className = "error">{error}</p>}
         
       </form>
     </div>
