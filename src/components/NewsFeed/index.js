@@ -82,12 +82,21 @@ class NewsFeed extends React.Component {
     this.setState({ comment: event.target.value });
   };
 
-  onPost = (evt, key, owner, uid) => {
+  onPost = (evt, key, uid) => {
     evt.preventDefault();
-    this.props.firebase.putComment(uid, key, this.state.username, this.state.comment).then(() => {
-      this.props.firebase.getIdea(uid).then(ideas => { // ideas : { KEY -> user idea}
-        this.setState({ideas : ideas});
-      });
+    this.props.firebase.putComment(uid.owner_uid, key.key, this.state.username, this.state.comment).then(() => {
+      this.state.uids.forEach((keys) =>{
+
+        this.props.firebase.getIdea(keys.key).then(data => { // ideas : { KEY -> user idea}
+        
+        if(data.length > 0){
+          this.setState({
+            ideas: [...this.state.ideas, data]
+          });
+          
+        }
+        });
+      })
     });
   }
 
@@ -160,7 +169,7 @@ class NewsFeed extends React.Component {
                 <Col sm="8">
                   <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
                 </Col>
-                <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key, owner, owner_uid)}>Post</Button>
+                <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, {key}, {owner_uid})}>Post</Button>
               </Form.Group>
               </Form>
               {comments}
