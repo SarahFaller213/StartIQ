@@ -74,7 +74,6 @@ const UserList = ({ users }) => (
             <Card.Body>
             <Card.Text><b>{user.username}</b></Card.Text>
             <Card.Text><b>{user.community}</b></Card.Text>
-            <Card.Text>Skills: {user.profile_info.skills}</Card.Text>
             <Card.Text>email:  {user.email}</Card.Text>
             <Card.Text>University: {user.profile_info.university}</Card.Text>
             <Card.Text>Degree: {user.profile_info.degree}</Card.Text>

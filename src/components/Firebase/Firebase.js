@@ -61,6 +61,7 @@ class Firebase {
   profile = uid => this.db.ref(`users/${uid}/profile_info`);
   tokens = token => this.db.ref(`tokens/${token}`);
   tokenPair = () => this.db.ref('tokens');
+  answers = (uid, key, question) => this.db.ref(`workspace/${uid}/${key}/questions/${question}`);
   revise = (uid, key) => this.db.ref(`workspace/${uid}/${key}/revision`);
   prompts = (prompt) => this.db.ref(`prompts/${prompt}`);
   comments = (uid, key) => this.db.ref(`workspace/${uid}/${key}/comments`);
@@ -102,6 +103,24 @@ class Firebase {
             .then((snapshot) => snapshot.ref.getDownloadURL());
   }
 
+  // ************************* PROMPT and Refined Idea API ***************************
+  putAnswers(text, uid, key, question) {
+    this.answers(uid, key, question).update({
+      answer: text
+    })
+  }
+
+  getAnswers(uid, key, question) {
+    return this.answers(uid, key, question).once('value').then(snapshot => {
+      return snapshot.val().answer;
+    })
+  }
+
+  getRefineIdea(uid, key) {
+    return this.workspace(uid).child(key).once('value').then( data => {
+      return data.val()
+    });
+  }
 
   // ************************* IDEA API ***************************
   async putIdea(ideaText, uid, attachments) {
@@ -111,17 +130,17 @@ class Firebase {
       created_at: date,
       attachments: attachments,
       questions: {
-          comp :{
-            "Are there competing Companies": "",
+          Competition : {
+            answer: ""
           },
-          customer :{
-          "Who is your target customer": "", 
+          Customer : {
+            answer: ""
+          }, 
+          Problem : {
+            answer: ""
           },
-          prob :{
-          "What problem is your idea going to solve?": "",
-          },
-          sol:{
-              "What is the solution does your idea have?": "",
+          Solution : {
+            answer: ""
           },
         }
     }).child("revision").push({
@@ -151,12 +170,6 @@ class Firebase {
     return this.workspace(uid).child(key).remove();
   }
 
-  getRefineIdea(uid, key) {
-    return this.workspace(uid).child(key).once('value').then( data => {
-      return data.val()
-    });
-  }
-
   async editIdea(ideaText, uid, key){
     await this.workspace(uid).child(key).update({idea: ideaText});
     await this.revise(uid, key).push({
@@ -164,6 +177,8 @@ class Firebase {
       created_at: Date.now()
     });
   }
+
+
 
   uploadFile(uid, file) {
     return this.fileStorage(uid).child(file.name+Date.now()).put(file);

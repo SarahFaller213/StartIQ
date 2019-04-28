@@ -23,7 +23,7 @@ const IdeaPage = (props) => (
 class Idea extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { prompt: "", number: "", question: "", key: props.match.params.key, uid: undefined, date: "", content: ""}
+    this.state = { prompt: "", number: "", question: "", key: props.match.params.key, uid: undefined, date: "", content: "", answer:""}
   }
 
   componentDidMount() {
@@ -42,6 +42,11 @@ class Idea extends React.Component {
     });
   }
 
+
+  onChange = event => {
+    this.setState({ answer: event.target.value });
+  };
+
   onSelect = (prompt) => {
     this.setState({ prompt });
     this.props.firebase.prompts(prompt).once('value').then((snapshot) => {
@@ -52,6 +57,15 @@ class Idea extends React.Component {
       this.setState({question: prompt_question[0]});
       this.setState({blockSubmit:false})
     })
+
+    this.props.firebase.getAnswers(this.state.uid, this.state.key, prompt).then((ans) => {
+      this.setState({answer : ans})
+    })
+  }
+
+  onClick = (evt) => {
+    evt.preventDefault();
+    this.props.firebase.putAnswers(this.state.answer, this.state.uid, this.state.key, this.state.prompt);
   }
 
   render() {
@@ -76,17 +90,20 @@ class Idea extends React.Component {
       <div className="tabs">
         <Tabs activeKey={this.state.prompt} id="uncontrolled-tab-example" onSelect={prompt => this.onSelect(prompt)}>
           <Tab eventKey="Customer" title="Customer">
-              <div className="label1"><Form.Label className = "question-label">{this.state.question} </Form.Label></div>
+              <div className="label1"><Form.Label className = "question-label">{this.state.question} </Form.Label> </div>
+    
               <form>
                   <div className="questionInput">
                   <input 
                   name="email"
                   type="text"
+                  value = {this.state.answer}
                   className="form-control"
                   placeholder=""
+                  onChange = {this.onChange}
               />
                 </div>
-              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
+              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit" onClick = {(evt) => this.onClick(evt)}> save</Button>
             </form>        
           </Tab>
           <Tab eventKey="Competition" title="Competition">
@@ -96,11 +113,13 @@ class Idea extends React.Component {
                   <input 
                   name="email"
                   type="text"
+                  value = {this.state.answer}
                   className="form-control"
                   placeholder=""
+                  onChange = {this.onChange}
               />
              </div>
-              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button> 
+              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"  onClick = {(evt) => this.onClick(evt)}> save</Button> 
             </form>
           </Tab>
           <Tab eventKey="Solution" title="Solution">
@@ -110,10 +129,12 @@ class Idea extends React.Component {
                   <input 
                   name="email"
                   type="text"
+                  value = {this.state.answer}
                   className="form-control"
-                  placeholder="" />
+                  placeholder=""
+                  onChange = {this.onChange} />
                 </div>
-                <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
+                <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"  onClick = {(evt) => this.onClick(evt)}> save</Button>
               </form>
           </Tab>
           <Tab eventKey="Problem" title="Problem">
@@ -123,11 +144,13 @@ class Idea extends React.Component {
                   <input 
                   name="email"
                   type="text"
+                  value = {this.state.answer}
                   className="form-control"
                   placeholder=""
+                  onChange = {this.onChange}
               />
               </div>
-              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"> next</Button>
+              <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"  onClick = {(evt) => this.onClick(evt)}> save</Button>
               </form>
           </Tab>
         </Tabs> 
