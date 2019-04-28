@@ -125,7 +125,7 @@ class SignInFormBase extends Component {
             this.props.firebase.user(user.uid).once('value').then(snapshot => {
               // console.log(snapshot.val().userType);
               if(snapshot.val().userType == "mentor"){
-                setTimeout(() => { this.props.history.push(ROUTES.FEED); }, 100);
+                setTimeout(() => { this.props.history.push(ROUTES.FEED); }, 300);
               } else if(snapshot.val().userType == "user") {
                 setTimeout(() => { this.props.history.push(ROUTES.DASHBOARD); }, 100);
               } else if (snapshot.val().userType = "admin") {

@@ -62,7 +62,6 @@ class NewsFeed extends React.Component {
           });
           
         }
-          
         });
       })
     });
@@ -70,7 +69,9 @@ class NewsFeed extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.firebase.users().off();
   }
+
 
   handleChange(value) {
     this.setState({ text: value });
@@ -81,10 +82,10 @@ class NewsFeed extends React.Component {
     this.setState({ comment: event.target.value });
   };
 
-  onPost = (evt, key) => {
+  onPost = (evt, key, owner, uid) => {
     evt.preventDefault();
-    this.props.firebase.putComment(this.state.uid, key, this.state.username, this.state.comment).then(() => {
-      this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
+    this.props.firebase.putComment(uid, key, this.state.username, this.state.comment).then(() => {
+      this.props.firebase.getIdea(uid).then(ideas => { // ideas : { KEY -> user idea}
         this.setState({ideas : ideas});
       });
     });
@@ -100,71 +101,69 @@ class NewsFeed extends React.Component {
 
   render() {
     // ideas
+    let idea;
 
     const ideas = this.state.ideas.map((list) => {
-      // console.log(list)
-      list.map( ([key, ideaInfo]) => {
-        console.log(key);
-        console.log(ideaInfo)
+      console.log(list)
+      idea = list.map( ([key, ideaInfo]) => {
         const created_at = (new Date(ideaInfo.created_at)).toString();
         const owner = ideaInfo.username;
         const idea = ideaInfo.idea;
-        console.log(created_at)
-        console.log(idea)
-        console.log(owner)
-        // const comments = !ideaInfo.comments ? [] : Object.values(ideaInfo.comments).map(([username, comment]) => {
-        //   return (
-        //     <Form>
-        //       <Form.Group as={Row} controlId="formPlaintextComment">
-        //         <Form.Label className = "username_comment" column sm={2}>
-        //           {username}
-        //         </Form.Label>
-        //         <Col sm="9" className = "commentContext pt-2">
-        //           {comment}
-        //         </Col>
-        //       </Form.Group>
-        //     </Form>
-        //   )
-        // });
+        const owner_uid = ideaInfo.uid;
+
+        const comments = !ideaInfo.comments ? [] : Object.values(ideaInfo.comments).map(([username, comment]) => {
+          return (
+            <Form>
+              <Form.Group as={Row} controlId="formPlaintextComment">
+                <Form.Label className = "username_comment" column sm={2}>
+                  {username}
+                </Form.Label>
+                <Col sm="9" className = "commentContext pt-2">
+                  {comment}
+                </Col>
+              </Form.Group>
+            </Form>
+          )
+        });
+        const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
+          return (
+            <div key={idx} className="my-0 px-2 idea-attachments" style={{ "borderTop": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
+              <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
+            </div>
+          );
+        });
+
         
-        // const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
-        //   return (
-        //     <div key={idx} className="my-0 px-2 idea-attachments" style={{ "borderTop": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
-        //       <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
-        //     </div>
-        //   );
-        // });
   
         return (
-          <div className="row dashboard" key={key}>
+          
+          
+          <div className="row dashboard" key={key} owner = {owner} owner_uid = {owner_uid}>
 
-  
             <div className="col-8">
               <p className = "createdAt"> {created_at}, posted by {owner}</p>
             </div>
             <div className="col-4">
-              <Link to={`/mentor/Idea/${key}`}> <Button className = "submit" variant="info"> Refine </Button></Link>
+              <Link to={`/Ideas/${key}/${owner_uid}`}> <Button className = "submit" variant="info"> Refine </Button></Link>
             </div>
             
             <div className="col-12">
               {renderHTML(idea)}
-              {/* {attachments} */}
+              {attachments}
               <hr></hr>
               
-              {/* <Form onSubmit = {this.onComment} >
-                <Form.Group as={Row} controlId="formPlaintextComment">
-                  <Form.Label className = "username_comment" column sm={2}>
-                  {this.state.username}
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
-                  </Col>
-                  <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key)}>Post</Button>
-                </Form.Group>
+              <Form onSubmit = {this.onComment} >
+              <Form.Group as={Row} controlId="formPlaintextComment">
+                <Form.Label className = "username_comment" column sm={2}>
+                {this.state.username}
+                </Form.Label>
+                <Col sm="8">
+                  <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
+                </Col>
+                <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key, owner, owner_uid)}>Post</Button>
+              </Form.Group>
               </Form>
-  
-              {comments} */}
-  
+              {comments}
             </div>
             
           </div>
@@ -180,7 +179,6 @@ class NewsFeed extends React.Component {
           <div className="my-5"></div>
           <div className="row ml-5">
             
-            {/* hidden file input that receives multiple files to be uploaded */}
             <input type="file" className="invisible" ref={this.uploadRef} onChange={this.onUpload} multiple></input>
             
             <div className = 'dashboard_profile col-2 px-3 text-center mt-5'>
@@ -189,17 +187,17 @@ class NewsFeed extends React.Component {
                 <hr></hr>
                 <div className = "dash_pro">
                   <p>{this.state.username}</p>
-                  {/* <p>Ideas: {this.state.ideas.length} </p> */}
                 </div>
               </div>
             </div>
 
             <div className='col-9 px-3 mr-0 px-5 mt-4 idea-wrapper'>
-              {ideas}
+              {idea}
             </div>
           </div>
         </div>
       </div>
+
     )
   }
 }

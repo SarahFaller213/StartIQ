@@ -8,4 +8,4 @@ export const COMMUNITY='/Community';
 export const TOKEN = '/Token';
 export const IDEA_PAGE = '/Idea/:key';
 export const FEED = '/mentor';
-export const MENTOR_IDEA_PAGE = 'mentor/Idea/:key';
+export const MENTOR_IDEA_PAGE = "/Ideas/:key/:uid";

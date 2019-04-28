@@ -130,6 +130,7 @@ class Firebase {
       idea: ideaText,
       created_at: date,
       attachments: attachments,
+      uid: uid,
       questions: {
           Competition : {
             answer: ""

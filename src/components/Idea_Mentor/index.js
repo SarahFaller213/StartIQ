@@ -23,13 +23,12 @@ const Mentor_IdeaPage = (props) => (
 class Idea_Mentor extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { prompt: "", number: "", question: "", key: props.match.params.key, uid: undefined, date: "", content: "", answer:""}
+    this.state = { prompt: "", number: "", question: "", key: props.match.params.key, uid: props.match.params.uid, date: "", content: "", answer:""}
   }
 
   componentDidMount() {
     this.props.firebase.setAuthChangeHandler((user) => {
       if(user) {
-        this.setState({ uid: user.uid });
         this.props.firebase.getRefineIdea(this.state.uid, this.state.key).then((idea) => {
           console.log(idea)
           this.setState({
@@ -38,7 +37,6 @@ class Idea_Mentor extends React.Component {
           })
         })
       }
-      else this.setState({ uid: undefined});
     });
   }
 
@@ -63,6 +61,7 @@ class Idea_Mentor extends React.Component {
     const { 
       blockSubmit,
     } = this.state;
+
     
     return (
       <div className = "main">
@@ -82,19 +81,19 @@ class Idea_Mentor extends React.Component {
         <Tabs activeKey={this.state.prompt} id="uncontrolled-tab-example" onSelect={prompt => this.onSelect(prompt)}>
           <Tab eventKey="Customer" title="Customer">
             <div className="label1"><Form.Label className = "question-label">{this.state.question} </Form.Label> </div>
-            <p>{this.state.answer}</p>   
+            <p><b>{this.state.answer}</b></p>
           </Tab>
           <Tab eventKey="Competition" title="Competition">
             <Form.Label className = "question-label">{this.state.question}</Form.Label>
-            <p>{this.state.answer}</p>   
+            <p><b>{this.state.answer}</b></p>
           </Tab>
           <Tab eventKey="Solution" title="Solution">
-              <Form.Label className = "question-label">{this.state.question}</Form.Label>
-              <p>{this.state.answer}</p>
+            <Form.Label className = "question-label">{this.state.question}</Form.Label>
+            <p><b>{this.state.answer}</b></p>
           </Tab>
           <Tab eventKey="Problem" title="Problem">
-              <Form.Label className = "question-label">{this.state.question}</Form.Label>
-              <p>{this.state.answer}</p>   
+            <Form.Label className = "question-label">{this.state.question}</Form.Label>
+            <p><b>{this.state.answer}</b></p> 
           </Tab>
         </Tabs> 
       </div>
@@ -106,7 +105,7 @@ class Idea_Mentor extends React.Component {
 
 }
 
-const IdeaForm = compose(
+const MentorIdeaForm = compose(
   withRouter,
   withFirebase,
 )(Idea_Mentor);
@@ -114,5 +113,5 @@ const IdeaForm = compose(
 
 export default Mentor_IdeaPage;
 
-export {IdeaForm};
+export {MentorIdeaForm};
 
