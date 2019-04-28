@@ -91,7 +91,7 @@ class Idea extends React.Component {
         <Tabs activeKey={this.state.prompt} id="uncontrolled-tab-example" onSelect={prompt => this.onSelect(prompt)}>
           <Tab eventKey="Customer" title="Customer">
               <div className="label1"><Form.Label className = "question-label">{this.state.question} </Form.Label> </div>
-    
+              <p><b>{this.state.answer}</b></p>
               <form>
                   <div className="questionInput">
                   <input 
@@ -108,6 +108,7 @@ class Idea extends React.Component {
           </Tab>
           <Tab eventKey="Competition" title="Competition">
               <Form.Label className = "question-label">{this.state.question}</Form.Label>
+              <p><b>{this.state.answer}</b></p>
               <form>
                   <div className="questionInput">
                   <input 
@@ -119,11 +120,14 @@ class Idea extends React.Component {
                   onChange = {this.onChange}
               />
              </div>
+             
               <Button className="nurikuri" id="next" disabled={blockSubmit} type="submit"  onClick = {(evt) => this.onClick(evt)}> save</Button> 
             </form>
+
           </Tab>
           <Tab eventKey="Solution" title="Solution">
               <Form.Label className = "question-label">{this.state.question}</Form.Label>
+              <p><b>{this.state.answer}</b></p>
               <form>
                   <div className="questionInput">
                   <input 
@@ -139,6 +143,7 @@ class Idea extends React.Component {
           </Tab>
           <Tab eventKey="Problem" title="Problem">
                 <Form.Label className = "question-label">{this.state.question}</Form.Label>
+                <p><b>{this.state.answer}</b></p>
               <form>
                 <div className="questionInput">
                   <input 

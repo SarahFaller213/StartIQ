@@ -148,6 +148,7 @@ class Dashboard extends React.Component {
         this.setState({ideas : ideas});
       });
     });
+    
   }
 
   onDelete = (key) => {
@@ -159,7 +160,7 @@ class Dashboard extends React.Component {
   }
 
   onComment= (event) => {
-    event.target.reset();
+    event.currentTarget.reset();
     this.setState({
       comment: ""
     })
@@ -277,7 +278,8 @@ class Dashboard extends React.Component {
                 {this.state.username}
                 </Form.Label>
                 <Col sm="8">
-                  <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
+                  <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} 
+                  placeholder="Enter Your Comment..." />
                 </Col>
                 <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key)}>Post</Button>
               </Form.Group>
