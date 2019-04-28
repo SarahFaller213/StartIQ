@@ -36,11 +36,15 @@ class App extends Component {
       //   ? this.setState({ authUser: authUser.uid })
       //   : this.setState({ authUser: null });
       if(authUser){
-        this.setState({ authUser: authUser.uid })
-        this.props.firebase.user(this.state.authUser).once('value').then(snapshot => {
-          console.log(snapshot.val().userType)
-          this.setState({userType: snapshot.val().userType});
-        });
+        setTimeout(() => { 
+          this.setState({ authUser: authUser.uid })
+          this.props.firebase.user(this.state.authUser).once('value').then(snapshot => {
+            console.log(snapshot.val().userType)
+            this.setState({userType: snapshot.val().userType});
+        }); 
+      }, 100);
+      
+        
       } else {
         this.setState({ authUser: null, userType: "" });
       }

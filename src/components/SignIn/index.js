@@ -79,7 +79,7 @@ class SignInGoogleBase extends Component {
       .doSignInWithGoogle()
       .then(() => {
         this.setState({ error: null });
-        this.props.history.push(ROUTES.DASHBOARD);
+        setTimeout(() => { this.props.history.push(ROUTES.DASHBOARD); }, 100);
       })
       .catch(error => {
         this.setState({ error });
@@ -127,9 +127,10 @@ class SignInFormBase extends Component {
               this.setState({userType: snapshot.val().userType});
               // console.log(snapshot.val().userType);
               if(this.state.userType == "mentor"){
-                this.props.history.push(ROUTES.FEED);
+                setTimeout(() => { this.props.history.push(ROUTES.FEED); }, 100);
+                
               } else {
-                this.props.history.push(ROUTES.DASHBOARD);
+                setTimeout(() => { this.props.history.push(ROUTES.DASHBOARD); }, 100);
               }
             });
           })

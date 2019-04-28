@@ -89,9 +89,9 @@ class SignUpFormBase extends Component {
         .then(result => this.props.firebase.signup(userType, username, email, imgURL, communityName, result.user.uid))
         .then(() => {
           if(userType === 'mentor'){
-            this.props.history.push(ROUTES.FEED)
+            setTimeout(() => { this.props.history.push(ROUTES.FEED); }, 100);
           } else {
-            this.props.history.push(ROUTES.DASHBOARD)
+            setTimeout(() => { this.props.history.push(ROUTES.DASHBOARD); }, 100);
           }
         })
       }else {
