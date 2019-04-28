@@ -123,9 +123,10 @@ class Firebase {
   }
 
   // ************************* IDEA API ***************************
-  async putIdea(ideaText, uid, attachments) {
+  async putIdea(ideaText, uid, attachments, name) {
     let date = Date.now()
     this.workspace(uid).push({
+      username: name,
       idea: ideaText,
       created_at: date,
       attachments: attachments,
@@ -153,9 +154,11 @@ class Firebase {
 
   getIdea(uid) {
     return this.workspace(uid).once('value').then( data => {
-        const workspaceData = data.val();
-        delete workspaceData.username;
-        return Object.entries(workspaceData);
+      // console.log(data.val())
+      const workspaceData = data.val();
+      delete workspaceData.username;
+      // console.log(Object.entries(workspaceData));
+      return Object.entries(workspaceData);
     });
   }
 

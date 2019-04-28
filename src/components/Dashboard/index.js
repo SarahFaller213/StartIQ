@@ -96,7 +96,7 @@ class Dashboard extends React.Component {
 
   onSubmit = () =>{
     if(this.state.uid) {
-      this.props.firebase.putIdea(this.state.text, this.state.uid, this.state.attachments).then(() => {
+      this.props.firebase.putIdea(this.state.text, this.state.uid, this.state.attachments, this.state.username).then(() => {
           this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
             this.setState({ideas : ideas, text: '', attachments: [] });
           });
