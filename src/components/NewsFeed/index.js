@@ -26,7 +26,7 @@ const SubmitButton = () => (
 class NewsFeed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '', ideas: [], revisions: [], comments: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: "", comment: "", commentShow: false}
+    this.state = { text: '', ideas: undefined, revisions: [], comments: [], uid: undefined, username: undefined, attachments: [], profile: '', ideaKey: "", comment: "", commentShow: false}
     this.handleChange = this.handleChange.bind(this)
     this.onChange = this.onChange.bind(this)
     this.uploadRef = React.createRef();
@@ -40,16 +40,35 @@ class NewsFeed extends React.Component {
           this.setState({username: username});
           // console.log(this.state.username)
         });
-        this.props.firebase.getIdea(this.state.uid).then(ideas => { // ideas : { KEY -> user idea}
-          this.setState({ideas : ideas});
+        this.props.firebase.newsfeed().on('value', snapshot => {
+          const ideasObject = snapshot.val();
+          const ideasList = Object.keys(ideasObject).map(key => ({
+            ...ideasObject[key]
+          }));
+
+          this.setState({ideas: ideasList});
+
+          // const ideamap = 
+          ideasList.map(key => {
+            console.log(Object.keys(key)[0])
+            // console.log(Object.values(key)[0].idea)
+            // console.log(typeof Object.values(key))
+
+          });
+
+          console.log(this.state.ideas)
         });
+
         this.props.firebase.getProfile(this.state.uid).then(profile => {
           this.setState({profile : profile});
         });
       }
       else this.setState({ uid: undefined, username: undefined });
     });
+  }
 
+  componentWillUnmount() {
+    this.props.firebase.newsfeed().off();
   }
 
   handleChange(value) {
@@ -80,61 +99,65 @@ class NewsFeed extends React.Component {
 
   render() {
     // ideas
-    const ideas = this.state.ideas.map( ([key, ideaInfo]) => {
-      const created_at = (new Date(ideaInfo.created_at)).toString();
-      const comments = !ideaInfo.comments ? [] : Object.values(ideaInfo.comments).map(([username, comment]) => {
-        return (
-          <Form>
-            <Form.Group as={Row} controlId="formPlaintextComment">
-              <Form.Label className = "username_comment" column sm={2}>
-                {username}
-              </Form.Label>
-              <Col sm="9" className = "commentContext pt-2">
-                {comment}
-              </Col>
-            </Form.Group>
-          </Form>
-        )
-      });
+    // const ideas = this.state.ideas.map( ([key, ideaInfo]) => {
+    //   const created_at = (new Date(ideaInfo.created_at)).toString();
+    //   const comments = !ideaInfo.comments ? [] : Object.values(ideaInfo.comments).map(([username, comment]) => {
+    //     return (
+    //       <Form>
+    //         <Form.Group as={Row} controlId="formPlaintextComment">
+    //           <Form.Label className = "username_comment" column sm={2}>
+    //             {username}
+    //           </Form.Label>
+    //           <Col sm="9" className = "commentContext pt-2">
+    //             {comment}
+    //           </Col>
+    //         </Form.Group>
+    //       </Form>
+    //     )
+    //   });
       
-      const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
-        return (
-          <div key={idx} className="my-0 px-2 idea-attachments" style={{ "borderTop": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
-            <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
-          </div>
-        );
-      });
+    //   const attachments = !ideaInfo.attachments ? [] : ideaInfo.attachments.map(([filename, url], idx) => {
+    //     return (
+    //       <div key={idx} className="my-0 px-2 idea-attachments" style={{ "borderTop": idx == 0 ? "solid rgb(223, 223, 223) 1pt" : "none" }}>
+    //         <p className="my-0 px-0 col-11 d-inline-block"> <i className="fas fa-paperclip"></i> <a href={url} target="_blank">{filename}</a></p>
+    //       </div>
+    //     );
+    //   });
 
-      return (
-        <div className="row dashboard" key={key}>
+    //   return (
+    //     <div className="row dashboard" key={key}>
 
-          <div className="col-8">
-            <p className = "createdAt"> {created_at}, posted by {this.state.username} </p>
-          </div>
-          <div className="col-12">
-            {renderHTML(ideaInfo.idea)}
-            {attachments}
-            <hr></hr>
-            
-            <Form onSubmit = {this.onComment} >
-              <Form.Group as={Row} controlId="formPlaintextComment">
-                <Form.Label className = "username_comment" column sm={2}>
-                {this.state.username}
-                </Form.Label>
-                <Col sm="9">
-                  <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
-                </Col>
-                <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key)}>Post</Button>
-              </Form.Group>
-            </Form>
-
-            {comments}
-
-          </div>
+    //       <div className="col-8">
+    //         <p className = "createdAt"> {created_at}, posted by {this.state.username} </p>
+    //       </div>
+    //       <div className="col-4">
+    //         <Link to={`/Idea/${key}`}> <Button className = "submit" variant="info"> Refine </Button></Link>
+    //       </div>
           
-        </div>
-      )
-    });
+    //       <div className="col-12">
+    //         {renderHTML(ideaInfo.idea)}
+    //         {attachments}
+    //         <hr></hr>
+            
+    //         <Form onSubmit = {this.onComment} >
+    //           <Form.Group as={Row} controlId="formPlaintextComment">
+    //             <Form.Label className = "username_comment" column sm={2}>
+    //             {this.state.username}
+    //             </Form.Label>
+    //             <Col sm="9">
+    //               <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
+    //             </Col>
+    //             <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, key)}>Post</Button>
+    //           </Form.Group>
+    //         </Form>
+
+    //         {comments}
+
+    //       </div>
+          
+    //     </div>
+    //   )
+    // });
 
     return (      
       <div className = "main">
@@ -152,13 +175,13 @@ class NewsFeed extends React.Component {
                 <hr></hr>
                 <div className = "dash_pro">
                   <p>{this.state.username}</p>
-                  <p>Ideas: {this.state.ideas.length} </p>
+                  {/* <p>Ideas: {this.state.ideas.length} </p> */}
                 </div>
               </div>
             </div>
 
             <div className='col-9 px-3 mr-0 px-5 mt-4 idea-wrapper'>
-              {ideas}
+              {/* {ideas} */}
             </div>
           </div>
         </div>

@@ -38,7 +38,7 @@ class CommunityPage extends React.Component {
         ...usersObject[key],
         uid: key,
       }));
-
+      
       this.setState({
         users: usersList,
         loading: false,
@@ -53,7 +53,6 @@ class CommunityPage extends React.Component {
 
   render() {
     const { users, loading } = this.state;
-      console.log(users)
 
     return (
       <div>

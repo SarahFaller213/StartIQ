@@ -54,6 +54,7 @@ class Firebase {
 
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
+  newsfeed = () => this.db.ref('workspace');
   workspace = uid => this.db.ref(`workspace/${uid}`);
   fileStorage = uid => this.storage.ref(`files/${uid}`); //Storage for pdf file uploads
   imgStorage = uid => this.storage.ref(`imgs/${uid}`);  //Storage for profile picture uploads
@@ -208,6 +209,8 @@ async checkToken(token){
 putTokens(token, community) {
   return this.tokens(token).set(community);
 }
+
+// ************************* Mentor API ***************************
 
 
 }
