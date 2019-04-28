@@ -26,14 +26,24 @@ class App extends Component {
 
     this.state = {
       authUser: null,
+      userType: ""
     };
   }
 
   componentDidMount() {
     this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState({ authUser })
-        : this.setState({ authUser: null });
+      // authUser
+      //   ? this.setState({ authUser: authUser.uid })
+      //   : this.setState({ authUser: null });
+      if(authUser){
+        this.setState({ authUser: authUser.uid })
+        this.props.firebase.user(this.state.authUser).once('value').then(snapshot => {
+          console.log(snapshot.val().userType)
+          this.setState({userType: snapshot.val().userType});
+        });
+      } else {
+        this.setState({ authUser: null, userType: "" });
+      }
     });
   }
   componentWillUnmount() {
@@ -45,7 +55,7 @@ class App extends Component {
     return (
   <Router>
     <div className = "background">
-      <Navigation authUser={this.state.authUser} />
+      <Navigation userType={this.state.userType} />
       <Route exact path={ROUTES.LANDING} component={SignInPage} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
