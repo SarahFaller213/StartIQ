@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+.card{
+    position: relative;
+    display: inline-block;
+    flex-direction: column;
+    min-width: 0;
+    border-radius: .25rem;
+    width: 50%;
+    padding-bottom: 1.5em; 
+}
+
+
+.cardHeader{
+    padding: 1.5%;
+    padding-bottom: 0.3rem;
+    background-color: grey;
+    text-align: center;
+}
+
+.cardBody{
+    flex: 1 1 auto;
+    padding-top: 2rem;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-size: bold;
+}
+
+
+
+.question-label{
+    display: inline-block;
+    padding: 5% 0%;
+}
+
+.label1{
+    text-align: center;
+}
+
+.centerDiv{
+    text-align: center;
+    padding-top: 5%;
+}
+
+.centerDiv2{
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.tabs{
+    display: inline-block;
+    width: 50%;
+}
+
+.ideaFont{
+    font-size: x-large;
+}
+
+.questionInput{
+    display: inline-block;
+}
+#next{
+    margin-left: 10px;
+}

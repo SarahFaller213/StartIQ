@@ -131,7 +131,7 @@ class NewsFeed extends React.Component {
     //         <p className = "createdAt"> {created_at}, posted by {this.state.username} </p>
     //       </div>
     //       <div className="col-4">
-    //         <Link to={`/Idea/${key}`}> <Button className = "submit" variant="info"> Refine </Button></Link>
+    //         <Link to={`/mentor/Idea/${key}`}> <Button className = "submit" variant="info"> Refine </Button></Link>
     //       </div>
           
     //       <div className="col-12">

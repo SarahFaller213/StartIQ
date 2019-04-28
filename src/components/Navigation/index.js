@@ -44,6 +44,7 @@ const NavigationAuthAdmin = () => (
       <img src= {logo} alt="StartIQ" />
       <li> <Link to={ROUTES.TOKEN} >Token</Link> </li>
       <li> <Link to={ROUTES.COMMUNITY}>Community</Link> </li>
+      <li> <Link to={ROUTES.PROFILE}>Profile</Link> </li>
       <li>  <Link to={ROUTES.LANDING}><SignOutButton /></Link></li>
     </div>
   </nav>
