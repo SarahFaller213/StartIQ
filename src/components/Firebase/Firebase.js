@@ -151,7 +151,13 @@ class Firebase {
     });
   }
 
- 
+  getAllIdeas() {
+    return this.users().once('value').then(snapshot => {
+      return Promise.all(
+        Object.keys(snapshot.val()).map(uid => this.getIdea(uid))
+      ).then(ideasForUID => ideasForUID.flat());
+    });
+  }
 
   getIdea(uid) {
     return this.workspace(uid).once('value').then( data => {
