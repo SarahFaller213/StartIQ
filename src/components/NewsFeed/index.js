@@ -61,13 +61,16 @@ class NewsFeed extends React.Component {
 
   onPost = (evt, key, uid) => {
     evt.preventDefault();
-    const comment = this.state.comment;
-    this.setState({ comment: "" }); 
-    this.props.firebase.putComment(uid.owner_uid, key.key, this.state.username, comment).then(() => {
-      this.props.firebase.getAllIdeas().then(ideas => {
-        this.setState({ ideas : ideas });
-      });
+    this.props.firebase.putComment(uid.owner_uid, key.key, this.state.username, this.state.comment).then(() => {
+      this.props.firebase.getAllIdeas().then(ideas => this.setState({ ideas : ideas }));
     });
+  }
+
+  onComment= (event) => {
+    event.target.reset();
+    this.setState({
+      comment: ""
+    })
   }
 
   render() {
@@ -122,10 +125,10 @@ class NewsFeed extends React.Component {
             <Form onSubmit = {this.onComment} >
             <Form.Group as={Row} controlId="formPlaintextComment">
               <Form.Label className = "username_comment" column sm={2}>
-                {this.state.username}
+              {this.state.username}
               </Form.Label>
               <Col sm="8">
-                <Form.Control className = "comment_input" type="Comment" value = {this.state.comment} onChange = {this.onChange} placeholder="Enter Your Comment..." />
+                <Form.Control className = "comment_input" type="Comment" onChange = {this.onChange} placeholder="Enter Your Comment..." />
               </Col>
               <Button className = "mr-4" type="submit" variant = "light" onClick = {(evt) => this.onPost(evt, {key}, {owner_uid})}>Post</Button>
             </Form.Group>
