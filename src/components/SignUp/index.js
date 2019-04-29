@@ -93,8 +93,11 @@ class SignUpFormBase extends Component {
           } else {
             setTimeout(() => { this.props.history.push(ROUTES.DASHBOARD); }, 100);
           }
-        })
-      }else {
+        }).catch(error => {
+          console.log(error);
+          this.setState({ error: error.message }); //Set Error State as Error message
+        });
+      } else {
         this.setState({error: "Wrong Token"})
       }
     })
@@ -133,6 +136,7 @@ class SignUpFormBase extends Component {
     passwordOne !== passwordTwo ||
     passwordOne === '' ||
     email === '' ||
+    userType === '' ||
     username === '';
 
       
@@ -231,7 +235,7 @@ class SignUpFormBase extends Component {
         />
         </div>
         <div className="elements2">
-        <button className = "btn nurikuri btn-block" disabled={blockSubmit} type="submit">Sign Up</button>
+        <button className = "btn nurikuri btn-block" disabled={blockSubmit} disabled={isInvalid} type="submit">Sign Up</button>
         </div>
 
         {error && <p className = "error">{error}</p>}
